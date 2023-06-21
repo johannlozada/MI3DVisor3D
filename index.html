@@ -146,7 +146,7 @@
                     //console.log(vCadena);
                     vNuevaCadena = vNuevaCadena.slice(vCadena.length, vNuevaCadena.length);
                     //console.log(vNuevaCadena);
-                    if (contar == 3 || contar == 4 || contar == 6){
+                    if (contar == 3 || contar == 4 || contar == 6 || contar == 7){
                         vNuevoLink = vNuevoLink + vCadena;
                     }
                     contar++;
@@ -169,15 +169,8 @@
             modelViewer.src = obtenerLink1(vRuta);
             modelViewerRuta = obtenerLink2(vRuta);
             //Colocar imagen de fondo modelViewer
-            document.getElementById("aModelo3d").innerHTML = "<img src='" + `${modelViewerRuta}` + "Cliente01/ClienteFondo.png'>";
-            console.log("<img src='" + `${modelViewerRuta}` + "Cliente01/ClienteFondo.png'>")
+            //document.getElementById("aModelo3d").innerHTML = "<img src='" + `${modelViewerRuta}` + "ClienteFondo.png'>";
             //Colocaf imagen de logo Cliente
-            document.getElementById("idLogo-cliente").src = "url(" + `${modelViewerRuta}` + "Cliente01/ClienteLogo.png)";
-            document.getElementById("idLeyenda").src = "url(" + `${modelViewerRuta}` + "Cliente01/MI3D-Leyenda01.png)";
-            /*document.getElementById("idLogo-cliente").style.backgroundImage = "url(" + `${modelViewerRuta}` + "ClienteLogo.png)";
-            document.getElementById("idLogo-cliente").style.backgroundPosition = "center center";
-            document.getElementById("idLogo-cliente").style.backgroundSize = "80px 80px";*/
-            //Cuando carga el archivo GLTF
             modelViewer.addEventListener("load", () => {
                 //Determinar cuantos variantes tiene un mesh
                 const variantesSelect = document.getElementById("variantesSelect");
