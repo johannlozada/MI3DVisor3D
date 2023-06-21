@@ -169,7 +169,7 @@
             modelViewer.src = obtenerLink1(vRuta);
             modelViewerRuta = obtenerLink2(vRuta);
             //Colocar imagen de fondo modelViewer
-            //document.getElementById("aModelo3d").innerHTML = "<img src='" + `${modelViewerRuta}` + "ClienteFondo.png'>";
+            document.getElementById("aModelo3d").style.cssText = "background-image: url('" + `${modelViewerRuta}` + "ClienteFondo.png')";
             //Colocaf imagen de logo Cliente
             modelViewer.addEventListener("load", () => {
                 //Determinar cuantos variantes tiene un mesh
