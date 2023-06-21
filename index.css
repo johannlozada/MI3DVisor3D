@@ -1,0 +1,235 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: Roboto Regular, Helvetica Neue, sans-serif;
+  font-size: 12px;
+}
+
+#container {
+  height: 100vh;
+  background: linear-gradient(to bottom, #cacaca, #a5d5fa);
+}
+
+#variantesSelect {
+  position: absolute;
+}
+
+.cargar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(6px 4px 3px rgba(0, 0, 0, 0.5)); /*posy posx tamaño somnbra color*/
+}
+
+.objetocargar {
+  width: 100px;
+  height: 100px;
+  animation: girar 5s linear infinite;
+  }
+  @keyframes girar {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+    
+model-viewer {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  --progress-bar-height: 5px;
+  --progress-bar-color: #2D76CC;
+}
+
+.logo-mi3d {
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  transform: translate(30%, -130%);
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5));
+}
+
+.logo-cliente {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  transform: translate(8px, 8px);
+  width: 80px;
+  height: 80px;
+  filter: drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5));
+}
+.controls {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(10%, 00%);
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5));
+}
+
+#ar-button {
+  background-image: url(imagenes/MI3D-favicon.ico); /* verificar para q sirve esta imagen*/
+  background-repeat: no-repeat;
+  background-size: 25px 25px;
+  background-position: 7px 50%;
+  background-color: #fff;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  bottom: 50px;
+  padding: 0px 16px 0px 40px;
+  color:#4285f4;
+  height: 36px;
+  line-height: 36px;
+  border-radius: 18px;
+  border: 1px solid #DADCE0;
+}
+
+#ar-button:active {
+  background-color: #E8EAED;
+}
+
+#ar-button:focus {
+  outline: none;
+}
+
+#ar-button:focus-visible {
+  outline: 1px solid #4285f4;
+}
+
+@keyframes circle {
+  from { transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
+  to   { transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
+}
+
+@keyframes elongate {
+  from { transform: translateX(100px); }
+  to   { transform: translateX(-100px); }
+}
+
+model-viewer > #ar-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 175px;
+  animation: elongate 2s infinite ease-in-out alternate;
+  display: none;
+}
+
+model-viewer[ar-status="session-started"] > #ar-prompt {
+  display: block;
+}
+
+model-viewer > #ar-prompt > img {
+  animation: circle 4s linear infinite;
+}
+
+model-viewer > #ar-failure {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 175px;
+  display: none;
+}
+
+model-viewer[ar-tracking="not-tracking"] > #ar-failure {
+  display: block;
+}
+
+.hotspot{
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  border: 4px solid rgba(215, 215, 215, 0.5);
+  background-color: transparent;
+  box-sizing: border-box;
+  pointer-events: none;
+  --min-hotspot-opacity: 0;
+}
+
+.annotation{
+  background-color: rgba(215, 215, 215, 0.5);
+  position: absolute;
+  transform: translate(10px, 10px);
+  border-radius: 4px;
+  padding: 10px;
+}
+
+#controlvariantes {
+  position: absolute;
+}
+
+.dot{
+  display: none;
+}
+
+.dimensiones{
+  background: #fff;
+  border-radius: 4px;
+  border: none;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.8);
+  display: block;
+  padding: 10px;
+  filter: drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5));
+  max-width: 200px;
+  position: absolute;
+  top: 100%;
+  left: 100%;
+  transform: translate(-105%, -110%);
+  overflow-wrap: break-word;
+  width: max-content;
+  height: max-content;
+}
+@media only screen and (max-width: 800px) {
+  .dim{
+      font-size: 3vw;
+  }
+}
+.dimensionLineContainer{
+  pointer-events: none;
+  display: block;
+}
+.dimensionLine{
+  stroke: #919191;
+  stroke-width: 2;
+  stroke-dasharray: 2;
+}
+.hide{
+  display: none;
+}
+/* This keeps child nodes hidden while the element loads */
+:not(:defined) > * {
+  display: none;
+}
+.leyenda {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 35%;
+  height: 35%x;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(6px 4px 3px rgba(0, 0, 0, 0.5));
+  opacity: 0.70;
+}
