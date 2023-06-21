@@ -76,8 +76,8 @@
                     <input id="show-leyenda" type="checkbox">
                     <label for="show-leyenda">  Leyenda</label>
                     <br>
-                    <input id="show-pantallaCompleta" type="checkbox">
-                    <label for="show-pantallaCompleta">  Pantalla Completa</label>
+                    <input id="show-pantalla" type="checkbox">
+                    <label for="show-pantalla">  Pantalla Completa</label>
 
                 </div>
                 <img id="idLeyenda" class="leyenda" src='imagenes/MI3D-Leyenda01.png'>
@@ -239,6 +239,7 @@
                 const checkboxVariante = modelViewer.querySelector('#show-variantes');
                 const checkboxDimension = modelViewer.querySelector('#show-dimensions');
                 const checkboxLeyenda = modelViewer.querySelector('#show-leyenda');
+                const checkboxPantalla = modelViewer.querySelector('#show-pantalla');
                 const vIdLeyenda = document.getElementById('idLeyenda');
                 //Cuando haces click genera la OptionList - Determinar a qué variantes se les da click
                 modelViewer.addEventListener("click", mostrarListavariantes);
@@ -291,7 +292,15 @@
                     else {
                         vIdLeyenda.style.display = "none";
                     }
-                })
+                });
+                // Revision de checkbox pantalla cuando inicia
+                if (checkboxPantalla.checked) {
+                    checkboxPantalla.checked = false;
+                }
+                // Revision de checkbox pantalla cuando cambia
+                checkboxPantalla.addEventListener('change',() => {
+                    toggleFullScreen();
+                });
                 //checkbox variante Pasar el valor
                 checkboxVariante.addEventListener('change', () => {
                     vClickActivo = !checkboxVariante.checked;
@@ -337,7 +346,7 @@
                 const x2 = size.x / 2;
                 const y2 = size.y / 2;
                 const z2 = size.z / 2;
-                cDecimal = 1000;
+                cDecimal = 1;
                 cUMedida = "m";
                 //console.log(size.x, size.y, size.z);console.log(center.x, center.y, center.z);
                 modelViewer.updateHotspot({
@@ -437,6 +446,15 @@
                         });
                 };
                 fHotspotVariante();
+                function toggleFullScreen() {
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen();
+                    } else {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        }
+                    }
+                }
             });
         </script>
     </body>
