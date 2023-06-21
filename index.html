@@ -423,9 +423,9 @@
                                     //    "z:", data.nodes[i].translation[1],
                                     //    "y:", data.nodes[i].translation[2],
                                     //    "Boton N:", c1);
-                                    hpx = data.nodes[i].translation[0] / 1000;
-                                    hpz = data.nodes[i].translation[1] / 1000;
-                                    hpy = data.nodes[i].translation[2] / 1000;
+                                    hpx = data.nodes[i].translation[0] / cDecimal;
+                                    hpz = data.nodes[i].translation[1] / cDecimal;
+                                    hpy = data.nodes[i].translation[2] / cDecimal;
                                     var vBoton = document.createElement("button");
                                     vBoton.id = "HotSpotVariante";
                                     if (checkboxVariante.checked) {
