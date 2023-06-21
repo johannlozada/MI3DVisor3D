@@ -48,7 +48,7 @@
                 </a>
                 <!--Logo de Cliente-->
                 <a href='https://www.google.com' target='_blank'>
-                    <img id='idLogo-cliente' class='ClienteLogo' src=''>
+                    <img id='idLogoCliente' class='ClienteLogo'>
                 </a>
                 <!--Boton de Realidad Aumentada-->
                 <button slot='ar-button' id='ar-button'>
@@ -170,6 +170,8 @@
             modelViewerRuta = obtenerLink2(vRuta);
             //Colocar imagen de fondo modelViewer
             document.getElementById("aModelo3d").style.cssText = "background-image: url('" + `${modelViewerRuta}` + "ClienteFondo.png')";
+            console.log("url('" + `${modelViewerRuta}` + "ClienteLogo.png')");
+            document.getElementById("idLogoCliente").src = "url('" + `${modelViewerRuta}` + "ClienteLogo.png')";
             //Colocaf imagen de logo Cliente
             modelViewer.addEventListener("load", () => {
                 //Determinar cuantos variantes tiene un mesh
