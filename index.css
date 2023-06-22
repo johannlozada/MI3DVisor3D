@@ -228,7 +228,7 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
       font-size: 3vw;
   }
   .leyenda {
-    width: 150%;
+    width: 80%;
   }
 }
 /* This keeps child nodes hidden while the element loads */
