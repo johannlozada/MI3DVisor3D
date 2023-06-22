@@ -6,16 +6,13 @@ body {
   font-family: Roboto Regular, Helvetica Neue, sans-serif;
   font-size: 12px;
 }
-
 #container {
   height: 100vh;
   background: linear-gradient(to bottom, #cacaca, #a5d5fa);
 }
-
 #variantesSelect {
   position: absolute;
 }
-
 .cargar {
   display: flex;
   justify-content: center;
@@ -28,7 +25,6 @@ body {
   transform: translate(-50%, -50%);
   filter: drop-shadow(6px 4px 3px rgba(0, 0, 0, 0.5)); /*posy posx tamaño somnbra color*/
 }
-
 .objetocargar {
   width: 100px;
   height: 100px;
@@ -42,7 +38,6 @@ body {
       transform: rotate(360deg);
   }
 }
-    
 model-viewer {
   width: 100%;
   height: 100%;
@@ -52,7 +47,6 @@ model-viewer {
   --progress-bar-height: 5px;
   --progress-bar-color: #2D76CC;
 }
-
 .logo-mi3d {
   position: absolute;
   top: 100%;
@@ -62,26 +56,24 @@ model-viewer {
   height: 40px;
   filter: drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5));
 }
-
 .ClienteLogo {
   position: absolute;
-  top: 0%;
   left: 0%;
-  transform: translate(8px, 8px);
+  top: 0%;
+  transform: translate(5%, 5%);
   width: 80px;
   height: 80px;
   filter: drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5));
 }
 .controls {
   position: absolute;
-  top: 50%;
   left: 0%;
+  top: 50%;
   transform: translate(10%, 00%);
   width: 100px;
   height: 100px;
   filter: drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5));
 }
-
 #ar-button {
   background-image: url(imagenes/MI3D-AR01.png);
   background-repeat: no-repeat;
@@ -100,29 +92,23 @@ model-viewer {
   border-radius: 18px;
   border: 1px solid #DADCE0;
 }
-
 #ar-button:active {
   background-color: #E8EAED;
 }
-
 #ar-button:focus {
   outline: none;
 }
-
 #ar-button:focus-visible {
   outline: 1px solid #4285f4;
 }
-
 @keyframes circle {
   from { transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
   to   { transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
 }
-
 @keyframes elongate {
   from { transform: translateX(100px); }
   to   { transform: translateX(-100px); }
 }
-
 model-viewer > #ar-prompt {
   position: absolute;
   left: 50%;
@@ -132,15 +118,12 @@ model-viewer > #ar-prompt {
   animation: elongate 2s infinite ease-in-out alternate;
   display: none;
 }
-
 model-viewer[ar-status="session-started"] > #ar-prompt {
   display: block;
 }
-
 model-viewer > #ar-prompt > img {
   animation: circle 4s linear infinite;
 }
-
 model-viewer > #ar-failure {
   position: absolute;
   left: 50%;
@@ -148,11 +131,9 @@ model-viewer > #ar-failure {
   bottom: 175px;
   display: none;
 }
-
 model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   display: block;
 }
-
 .hotspot{
   display: block;
   width: 20px;
@@ -164,7 +145,6 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   pointer-events: none;
   --min-hotspot-opacity: 0;
 }
-
 .annotation{
   background-color: rgba(215, 215, 215, 0.5);
   position: absolute;
@@ -172,16 +152,13 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   border-radius: 4px;
   padding: 10px;
 }
-
-#controlvariantes {
+#marcoleyenda {
   position: absolute;
 }
-
 .dot{
   display: none;
 }
-
-.dimensiones{
+.marcodimensiones{
   background: #fff;
   border-radius: 4px;
   border: none;
@@ -192,9 +169,9 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   filter: drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5));
   max-width: 200px;
   position: absolute;
-  top: 100%;
   left: 100%;
-  transform: translate(-105%, -110%);
+  top: 0%;
+  transform: translate(-105%, 10%);
   overflow-wrap: break-word;
   width: max-content;
   height: max-content;
@@ -231,6 +208,10 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   }
   .leyenda {
     width: 80%;
+  }
+  .ClienteLogo {
+    width: 60px;
+    height: 60px;
   }
 }
 /* This keeps child nodes hidden while the element loads */

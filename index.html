@@ -64,17 +64,17 @@
                     <img class='objetocargar' src='imagenes/MI3D-Isotipo.png'>
                 </div>
                 <!--Checkbox para activar si se muestran las medidas y/o las variantes-->
-                <div id="controlvariantes" class="dimensiones">
+                <div id="marcoleyenda" class="marcodimensiones">
                     Opciones:
                     <br>
                     <input id="show-variantes" type="checkbox">
                     <label for="show-variantes">  Variantes</label>
                     <br>
                     <input id="show-dimensions" type="checkbox">
-                    <label for="show-dimensions">  Dimensiones</label>
+                    <label for="show-dimensions">  Medidas</label>
                     <br>
                     <input id="show-leyenda" type="checkbox">
-                    <label for="show-leyenda">  Leyenda</label>
+                    <label for="show-leyenda">  Ayuda</label>
                     <br>
                     <input id="show-pantalla" type="checkbox">
                     <label for="show-pantalla">  Pantalla Completa</label>
@@ -164,7 +164,7 @@
             } else {
                 console.log("Computadora");
                 vresultado1.innerHTML = "";
-                //vresultado1.style.cssText = "background-image: url(imagenes/MI3D-favicon.ico); background-color: rgba(254, 254, 254, 0);";
+                vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
             }
             const modelViewer = document.querySelector("model-viewer#aModelo3d");
             //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
