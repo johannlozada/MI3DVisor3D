@@ -197,14 +197,6 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   width: max-content;
   height: max-content;
 }
-@media only screen and (max-width: 600px) {
-  .dim{
-      font-size: 3vw;
-  }
-  .leyenda {
-    width: 150%;
-  }
-}
 .dimensionLineContainer{
   pointer-events: none;
   display: block;
@@ -215,10 +207,6 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   stroke-dasharray: 2;
 }
 .hide{
-  display: none;
-}
-/* This keeps child nodes hidden while the element loads */
-:not(:defined) > * {
   display: none;
 }
 .leyenda {
@@ -234,4 +222,16 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   transform: translate(-50%, -50%);
   filter: drop-shadow(6px 4px 3px rgba(0, 0, 0, 0.5));
   opacity: 0.70;
+}
+@media only screen and (max-width: 600px) {
+  .dim{
+      font-size: 3vw;
+  }
+  .leyenda {
+    width: 150%;
+  }
+}
+/* This keeps child nodes hidden while the element loads */
+:not(:defined) > * {
+  display: none;
 }
