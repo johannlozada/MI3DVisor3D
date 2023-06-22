@@ -16,12 +16,16 @@
                 src=""
                 alt='MI3D - Visor 3D' shadow-intensity='1'
                 camera-controls
-                touch-action='pan-y' ar
+                touch-action='pan-y'
+                ar
                 ar-modes='webxr scene-viewer quick-look'
                 xr-enviroment
-                ar-scale='fixed'
+                ar-scale='auto'
                 disable-tap
-                scale='1 1 1'>
+                scale='1 1 1'
+                autoplay>
+                <button id="HotSpotVariante" class="hotspot" slot="hotspot" data-position="0 0 0" data-normal="0 0 0"> Punto 0,0,0 </button>
+                
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
