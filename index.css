@@ -26,11 +26,11 @@ body {
   filter: drop-shadow(6px 4px 3px rgba(0, 0, 0, 0.5)); /*posy posx tamaño somnbra color*/
 }
 .objetocargar {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   animation: girar 5s linear infinite;
-  }
-  @keyframes girar {
+}
+@keyframes girar {
   0% {
       transform: rotate(0deg);
   }
@@ -47,22 +47,22 @@ model-viewer {
   --progress-bar-height: 5px;
   --progress-bar-color: #2D76CC;
 }
-.logo-mi3d {
-  position: absolute;
-  top: 100%;
-  left: 0%;
-  transform: translate(30%, -130%);
-  width: 40px;
-  height: 40px;
-  filter: drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5));
-}
 .ClienteLogo {
   position: absolute;
   left: 0%;
   top: 0%;
-  transform: translate(5%, 5%);
+  transform: translate(10%, 10%);
   width: 80px;
   height: 80px;
+  filter: drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5));
+}
+.logo-mi3d {
+  position: absolute;
+  left: 0%;
+  top: 100%;
+  transform: translate(40%, -150%);
+  width: 40px;
+  height: 40px;
   filter: drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5));
 }
 .controls {
@@ -120,6 +120,9 @@ model-viewer > #ar-prompt {
 }
 model-viewer[ar-status="session-started"] > #ar-prompt {
   display: block;
+  .show-variantes {
+    display: none;
+  }
 }
 model-viewer > #ar-prompt > img {
   animation: circle 4s linear infinite;
@@ -152,9 +155,6 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   border-radius: 4px;
   padding: 10px;
 }
-#marcoleyenda {
-  position: absolute;
-}
 .dot{
   display: none;
 }
@@ -171,7 +171,7 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   position: absolute;
   left: 100%;
   top: 0%;
-  transform: translate(-105%, 10%);
+  transform: translate(-105%, 5%);
   overflow-wrap: break-word;
   width: max-content;
   height: max-content;
@@ -212,6 +212,10 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   .ClienteLogo {
     width: 60px;
     height: 60px;
+  }
+  .objetocargar {
+    width: 150px;
+    height: 150px;
   }
 }
 /* This keeps child nodes hidden while the element loads */
