@@ -83,7 +83,7 @@ model-viewer {
 }
 
 #ar-button {
-  /*background-image: url(imagenes/MI3D-favicon.ico); /* verificar para q sirve esta imagen*/
+  background-image: url(imagenes/MI3D-AR01.png);
   background-repeat: no-repeat;
   background-size: 25px 25px;
   background-position: 7px 50%;
