@@ -197,12 +197,12 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   width: max-content;
   height: max-content;
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 600px) {
   .dim{
       font-size: 3vw;
   }
   .leyenda {
-    width: 80%;
+    width: 150%;
   }
 }
 .dimensionLineContainer{
