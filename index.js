@@ -15,7 +15,6 @@ document.addEventListener("contextmenu", function(event) {
   event.preventDefault();
 });
 */
-/* Lista de variantes */
 
 
 

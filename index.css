@@ -120,9 +120,6 @@ model-viewer > #ar-prompt {
 }
 model-viewer[ar-status="session-started"] > #ar-prompt {
   display: block;
-  .show-variantes {
-    display: none;
-  }
 }
 model-viewer > #ar-prompt > img {
   animation: circle 4s linear infinite;
@@ -175,6 +172,11 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   overflow-wrap: break-word;
   width: max-content;
   height: max-content;
+  model-viewer[ar-status="session-started"] > #ar-prompt {
+    .marcodimensiones {
+      display: none;
+    }
+  }
 }
 .dimensionLineContainer{
   pointer-events: none;
