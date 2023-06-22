@@ -83,7 +83,7 @@ model-viewer {
 }
 
 #ar-button {
-  background-image: url(imagenes/MI3D-favicon.ico); /* verificar para q sirve esta imagen*/
+  /*background-image: url(imagenes/MI3D-favicon.ico); /* verificar para q sirve esta imagen*/
   background-repeat: no-repeat;
   background-size: 25px 25px;
   background-position: 7px 50%;
@@ -127,6 +127,8 @@ model-viewer > #ar-prompt {
   position: absolute;
   left: 50%;
   bottom: 175px;
+  width: 80px;
+  height: 80px;
   animation: elongate 2s infinite ease-in-out alternate;
   display: none;
 }
