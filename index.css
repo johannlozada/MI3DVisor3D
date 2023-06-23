@@ -205,7 +205,7 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   opacity: 0.70;
 }
 @media only screen and (max-width: 600px) {
-  .dim{
+  .marcodimensiones{
       font-size: 3vw;
   }
   .leyenda {
