@@ -88,13 +88,13 @@
 
                 <!-- Parámetros pasados en la URL: -->
                 <div id="parametros"></div>
-
-            </model-viewer>
                 <!-- Elemento variantselect y variantesconteiner para la lista de opciones -->
                 <select id='variantesSelect' style='display: none;'>
                 </select>
                 <div id='variantesContainer'>
                 </div>
+            </model-viewer>
+
 
         </div>
         <script>
@@ -228,7 +228,7 @@
                             variantesContainer.style.display = "block";
                             variantesSelect.style.display = "none";
                             variantesContainer.innerHTML = "";
-                            const varianteName = document.createElement("span");
+                            const varianteName = modelViewer.createElement("span");
                             if (variante.name.search('_') > 0) {
                                 varianteName.textContent = variante.name;
                                 variantesContainer.appendChild(varianteName);
