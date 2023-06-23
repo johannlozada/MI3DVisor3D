@@ -211,6 +211,9 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   #variantesSelect {
     font-size: 15vw;
   }
+  #variantesContainer {
+    font-size: 15vw;
+  }
   .leyenda {
     width: 80%;
   }
