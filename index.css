@@ -206,13 +206,13 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
 }
 @media only screen and (max-width: 600px) {
   .marcodimensiones{
-    font-size: 15vw;
+    font-size: 5vw;
   }
   #variantesSelect {
-    font-size: 15vw;
+    font-size: 5vw;
   }
   #variantesContainer {
-    font-size: 15vw;
+    font-size: 5vw;
   }
   .leyenda {
     width: 80%;
