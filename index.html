@@ -83,10 +83,8 @@
 
                 </div>
                 <img id="idLeyenda" class="leyenda" src='imagenes/MI3D-Leyenda01.png'>
-
                 <!-- Parámetros pasados en la URL: -->
                 <div id="parametros"></div>
-
             </model-viewer>
             <!-- Elemento select y contenedor para la lista de opciones -->
             <select id='variantesSelect' style='display: none;'>
@@ -96,7 +94,7 @@
         </div>
         <script>
             //INICIO de obtener parametros
-            //los parametros tienen q ir "?" iniciar const "=" valor ejemplo ...?const01=valor01&const02=valor02&...
+            //los parametros despues del Link inician con ?CONST=VALOR ejemplo ...?const01=valor01&const02=valor02&...
             //la idea seria conectar con googlesheets, pasar parametros como codigo=CLI001
             //Hacer un script que busque este codigo en la googlesheets y retorne el link con la direccion del GLTF
             var vClickActivo;
