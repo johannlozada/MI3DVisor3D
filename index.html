@@ -24,8 +24,6 @@
                 disable-tap
                 scale='1 1 1'
                 autoplay>
-                <button id="HotSpotVariante" class="hotspot" slot="hotspot" data-position="0 0 0" data-normal="0 0 0"> Punto 0,0,0 </button>
-                
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
@@ -311,6 +309,13 @@
                 // Revision de checkbox pantalla cuando cambia
                 checkboxPantalla.addEventListener('change',() => {
                     toggleFullScreen();
+                });
+                document.addEventListener("fullscreenchange", function(event) {
+                    if (!document.fullscreenElement) {
+                        // El usuario ha salido del modo de pantalla completa
+                        console.log("Tecla ESC capturada o salida del modo de pantalla completa");
+                        checkboxPantalla.checked = false;
+                    }
                 });
                 //checkbox variante Pasar el valor
                 checkboxVariante.addEventListener('change', () => {
