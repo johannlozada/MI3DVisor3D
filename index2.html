@@ -14,7 +14,6 @@
         <div id="container">
             <model-viewer id='aModelo3d'
                 src=""
-                ar-placement=""
                 alt='MI3D - Visor 3D'
                 shadow-intensity='1'
                 camera-controls
@@ -95,18 +94,6 @@
             </div>
         </div>
         <script>
-            ///////////////////////
-            // Parametros iniciales
-            // Ruta de archivo
-            vRuta = "https://github.com/johannlozada/MI3DAlmacen/blob/a707de5968c294181a94a845728362747efbead5/Cliente01/Demo%203D%20Variantes.gltf";
-            // 0=Piso o 1=Pared GLTF
-            vUbicacion = 0;
-            if vUbicacion = 0 {
-                vUbicacion = "wall";
-            }
-            else {
-                vUbicacion = "floor";
-            }
             //INICIO de obtener parametros
             //los parametros despues del Link inician con ?CONST=VALOR ejemplo ...?const01=valor01&const02=valor02&...
             //la idea seria conectar con googlesheets, pasar parametros como codigo=CLI001
@@ -187,8 +174,8 @@
             }
             const modelViewer = document.querySelector("model-viewer#aModelo3d");
             //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
+            vRuta = "https://github.com/johannlozada/MI3DAlmacen/blob/a707de5968c294181a94a845728362747efbead5/Cliente01/Demo%203D%20Variantes.gltf";
             modelViewer.src = obtenerLink1(vRuta);
-            modelViewer.ar-placement = vUbicacion;
             modelViewerRuta = obtenerLink2(vRuta);
             //Colocar imagen de fondo modelViewer
             document.getElementById("aModelo3d").style.cssText = "background-image: url('" + `${modelViewerRuta}` + "ClienteFondo.png')";
