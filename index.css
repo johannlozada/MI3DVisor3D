@@ -13,6 +13,7 @@ body {
   background-size: 100% 100%;
   position: absolute;
 }
+/*
 #fondocliente {
   opacity: 0.25;
   width: auto;
@@ -24,6 +25,7 @@ body {
   background-size: cover;
   z-index: -1000;
 }
+*/
 #variantesSelect {
   position: absolute;
 }
@@ -239,10 +241,12 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
     width: 150px;
     height: 150px;
   }
+  /*
   #fondocliente {
     height: 100%;
     transform: rotate(-25deg) translate(-35%, -20%);
   }
+  */
 }
 /* This keeps child nodes hidden while the element loads */
 :not(:defined) > * {
