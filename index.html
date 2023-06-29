@@ -174,12 +174,12 @@
             }
             const modelViewer = document.querySelector("model-viewer#aModelo3d");
             //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
-            vRuta = "https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf";
+            vRuta = "https://github.com/johannlozada/MI3DAlmacen/blob/a707de5968c294181a94a845728362747efbead5/Cliente01/Demo%203D%20Variantes.gltf";
             modelViewer.src = obtenerLink1(vRuta);
             modelViewerRuta = obtenerLink2(vRuta);
             //Colocar imagen de fondo modelViewer
-            //document.getElementById("aModelo3d").style.cssText = "background-image: url('" + `${modelViewerRuta}` + "ClienteFondo.png')";
-            //document.getElementById("idLogoCliente").src = `${modelViewerRuta}` + "ClienteLogo.png";
+            document.getElementById("aModelo3d").style.cssText = "background-image: url('" + `${modelViewerRuta}` + "ClienteFondo.png')";
+            document.getElementById("idLogoCliente").src = `${modelViewerRuta}` + "ClienteLogo.png";
             //Colocaf imagen de logo Cliente
             modelViewer.addEventListener("load", () => {
                 //Determinar cuantos variantes tiene un mesh
