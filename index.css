@@ -241,7 +241,8 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   }
   #fondocliente {
     height: 100%;
-    transform: rotate(-25deg) translate(-35%, -20%);
+    left: -90%;
+    transform: rotate(-25deg);
   }
 }
 /* This keeps child nodes hidden while the element loads */
