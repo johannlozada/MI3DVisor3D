@@ -13,7 +13,7 @@
         <!--Cuerpo 3D-->
         <div id="container">
             <model-viewer id='aModelo3d'
-                src=''
+                src=""
                 alt='MI3D - Visor 3D'
                 shadow-intensity='1'
                 camera-controls
@@ -25,7 +25,6 @@
                 disable-tap
                 scale='1 1 1'
                 autoplay>
-                <img id="fondocliente" src=" ">
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
@@ -94,28 +93,9 @@
             <div id='variantesContainer'>
             </div>
         </div>
-    
         <script>
-            ///////////////////////
-            // Parametros iniciales que tendra q leer del googlesheet
-            // Ruta de archivo
-            vRuta = "https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf";
-            // 0=Piso o 1=Pared GLTF
-/*            vPosicion = "1";
-            if (vPosicion === "0") {
-                vPosicion = "wall";
-            }
-            else {
-                vPosicion = "floor";
-            }
-            vColores1 = "#c8e1ff";
-            vColores2 = "#3b91f7";*/
-
             //INICIO de obtener parametros
             //los parametros despues del Link inician con ?CONST=VALOR ejemplo ...?const01=valor01&const02=valor02&...
-            //Leyenda:
-            //para01=ubicacion archivo Gltf
-            //para02=posicion en ar del Gltf
             //la idea seria conectar con googlesheets, pasar parametros como codigo=CLI001
             //Hacer un script que busque este codigo en la googlesheets y retorne el link con la direccion del GLTF
             var vClickActivo;
@@ -194,14 +174,12 @@
             }
             const modelViewer = document.querySelector("model-viewer#aModelo3d");
             //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
+            vRuta = "https://github.com/johannlozada/MI3DAlmacen/blob/a707de5968c294181a94a845728362747efbead5/Cliente01/Demo%203D%20Variantes.gltf";
             modelViewer.src = obtenerLink1(vRuta);
             modelViewerRuta = obtenerLink2(vRuta);
             //Colocar imagen de fondo modelViewer
-            //document.getElementById("container").style.cssText = "background: radial-gradient(farthest-corner at -10vw 110vh," + `${vColores1}` + " 0%," + `${vColores2}` + " 100%);";
-            //document.getElementById("fondocliente").src = `${modelViewerRuta}` + "ClienteFondo.png";
+            document.getElementById("aModelo3d").style.cssText = "background-image: url('" + `${modelViewerRuta}` + "ClienteFondo.png')";
             document.getElementById("idLogoCliente").src = `${modelViewerRuta}` + "ClienteLogo.png";
-            //modelViewer.setAttribute("ar-placement", vPosicion);
-            console.log(modelViewer.setAttribute("ar-placement", vPosicion));
             //Colocaf imagen de logo Cliente
             modelViewer.addEventListener("load", () => {
                 //Determinar cuantos variantes tiene un mesh
@@ -379,7 +357,7 @@
                     
                 };
                 modelViewer.addEventListener('camera-change', renderSVG);
-                const center = modelViewer.getBoundingBoxCenter().x;
+                const center = modelViewer.getBoundingBoxCenter();
                 const size = modelViewer.getDimensions();
                 const x2 = size.x / 2;
                 const y2 = size.y / 2;

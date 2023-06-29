@@ -7,8 +7,22 @@ body {
   font-size: 12px;
 }
 #container {
+  width: 100%;
   height: 100vh;
-  background: linear-gradient(to bottom, #cacaca, #a5d5fa);
+  color: #fff;
+  background-size: 100% 100%;
+  position: absolute;
+}
+#fondocliente {
+  opacity: 0.25;
+  width: auto;
+  height: 180%;
+  position: absolute;
+  background-position: center;
+  transform: rotate(-25deg) translate(-10%, -30%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1000;
 }
 #variantesSelect {
   position: absolute;
@@ -23,7 +37,7 @@ body {
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  filter: drop-shadow(6px 4px 3px rgba(0, 0, 0, 0.5)); /*posy posx tamaño somnbra color*/
+  filter: drop-shadow(6px 4px 3px rgba(0, 0, 0, 0.5)); /*posy posx tamaño sombra color*/
 }
 .objetocargar {
   width: 150px;
@@ -224,6 +238,10 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   .objetocargar {
     width: 150px;
     height: 150px;
+  }
+  #fondocliente {
+    height: 100%;
+    transform: rotate(-25deg) translate(-35%, -20%);
   }
 }
 /* This keeps child nodes hidden while the element loads */
