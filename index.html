@@ -97,9 +97,9 @@
     
         <script>
             ///////////////////////
-            // Parametros iniciales
+            // Parametros iniciales que tendra q leer del googlesheet
             // Ruta de archivo
-            vRuta = "https://github.com/johannlozada/MI3DAlmacen/blob/fe5c9dd14dec7dca17384fceae5cbdc492a4cac7/Cliente01/Demo%203D%20Variantes.gltf";
+            vRuta = "https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf";
             // 0=Piso o 1=Pared GLTF
             vPosicion = "1";
             if (vPosicion === "0") {
@@ -196,7 +196,6 @@
             modelViewer.src = obtenerLink1(vRuta);
             modelViewerRuta = obtenerLink2(vRuta);
             //Colocar imagen de fondo modelViewer
-            //modelViewer.style.cssText = "background-image: url('" + `${modelViewerRuta}` + "ClienteFondo.png');";
             document.getElementById("container").style.cssText = "background: radial-gradient(farthest-corner at -10vw 110vh," + `${vColores1}` + " 0%," + `${vColores2}` + " 100%);";
             document.getElementById("fondocliente").src = `${modelViewerRuta}` + "ClienteFondo.png";
             document.getElementById("idLogoCliente").src = `${modelViewerRuta}` + "ClienteLogo.png";
