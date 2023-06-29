@@ -3,6 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv='cache-control' content='no-cache'> 
+        <meta http-equiv='expires' content='0'> 
+        <meta http-equiv='pragma' content='no-cache'>
         <link rel="stylesheet" type="text/css" href="./index.css">
         <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
         <script src="./index.js"></script>
@@ -17,14 +20,14 @@
                 alt='MI3D - Visor 3D'
                 shadow-intensity='1'
                 camera-controls
-                touch-action='pan-y'
                 ar
                 ar-modes='webxr scene-viewer quick-look'
                 xr-enviroment
                 ar-scale='auto'
                 disable-tap
                 scale='1 1 1'
-                autoplay>
+                autoplay
+                >
                 <img id="fondocliente" src=" ">
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
@@ -80,6 +83,9 @@
                     <input id="show-leyenda" type="checkbox">
                     <label for="show-leyenda">  Ayuda</label>
                     <br>
+                    <input id="show-informacion" type="checkbox">
+                    <label for="show-informacion">  Información</label>
+                    <br>
                     <input id="show-pantalla" type="checkbox">
                     <label for="show-pantalla">  Pantalla Completa</label>
 
@@ -87,6 +93,7 @@
                 <img id="idLeyenda" class="leyenda" src='imagenes/MI3D-Leyenda01.png'>
                 <!-- Parámetros pasados en la URL: -->
                 <div id="parametros"></div>
+
             </model-viewer>
             <!-- Elemento select y contenedor para la lista de opciones -->
             <select id='variantesSelect' style='display: none;'>
@@ -100,7 +107,7 @@
             // Parametros iniciales que tendra q leer del googlesheet
             // Ruta de archivo
             vRuta = "https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf";
-            // 0=Piso o 1=Pared GLTF
+            // Si vPosicion es 0=Piso o 1=Pared GLTF
             vPosicion = "1";
             if (vPosicion === "0") {
                 vPosicion = "wall";
@@ -183,6 +190,7 @@
                 return vNuevoLink;
             }
             //Determinar qué tipo de dispositivo se está usando
+            const modelViewer = document.querySelector("model-viewer#aModelo3d");
             const vresultado1 = document.getElementById("ar-button");
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 console.log("Móvil");
@@ -191,18 +199,98 @@
                 console.log("Computadora");
                 vresultado1.innerHTML = "";
                 vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
+/*
+                (() => {
+                const orbitCycle = [
+                    '45deg 55deg 0m','-60deg 110deg 0m',modelViewer.cameraOrbit
+                ];
+                setInterval(() => {
+                    const currentOrbitIndex = orbitCycle.indexOf(modelViewer.cameraOrbit);
+                    modelViewer.cameraOrbit = orbitCycle[(currentOrbitIndex + 1) % orbitCycle.length];
+                }, 1000);
+                })();
+*/
             }
-            const modelViewer = document.querySelector("model-viewer#aModelo3d");
+/*            let portrait = window.matchMedia("(orientation: portrait)");
+            portrait.addEventListener("change", model3dDesplazar);
+           portrait.addEventListener("change", function(e) {
+                if(e.matches) {
+                    console.log("vertical");
+                } else {
+                    console.log("horizontal");             
+                }
+            })
+            modelViewer.addEventListener('load', model3dDesplazar);
+
+            function model3dDesplazar() {
+                if (screen.width > screen.height) {
+                    console.log("horizontal");
+                    const PROMT_MS = 500;
+                    const REPEAT_MS = 3000;
+                    const finger0 = {
+                        x: {
+                            initialValue: 0,
+                            keyframes: [
+                                {frames: 1, value: -0.25},
+                            ]
+                            },
+                        y: {
+                            initialValue: 0,
+                            keyframes: [
+                                {frames: 1, value: 0},
+                            ]
+                        }
+                    };
+                    const finger1 = finger0;
+                    let hasInteracted = false;
+                    const prompt = () => {
+                        if (!hasInteracted) {
+                            modelViewer.interact(PROMT_MS, finger0, finger1);
+                        }
+                    };
+                    modelViewer.addEventListener('poster-dismissed', () => {
+                        prompt();
+                    }, {once: true});
+                }
+                if (screen.width < screen.height) {
+                    console.log("vertical");
+                    const PROMT_MS = 500;
+                    const REPEAT_MS = 3000;
+                    const finger0 = {
+                        x: {
+                            initialValue: 0,
+                            keyframes: [
+                                {frames: 1, value: 0},
+                            ]
+                            },
+                        y: {
+                            initialValue: 0,
+                            keyframes: [
+                                {frames: 1, value: 0.20},
+                            ]
+                        }
+                    };
+                    const finger1 = finger0;
+                    let hasInteracted = false;
+                    const prompt = () => {
+                        if (!hasInteracted) {
+                            modelViewer.interact(PROMT_MS, finger0, finger1);
+                        }
+                    };
+                    modelViewer.addEventListener('poster-dismissed', () => {
+                        prompt();
+                    }, {once: true});
+                }
+            }
+*/            
             //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
             modelViewer.src = obtenerLink1(vRuta);
             modelViewerRuta = obtenerLink2(vRuta);
             //Colocar imagen de fondo modelViewer
-            //document.getElementById("container").style.cssText = "background: radial-gradient(farthest-corner at -10vw 110vh," + `${vColores1}` + " 0%," + `${vColores2}` + " 100%);";
-            //document.getElementById("fondocliente").src = `${modelViewerRuta}` + "ClienteFondo.png";
+            document.getElementById("container").style.cssText = "background: radial-gradient(farthest-corner at -10vw 110vh," + `${vColores1}` + " 0%," + `${vColores2}` + " 100%);";
+            document.getElementById("fondocliente").src = `${modelViewerRuta}` + "ClienteFondo.png";
             document.getElementById("idLogoCliente").src = `${modelViewerRuta}` + "ClienteLogo.png";
-            //modelViewer.setAttribute("ar-placement", vPosicion);
-            console.log(modelViewer.setAttribute("ar-placement", vPosicion));
-            //Colocaf imagen de logo Cliente
+            modelViewer.setAttribute("ar-placement", vPosicion);
             modelViewer.addEventListener("load", () => {
                 //Determinar cuantos variantes tiene un mesh
                 const variantesSelect = document.getElementById("variantesSelect");
