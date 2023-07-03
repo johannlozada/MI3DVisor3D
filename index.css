@@ -134,6 +134,9 @@ model-viewer > #ar-prompt {
 }
 model-viewer[ar-status="session-started"] > #ar-prompt {
   display: block;
+  #fondocliente {
+    display: none;
+  }
   /*SOLUCIONAR PROBLEMA QUE SE VE LA IMAGEN TRANSPARENTE DURANTE EL AR*/
 }
 model-viewer > #ar-prompt > img {
