@@ -131,9 +131,6 @@ model-viewer > #ar-prompt {
   height: 80px;
   animation: elongate 2s infinite ease-in-out alternate;
   display: none;
-  #fondocliente {
-    display: none;
-  }
 }
 model-viewer[ar-status="session-started"] > #ar-prompt {
   display: block;
