@@ -93,8 +93,6 @@
                 <img id="idLeyenda" class="leyenda" src='imagenes/MI3D-Leyenda01.png'>
                 <!-- Parámetros pasados en la URL: -->
                 <div id="parametros"></div>
-
-
                 <!-- Elemento select y contenedor para la lista de opciones -->
                 <select id='variantesSelect' style='display: none;'>
                 </select>
@@ -198,13 +196,14 @@
             //Determinar qué tipo de dispositivo se está usando
             const modelViewer = document.querySelector("model-viewer#aModelo3d");
             const vresultado1 = document.getElementById("ar-button");
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                console.log("Móvil");
+            vtipopantalla = tipoPantalla();
+            console.log(vtipopantalla);
+            if (vtipopantalla.includes("movil")) {
                 vresultado1.innerHTML = "Activar AR";
-            } else {
-                console.log("Computadora");
-                vresultado1.innerHTML = "";
-                vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
+            }
+            else {
+                //vresultado1.innerHTML = "";
+                //vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
             }
 /*
                 (() => {
@@ -225,7 +224,7 @@
                 } else {
                     console.log("horizontal");             
                 }
-            })
+            });
             modelViewer.addEventListener('load', model3dDesplazar);
             function model3dDesplazar() {
                 if (screen.width > screen.height) {
@@ -357,9 +356,10 @@
                     }
                 }
                 //Obtener los checkbox
-                const checkboxVariante = modelViewer.querySelector('#show-variantes');
-                const checkboxDimension = modelViewer.querySelector('#show-dimensions');
-                const checkboxLeyenda = modelViewer.querySelector('#show-leyenda');
+                const checkboxVariantes = modelViewer.querySelector('#show-variantes');
+                const checkboxMedidas = modelViewer.querySelector('#show-dimensions');
+                const checkboxAyuda = modelViewer.querySelector('#show-leyenda');
+                const checkboxInformacion = modelViewer.querySelector('#show-informacion');
                 const checkboxPantalla = modelViewer.querySelector('#show-pantalla');
                 const vIdLeyenda = document.getElementById('idLeyenda');
                 //Cuando haces click genera la OptionList - Determinar a qué variantes se les da click
@@ -374,7 +374,7 @@
                 });
                 //checkbox variante Oculto/Visible
                 function setVisibilityVar(element) {
-                    if (checkboxVariante.checked) {
+                    if (checkboxVariantes.checked) {
                         element.classList.remove('hide');
                     } else {
                         element.classList.add('hide');
@@ -382,7 +382,7 @@
                 }
                 //checkbox dimension Oculto/Visible
                 function setVisibilityDim(element) {
-                    if (checkboxDimension.checked) {
+                    if (checkboxMedidas.checked) {
                         element.classList.remove('hide');
                     } else {
                         element.classList.add('hide');
@@ -395,19 +395,19 @@
                 //checkbox dimension Pasar el valor cuando carga
                 setVisibilityDim(modelViewer.querySelector('#dimLines'));
                 modelViewer.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
-                    vClickActivo = !checkboxVariante.checked;
+                    vClickActivo = !checkboxVariantes.checked;
                     setVisibilityDim(hotspot);
                 });
                 // Revision de checkbox leyenda cuando inicia
-                if (checkboxLeyenda.checked) {
+                if (checkboxAyuda.checked) {
                     vIdLeyenda.style.display = "flex";
                 }
                 else {
                     vIdLeyenda.style.display = "none";
                 }
                 // Revision de checkbox leyenda cuando cambia
-                checkboxLeyenda.addEventListener('change',() => {
-                    if (checkboxLeyenda.checked) {
+                checkboxAyuda.addEventListener('change',() => {
+                    if (checkboxAyuda.checked) {
                         vIdLeyenda.style.display = "flex";
                     }
                     else {
@@ -430,21 +430,21 @@
                     }
                 });
                 //checkbox variante Pasar el valor
-                checkboxVariante.addEventListener('change', () => {
-                    vClickActivo = !checkboxVariante.checked;
+                checkboxVariantes.addEventListener('change', () => {
+                    vClickActivo = !checkboxVariantes.checked;
                     modelViewer.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
                         setVisibilityVar(hotspot);
                     });
                 });
                 //checkbox dimension Pasar el valor
-                checkboxDimension.addEventListener('change', () => {
+                checkboxMedidas.addEventListener('change', () => {
                     setVisibilityDim(modelViewer.querySelector('#dimLines'));
                     modelViewer.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
                         setVisibilityDim(hotspot);
                     });
                 });
                 // update svg - inicio dibujo de Lineas Dimensiones
-                //console.log(checkboxVariante.checked);
+                //console.log(checkboxVariantes.checked);
                 function drawLine(svgLine, dotHotspot1, dotHotspot2, dimensionHotspot) {
                     if (dotHotspot1 && dotHotspot2) {
                         svgLine.setAttribute('x1', dotHotspot1.canvasPosition.x);
@@ -467,8 +467,6 @@
                     drawLine(dimLines[2], modelViewer.queryHotspot('hotspot-dot+X+Y-Z'), modelViewer.queryHotspot('hotspot-dot-X+Y-Z')); // always visible
                     drawLine(dimLines[3], modelViewer.queryHotspot('hotspot-dot-X+Y-Z'), modelViewer.queryHotspot('hotspot-dot-X-Y-Z'), modelViewer.queryHotspot('hotspot-dim-X-Z'));
                     drawLine(dimLines[4], modelViewer.queryHotspot('hotspot-dot-X-Y-Z'), modelViewer.queryHotspot('hotspot-dot-X-Y+Z'), modelViewer.queryHotspot('hotspot-dim-X-Y'));
-                    //console.log("");
-                    
                 };
                 modelViewer.addEventListener('camera-change', renderSVG);
                 const center = modelViewer.getBoundingBoxCenter();
@@ -558,7 +556,7 @@
                                     hpy = data.nodes[i].translation[2] / cDecimal;
                                     var vBoton = document.createElement("button");
                                     vBoton.id = "HotSpotVariante";
-                                    if (checkboxVariante.checked) {
+                                    if (checkboxVariantes.checked) {
                                         vBoton.className = "hotspot";
                                     } else {
                                         vBoton.className = "hotspot hide";
@@ -584,6 +582,12 @@
                             document.exitFullscreen();
                         }
                     }
+                }
+                textoejemplo="Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo"
+                combinacion = "aca ira la combinacion de acuerdo a las variantes combinacion combinacion aca ira la combinacion de acuerdo a las variantes combinacion combinacion";
+                pInformacion("Centro TV - Venecia", "Cod: TV-150523001", combinacion, "imagenes/MI3D-favicon.ico", vColores1, vColores2);
+                function mMenu() {
+
                 }
             });
         </script>
