@@ -137,7 +137,6 @@ model-viewer[ar-status="session-started"] > #ar-prompt {
   #fondocliente {
     display: none;
   }
-  /*SOLUCIONAR PROBLEMA QUE SE VE LA IMAGEN TRANSPARENTE DURANTE EL AR*/
 }
 model-viewer > #ar-prompt > img {
   animation: circle 4s linear infinite;
