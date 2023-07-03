@@ -94,12 +94,14 @@
                 <!-- Parámetros pasados en la URL: -->
                 <div id="parametros"></div>
 
+
+                <!-- Elemento select y contenedor para la lista de opciones -->
+                <select id='variantesSelect' style='display: none;'>
+                </select>
+                <div id='variantesContainer'>
+                </div>
             </model-viewer>
-            <!-- Elemento select y contenedor para la lista de opciones -->
-            <select id='variantesSelect' style='display: none;'>
-            </select>
-            <div id='variantesContainer'>
-            </div>
+
         </div>
     
         <script>
@@ -117,7 +119,11 @@
             }
             vColores1 = "#c8e1ff";
             vColores2 = "#3b91f7";
-
+            //Angulos de vision V y H
+            //vCamaraorbitar="-45deg 75deg 100%"; // camera-orbit = movimiento de la camara sobre el objeto $Theta $Phi $Radio
+            //vCamaraDestino="5m 2m 0m";"" // camera-target = a donde va la camara sobre el objeto $X $Y $Z
+            //vMaxCamaraOrbita="22.5deg 90deg auto"; // $Theta $Phi $Radio Maximo
+            //vMinCamaraOrbita="-22.5deg 45deg auto"; // $Theta $Phi $Radio Minimo
             //INICIO de obtener parametros
             //los parametros despues del Link inician con ?CONST=VALOR ejemplo ...?const01=valor01&const02=valor02&...
             //Leyenda:
@@ -199,6 +205,7 @@
                 console.log("Computadora");
                 vresultado1.innerHTML = "";
                 vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
+            }
 /*
                 (() => {
                 const orbitCycle = [
@@ -210,7 +217,6 @@
                 }, 1000);
                 })();
 */
-            }
 /*            let portrait = window.matchMedia("(orientation: portrait)");
             portrait.addEventListener("change", model3dDesplazar);
            portrait.addEventListener("change", function(e) {
@@ -221,7 +227,6 @@
                 }
             })
             modelViewer.addEventListener('load', model3dDesplazar);
-
             function model3dDesplazar() {
                 if (screen.width > screen.height) {
                     console.log("horizontal");
@@ -295,7 +300,7 @@
                 //Determinar cuantos variantes tiene un mesh
                 const variantesSelect = document.getElementById("variantesSelect");
                 const variantesContainer = document.getElementById("variantesContainer");
-                function generarListaVariantes(variantes, x, y, cMaterial, cMaterialDefecto) {
+                function generarListaVariantes(x, y, cMaterial, cMaterialDefecto) {
                     const variante = modelViewer.availableVariants;
                     variantesSelect.innerHTML = "";
                     variantesSelect.style.display = "block";
@@ -333,7 +338,6 @@
                             variantesContainer.style.display = "block";
                             variantesSelect.style.display = "none";
                             variantesContainer.innerHTML = "";
-                            //variantesContainer.cssText = "font-size: 15vw;"
                             const varianteName = document.createElement("span");
                             if (variante.name.search('_') > 0) {
                                 varianteName.textContent = variante.name;
@@ -341,7 +345,7 @@
                                 const cMaterial = variante.name.slice(variante.name.search('_')+1,variante.name.length); // Determinar el Material
                                 const cMaterialDefecto = variante.name.slice(0, variante.name.search('_')); // Determinar el Material x defecto
                                 //console.log("material = " + variante.name, " Codigo = [" + cMaterial + "]", "MDefecto = " + cMaterialDefecto);
-                                generarListaVariantes([variante], x, y, cMaterial, cMaterialDefecto);
+                                generarListaVariantes(x, y, cMaterial, cMaterialDefecto);
                             }
                         }
                         else {
@@ -365,7 +369,7 @@
                     variantesSelect.style.display = 'none';
                 });
                 //Detecta cuando se da click en cualquier lado
-                document.getElementById("aModelo3d").addEventListener("mousedown", function(e){
+                document.getElementById("variantesContainer").addEventListener("mousedown", function(e){
                     variantesSelect.style.display = 'none';
                 });
                 //checkbox variante Oculto/Visible
