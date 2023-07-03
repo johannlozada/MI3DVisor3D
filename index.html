@@ -551,6 +551,7 @@
                                     //    "z:", data.nodes[i].translation[1],
                                     //    "y:", data.nodes[i].translation[2],
                                     //    "Boton N:", c1);
+                                    console.log("Nombre:", data.nodes[i].name);
                                     hpx = data.nodes[i].translation[0] / cDecimal;
                                     hpz = data.nodes[i].translation[1] / cDecimal;
                                     hpy = data.nodes[i].translation[2] / cDecimal;
@@ -564,6 +565,13 @@
                                     vBoton.setAttribute("slot","hotspot" + `${c1}`);
                                     vBoton.setAttribute("data-position",`${hpx} ${hpz} ${hpy}`);
                                     vBoton.setAttribute("data-normal", "0 0 0");
+
+                                    var vDetalle = document.createElement("div");
+                                    vDetalle.className = "annotation";
+                                    vDetalle.innerHTML = data.nodes[i].name;
+                                    vDetalle.style.color = "rgb(0, 0, 0)";
+                                    vBoton.appendChild(vDetalle);
+
                                     modelViewer.appendChild(vBoton);
                                     c1++;
                                 }

@@ -163,9 +163,9 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
 .annotation{
   background-color: rgba(215, 215, 215, 0.5);
   position: absolute;
-  transform: translate(10px, 10px);
+  transform: translate(-50%, 15px);
   border-radius: 4px;
-  padding: 10px;
+  padding: 5px;
 }
 .dot{
   display: none;
