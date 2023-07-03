@@ -296,6 +296,9 @@
                 if (event.detail.status != "failed") {
                     document.getElementById("fondocliente").src = "";
                 }
+                else {
+                    document.getElementById("fondocliente").src = `${modelViewerRuta}` + "ClienteFondo.png";
+                }
             })
             document.getElementById("fondocliente").src = `${modelViewerRuta}` + "ClienteFondo.png";
             document.getElementById("idLogoCliente").src = `${modelViewerRuta}` + "ClienteLogo.png";
