@@ -293,6 +293,7 @@
             //Colocar imagen de fondo modelViewer
             document.getElementById("container").style.cssText = "background: radial-gradient(farthest-corner at -10vw 110vh," + `${vColores1}` + " 0%," + `${vColores2}` + " 100%);";
             modelViewer.addEventListener("ar-status", (event) => {
+                modelViewer.innerHTML = event.detail.status;
                 if (event.detail.status != "failed") {
                     document.getElementById("fondocliente").src = "";
                 }
