@@ -574,25 +574,15 @@
                                     modelViewer.appendChild(vBoton);
                                     c1++;
                                 }
-                            }
-                        })
+                            } 
+                        }) 
                         .catch(error => {
                             console.error('Error al obtener el archivo JSON:', error);
                         });
                 };
                 fHotspotVariante();
-                function toggleFullScreen() {
-                    if (!document.fullscreenElement) {
-                        document.documentElement.requestFullscreen();
-                    } else {
-                        if (document.exitFullscreen) {
-                            document.exitFullscreen();
-                        }
-                    }
-                }
-                textoejemplo="Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo"
-                combinacion = "aca ira la combinacion de acuerdo a las variantes combinacion combinacion aca ira la combinacion de acuerdo a las variantes combinacion combinacion";
-                pInformacion("Centro TV - Venecia", "Cod: TV-150523001", combinacion, "imagenes/MI3D-favicon.ico", vColores1, vColores2);
+                xCombinacion = "Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo";
+                pInformacion("Centro TV - Venecia", "Cod: TV-150523001", xCombinacion, "imagenes/MI3D-favicon.ico", vColores1, vColores2);
                 function mMenu() {
 
                 }

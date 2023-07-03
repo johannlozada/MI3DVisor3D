@@ -15,6 +15,15 @@ document.addEventListener("contextmenu", function(event) {
   event.preventDefault();
 });
 */
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+  } else {
+      if (document.exitFullscreen) {
+          document.exitFullscreen();
+      }
+  }
+}
 function tipoPantalla() {
   let vtipoPantalla = "";
   let vOrientacion = "";
@@ -64,7 +73,6 @@ function pInformacion(vtitulo, vcodigo, vcombinacion, vimagen, vColores1, vColor
     //contenedor.style.width = "max-content";
     //contenedor.style.height = "max-content";
     contenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
-    console.log(vleft, vtop);
 
   // Crear el elemento de cierre
   var cierre = document.createElement("span");
