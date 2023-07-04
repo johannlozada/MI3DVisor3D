@@ -90,14 +90,16 @@ function pInformacion(vtitulo, vcodigo, vcombinacion, vimagen, vColores1, vColor
     vleft = "50%";
     vmaxWidth = "60%";
   }
-  else {
-    if (vOrientacion.includes("horizontal")) {
-      vtop = "50%";
-      vleft = "75%";
-      vmaxWidth = "20%";
-    }
+  if (vOrientacion.includes("movil") && vOrientacion.includes("horizontal")) {
+    vtop = "50%";
+    vleft = "75%";
+    vmaxWidth = "20%";
   }
-
+  if (vOrientacion.includes("computadora") && vOrientacion.includes("horizontal")) {
+    vtop = "50%";
+    vleft = "75%";
+    vmaxWidth = "20%";
+  }
   // Crear el elemento contenedor del rectángulo de información
   var contenedor = document.createElement("div");
     contenedor.style.background = "rgba(" + parseInt(vColores2[1]+vColores2[2],16) +", " + parseInt(vColores2[3]+vColores2[4],16) + ", " + parseInt(vColores2[5]+vColores2[6],16) + ", 0.25)";
