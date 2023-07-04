@@ -298,7 +298,7 @@
                 }
             })
             modelViewer.addEventListener("ar-status", (event) => {
-                if (event.detail.status != "not-presenting") {
+                if (event.detail.status == "not-presenting") {
                     document.getElementById("fondocliente").src = `${modelViewerRuta}` + "ClienteFondo.png";;
                 }
             })
