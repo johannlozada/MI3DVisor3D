@@ -71,7 +71,7 @@
                     <img class='objetocargar' src='imagenes/MI3D-Isotipo.png'>
                 </div>
                 <!--Checkbox para activar si se muestran las medidas y/o las variantes-->
-                <div id="marcoleyenda" class="marcodimensiones">
+                <div id="marcoleyenda" class="marcoleyenda">
                     Opciones:
                     <br>
                     <input id="show-variantes" type="checkbox">
@@ -88,7 +88,6 @@
                     <br>
                     <input id="show-pantalla" type="checkbox">
                     <label for="show-pantalla">  Pantalla Completa</label>
-
                 </div>
                 <img id="idLeyenda" class="leyenda" src='imagenes/MI3D-Leyenda01.png'>
                 <!-- Parámetros pasados en la URL: -->
@@ -158,41 +157,6 @@
             }
             // Llamar a la función para mostrar los parámetros cuando la página se cargue
             window.onload = mostrarParametros;
-            function obtenerLink1(vLink){
-                var contar = 0;
-                var start = 0;
-                vNuevaCadena = vLink;
-                vNuevoLink = 'https://raw.githubusercontent.com/';
-                while ((start = vLink.indexOf("/", start) + 1) > 0) {
-                    vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/')+1);
-                    //console.log(vCadena);
-                    vNuevaCadena = vNuevaCadena.slice(vCadena.length, vNuevaCadena.length);
-                    //console.log(vNuevaCadena);
-                    if (contar == 3 || contar == 4 || contar > 5){
-                        vNuevoLink = vNuevoLink + vCadena;
-                    }
-                    contar++;
-                }
-                vNuevoLink = vNuevoLink + vNuevaCadena;
-                return vNuevoLink;
-            }
-            function obtenerLink2(vLink){
-                var contar = 0;
-                var start = 0;
-                vNuevaCadena = vLink;
-                vNuevoLink = 'https://raw.githubusercontent.com/';
-                while ((start = vLink.indexOf("/", start) + 1) > 0) {
-                    vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/')+1);
-                    //console.log(vCadena);
-                    vNuevaCadena = vNuevaCadena.slice(vCadena.length, vNuevaCadena.length);
-                    //console.log(vNuevaCadena);
-                    if (contar == 3 || contar == 4 || contar == 6 || contar == 7){
-                        vNuevoLink = vNuevoLink + vCadena;
-                    }
-                    contar++;
-                }
-                return vNuevoLink;
-            }
             //Determinar qué tipo de dispositivo se está usando
             const modelViewer = document.querySelector("model-viewer#aModelo3d");
             const vresultado1 = document.getElementById("ar-button");
@@ -204,89 +168,7 @@
             else {
                 //vresultado1.innerHTML = "";
                 //vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
-            }
-/*
-                (() => {
-                const orbitCycle = [
-                    '45deg 55deg 0m','-60deg 110deg 0m',modelViewer.cameraOrbit
-                ];
-                setInterval(() => {
-                    const currentOrbitIndex = orbitCycle.indexOf(modelViewer.cameraOrbit);
-                    modelViewer.cameraOrbit = orbitCycle[(currentOrbitIndex + 1) % orbitCycle.length];
-                }, 1000);
-                })();
-*/
-/*            let portrait = window.matchMedia("(orientation: portrait)");
-            portrait.addEventListener("change", model3dDesplazar);
-           portrait.addEventListener("change", function(e) {
-                if(e.matches) {
-                    console.log("vertical");
-                } else {
-                    console.log("horizontal");             
-                }
-            });
-            modelViewer.addEventListener('load', model3dDesplazar);
-            function model3dDesplazar() {
-                if (screen.width > screen.height) {
-                    console.log("horizontal");
-                    const PROMT_MS = 500;
-                    const REPEAT_MS = 3000;
-                    const finger0 = {
-                        x: {
-                            initialValue: 0,
-                            keyframes: [
-                                {frames: 1, value: -0.25},
-                            ]
-                            },
-                        y: {
-                            initialValue: 0,
-                            keyframes: [
-                                {frames: 1, value: 0},
-                            ]
-                        }
-                    };
-                    const finger1 = finger0;
-                    let hasInteracted = false;
-                    const prompt = () => {
-                        if (!hasInteracted) {
-                            modelViewer.interact(PROMT_MS, finger0, finger1);
-                        }
-                    };
-                    modelViewer.addEventListener('poster-dismissed', () => {
-                        prompt();
-                    }, {once: true});
-                }
-                if (screen.width < screen.height) {
-                    console.log("vertical");
-                    const PROMT_MS = 500;
-                    const REPEAT_MS = 3000;
-                    const finger0 = {
-                        x: {
-                            initialValue: 0,
-                            keyframes: [
-                                {frames: 1, value: 0},
-                            ]
-                            },
-                        y: {
-                            initialValue: 0,
-                            keyframes: [
-                                {frames: 1, value: 0.20},
-                            ]
-                        }
-                    };
-                    const finger1 = finger0;
-                    let hasInteracted = false;
-                    const prompt = () => {
-                        if (!hasInteracted) {
-                            modelViewer.interact(PROMT_MS, finger0, finger1);
-                        }
-                    };
-                    modelViewer.addEventListener('poster-dismissed', () => {
-                        prompt();
-                    }, {once: true});
-                }
-            }
-*/            
+            }            
             //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
             modelViewer.src = obtenerLink1(vRuta);
             modelViewerRuta = obtenerLink2(vRuta);

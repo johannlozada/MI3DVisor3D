@@ -169,7 +169,7 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
 .dot{
   display: none;
 }
-.marcodimensiones{
+.marcoleyenda{
   background: #fff;
   border-radius: 4px;
   border: none;

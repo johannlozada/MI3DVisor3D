@@ -47,60 +47,97 @@ function tipoPantalla() {
   vtipoPantalla = vtipoPantalla + "|" + vOrientacion;
   return vtipoPantalla;
 }
+function obtenerLink1(vLink){ //Obtener la ruta completa archivo GLTF
+  var contar = 0;
+  var start = 0;
+  vNuevaCadena = vLink;
+  vNuevoLink = 'https://raw.githubusercontent.com/';
+  while ((start = vLink.indexOf("/", start) + 1) > 0) {
+      vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/')+1);
+      //console.log(vCadena);
+      vNuevaCadena = vNuevaCadena.slice(vCadena.length, vNuevaCadena.length);
+      //console.log(vNuevaCadena);
+      if (contar == 3 || contar == 4 || contar > 5){
+          vNuevoLink = vNuevoLink + vCadena;
+      }
+      contar++;
+  }
+  vNuevoLink = vNuevoLink + vNuevaCadena;
+  return vNuevoLink;
+}
+function obtenerLink2(vLink){ //Obtener la ruta de la "carpeta" donde se encuentra el GLTF
+  var contar = 0;
+  var start = 0;
+  vNuevaCadena = vLink;
+  vNuevoLink = 'https://raw.githubusercontent.com/';
+  while ((start = vLink.indexOf("/", start) + 1) > 0) {
+      vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/')+1);
+      //console.log(vCadena);
+      vNuevaCadena = vNuevaCadena.slice(vCadena.length, vNuevaCadena.length);
+      //console.log(vNuevaCadena);
+      if (contar == 3 || contar == 4 || contar == 6 || contar == 7){
+          vNuevoLink = vNuevoLink + vCadena;
+      }
+      contar++;
+  }
+  return vNuevoLink;
+}
 function pInformacion(vtitulo, vcodigo, vcombinacion, vimagen, vColores1, vColores2) {
   // Posicion y Medidas de acuerdo a pantalla y orientacion
   vOrientacion = tipoPantalla();
   if (vOrientacion.includes("movil") && vOrientacion.includes("vertical")) {
-    vtop = `${((screen.height / 4) * 3) - 80}` + "px";
-    vleft = `${(screen.width / 2) - 150}` + "px";
+    vtop = "75%";
+    vleft = "50%";
   }
   else {
     if (vOrientacion.includes("horizontal")) {
-      vtop = `${screen.height / 2}` + "px";
-      vleft = `${((screen.width / 4) * 3) - 150}` + "px";
+      vtop = "50%";
+      vleft = "75%";
     }
   }
   // Crear el elemento contenedor del rectángulo de información
   var contenedor = document.createElement("div");
     contenedor.style.background = "rgba(" + parseInt(vColores2[1]+vColores2[2],16) +", " + parseInt(vColores2[3]+vColores2[4],16) + ", " + parseInt(vColores2[5]+vColores2[6],16) + ", 0.25)";
-    contenedor.style.position = "absolute";
     contenedor.style.display = "block";
-    contenedor.style.padding = "10px";
+    contenedor.style.padding = "20px";
+    contenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
     contenedor.style.maxWidth = "300px";
+    contenedor.style.position = "absolute";
     contenedor.style.left = vleft;
     contenedor.style.top = vtop;
+    contenedor.style.transform = "translate(-50%, -50%)";
     contenedor.style.overflowWrap = "break-word";
-    //contenedor.style.width = "max-content";
-    //contenedor.style.height = "max-content";
-    contenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
+    contenedor.style.width = "max-content";
+    contenedor.style.height = "max-content";
 
-  // Crear el elemento de cierre
-  var cierre = document.createElement("span");
-    cierre.innerHTML = "<img id='cImagen'" + "src = '" + vimagen + "'>";
-    cierre.style.position = "absolute";
-    cierre.style.right = "0px";
-    cierre.style.top = "0px";
-    cierre.style.width = "20px";
-    cierre.style.height = "20px";
-    cierre.style.cursor = "pointer";
-    cierre.addEventListener("click", function() {
-        contenedor.parentNode.removeChild(contenedor);
-        return false;
-    });
-  contenedor.appendChild(cierre);
+      // Crear el elemento de cierre
+      var cierre = document.createElement("span");
+        cierre.innerHTML = "<img id='cImagen'" + "src = '" + vimagen + "'>";
+        cierre.style.position = "absolute";
+        cierre.style.right = "0px";
+        cierre.style.top = "0px";
+        cierre.style.width = "20px";
+        cierre.style.height = "20px";
+        cierre.style.cursor = "pointer";
+        cierre.addEventListener("click", function() {
+            contenedor.parentNode.removeChild(contenedor);
+            return false;
+        });
+      contenedor.appendChild(cierre);
 
-  // Crear el contenido título + codigo + combinacion
-  var titulo = document.createElement("h3");
-  titulo.style.position = "flex";
-  titulo.style.top = vtop + "px";
-  titulo.style.color = "rgb(" + parseInt(vColores1[1]+vColores1[2],16) +", " + parseInt(vColores1[3]+vColores1[4],16) + ", " + parseInt(vColores1[5]+vColores1[6],16) + ")";
-  titulo.innerHTML = vtitulo + "<br><br>" + vcodigo + "<br><br>" + vcombinacion;
-  contenedor.appendChild(titulo);
-  
-  // Agregar el contenedor al cuerpo de la página
-  document.body.appendChild(contenedor);
+      // Crear el contenido título + codigo + combinacion
+      var titulo = document.createElement("h3");
+      titulo.style.position = "flex";
+      titulo.style.top = vtop + "px";
+      titulo.style.color = "rgb(" + parseInt(vColores1[1]+vColores1[2],16) +", " + parseInt(vColores1[3]+vColores1[4],16) + ", " + parseInt(vColores1[5]+vColores1[6],16) + ")";
+      titulo.innerHTML = vtitulo + "<br><br>" + vcodigo + "<br><br>" + vcombinacion;
+      contenedor.appendChild(titulo);
+      
+    // Agregar el contenedor al cuerpo de la página
+    document.body.appendChild(contenedor);
 
-  var xImage = document.getElementById('cImagen');
-  xImage.style.width = cierre.style.width;
-  xImage.style.height = cierre.style.height;
+    //Agregar imagen a la esquina del cuadrado
+    var xImage = document.getElementById('cImagen');
+    xImage.style.width = cierre.style.width;
+    xImage.style.height = cierre.style.height;
 }
