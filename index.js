@@ -1,6 +1,6 @@
 /* Borrar logo de carga */
 window.addEventListener('load', function() {
-  const loadingScreen = document.querySelector('.cargar');
+  const loadingScreen = document.querySelector('.ClassObjetoCargar');
   for (var i = 1; i <= 8; i++) {
     setTimeout(function() {
       if (i === 9) {
@@ -15,7 +15,7 @@ document.addEventListener("contextmenu", function(event) {
   event.preventDefault();
 });
 */
-function toggleFullScreen() {
+function fToggleFullScreen() {
   if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
   } else {
@@ -24,11 +24,11 @@ function toggleFullScreen() {
       }
   }
 }
-function tipoPantalla() {
-  let vtipoPantalla = "";
+function fTipoPantalla() {
+  let vTipoPantalla = "";
   let vOrientacion = "";
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    vtipoPantalla = "movil";
+    vTipoPantalla = "movil";
     if (screen.width > screen.height) {
       vOrientacion = "horizontal";
     }
@@ -36,7 +36,7 @@ function tipoPantalla() {
       vOrientacion = "vertical";
     }
   } else {
-    vtipoPantalla = "computadora";
+    vTipoPantalla = "computadora";
     if (screen.width > screen.height) {
       vOrientacion = "horizontal";
     }
@@ -44,105 +44,105 @@ function tipoPantalla() {
       vOrientacion = "vertical";
     }
   }
-  vtipoPantalla = vtipoPantalla + "|" + vOrientacion;
-  return vtipoPantalla;
+  vTipoPantalla = vTipoPantalla + "|" + vOrientacion;
+  return vTipoPantalla;
 }
-function obtenerLink1(vLink){ //Obtener la ruta completa archivo GLTF
-  var contar = 0;
-  var start = 0;
-  vNuevaCadena = vLink;
+function fObtenerLink1(pLink){ //Obtener la ruta completa archivo GLTF
+  var vContar = 0;
+  var vInicio = 0;
+  vNuevaCadena = pLink;
   vNuevoLink = 'https://raw.githubusercontent.com/';
-  while ((start = vLink.indexOf("/", start) + 1) > 0) {
+  while ((vInicio = pLink.indexOf("/", vInicio) + 1) > 0) {
       vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/')+1);
       //console.log(vCadena);
       vNuevaCadena = vNuevaCadena.slice(vCadena.length, vNuevaCadena.length);
       //console.log(vNuevaCadena);
-      if (contar == 3 || contar == 4 || contar > 5){
+      if (vContar == 3 || vContar == 4 || vContar > 5){
           vNuevoLink = vNuevoLink + vCadena;
       }
-      contar++;
+      vContar++;
   }
   vNuevoLink = vNuevoLink + vNuevaCadena;
   return vNuevoLink;
 }
-function obtenerLink2(vLink){ //Obtener la ruta de la "carpeta" donde se encuentra el GLTF
-  var contar = 0;
-  var start = 0;
-  vNuevaCadena = vLink;
+function fObtenerLink2(pLink){ //Obtener la ruta de la "carpeta" donde se encuentra el GLTF
+  var vContar = 0;
+  var vInicio = 0;
+  vNuevaCadena = pLink;
   vNuevoLink = 'https://raw.githubusercontent.com/';
-  while ((start = vLink.indexOf("/", start) + 1) > 0) {
+  while ((vInicio = pLink.indexOf("/", vInicio) + 1) > 0) {
       vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/')+1);
       //console.log(vCadena);
       vNuevaCadena = vNuevaCadena.slice(vCadena.length, vNuevaCadena.length);
       //console.log(vNuevaCadena);
-      if (contar == 3 || contar == 4 || contar == 6 || contar == 7){
+      if (vContar == 3 || vContar == 4 || vContar == 6 || vContar == 7){
           vNuevoLink = vNuevoLink + vCadena;
       }
-      contar++;
+      vContar++;
   }
   return vNuevoLink;
 }
-function pInformacion(vtitulo, vcodigo, vcombinacion, vimagen, vColores1, vColores2) {
+function fInformacion(pTitulo, pCodigo, pCombinacion, pImagen, pColores1, pColores2) {
   // Posicion y Medidas de acuerdo a pantalla y orientacion
-  vOrientacion = tipoPantalla();
+  vOrientacion = fTipoPantalla();
   if (vOrientacion.includes("movil") && vOrientacion.includes("vertical")) {
-    vtop = "75%";
-    vleft = "50%";
-    vmaxWidth = "60%";
+    vTop = "75%";
+    vLeft = "50%";
+    vMaxWidth = "60%";
   }
   if (vOrientacion.includes("movil") && vOrientacion.includes("horizontal")) {
-    vtop = "50%";
-    vleft = "75%";
-    vmaxWidth = "20%";
+    vTop = "50%";
+    vLeft = "75%";
+    vMaxWidth = "20%";
   }
   if (vOrientacion.includes("computadora") && vOrientacion.includes("horizontal")) {
-    vtop = "50%";
-    vleft = "75%";
-    vmaxWidth = "20%";
+    vTop = "50%";
+    vLeft = "75%";
+    vMaxWidth = "20%";
   }
-  // Crear el elemento contenedor del rectángulo de información
-  var contenedor = document.createElement("div");
-    contenedor.style.background = "rgba(" + parseInt(vColores2[1]+vColores2[2],16) +", " + parseInt(vColores2[3]+vColores2[4],16) + ", " + parseInt(vColores2[5]+vColores2[6],16) + ", 0.25)";
-    contenedor.style.display = "block";
-    contenedor.style.padding = "20px";
-    contenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
-    contenedor.style.maxWidth = vmaxWidth;
-    contenedor.style.position = "absolute";
-    contenedor.style.left = vleft;
-    contenedor.style.top = vtop;
-    contenedor.style.transform = "translate(-50%, -50%)";
-    contenedor.style.overflowWrap = "break-word";
-    contenedor.style.width = "max-content";
-    contenedor.style.height = "max-content";
+  // Crear el elemento oContenedor del rectángulo de información
+  var oContenedor = document.createElement("div");
+    oContenedor.style.background = "rgba(" + parseInt(pColores2[1]+pColores2[2],16) +", " + parseInt(pColores2[3]+pColores2[4],16) + ", " + parseInt(pColores2[5]+pColores2[6],16) + ", 0.25)";
+    oContenedor.style.display = "block";
+    oContenedor.style.padding = "20px";
+    oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
+    oContenedor.style.maxWidth = vMaxWidth;
+    oContenedor.style.position = "absolute";
+    oContenedor.style.left = vLeft;
+    oContenedor.style.top = vTop;
+    oContenedor.style.transform = "translate(-50%, -50%)";
+    oContenedor.style.overflowWrap = "break-word";
+    oContenedor.style.width = "max-content";
+    oContenedor.style.height = "max-content";
 
-      // Crear el elemento de cierre
-      var cierre = document.createElement("span");
-        cierre.innerHTML = "<img id='cImagen'" + "src = '" + vimagen + "'>";
-        cierre.style.position = "absolute";
-        cierre.style.right = "0px";
-        cierre.style.top = "0px";
-        cierre.style.width = "20px";
-        cierre.style.height = "20px";
-        cierre.style.cursor = "pointer";
-        cierre.addEventListener("click", function() {
-            contenedor.parentNode.removeChild(contenedor);
+      // Crear el elemento de oCierre
+      var oCierre = document.createElement("span");
+        oCierre.innerHTML = "<img id='cImagen'" + "src = '" + pImagen + "'>";
+        oCierre.style.position = "absolute";
+        oCierre.style.right = "0px";
+        oCierre.style.top = "0px";
+        oCierre.style.width = "20px";
+        oCierre.style.height = "20px";
+        oCierre.style.cursor = "pointer";
+        oCierre.addEventListener("click", function() {
+            oContenedor.parentNode.removeChild(oContenedor);
             return false;
         });
-      contenedor.appendChild(cierre);
+      oContenedor.appendChild(oCierre);
 
       // Crear el contenido título + codigo + combinacion
-      var titulo = document.createElement("h3");
-      titulo.style.position = "flex";
-      titulo.style.top = vtop + "px";
-      titulo.style.color = "rgb(" + parseInt(vColores1[1]+vColores1[2],16) +", " + parseInt(vColores1[3]+vColores1[4],16) + ", " + parseInt(vColores1[5]+vColores1[6],16) + ")";
-      titulo.innerHTML = vtitulo + "<br><br>" + vcodigo + "<br><br>" + vcombinacion;
-      contenedor.appendChild(titulo);
+      var oTitulo = document.createElement("h3");
+      oTitulo.style.position = "flex";
+      oTitulo.style.top = vTop + "px";
+      oTitulo.style.color = "rgb(" + parseInt(pColores1[1]+pColores1[2],16) +", " + parseInt(pColores1[3]+pColores1[4],16) + ", " + parseInt(pColores1[5]+pColores1[6],16) + ")";
+      oTitulo.innerHTML = pTitulo + "<br><br>" + pCodigo + "<br><br>" + pCombinacion;
+      oContenedor.appendChild(oTitulo);
       
-    // Agregar el contenedor al cuerpo de la página
-    document.body.appendChild(contenedor);
+    // Agregar el oContenedor al cuerpo de la página
+    document.body.appendChild(oContenedor);
 
     //Agregar imagen a la esquina del cuadrado
-    var xImage = document.getElementById('cImagen');
-    xImage.style.width = cierre.style.width;
-    xImage.style.height = cierre.style.height;
+    var oImage = document.getElementById('cImagen');
+    oImage.style.width = oCierre.style.width;
+    oImage.style.height = oCierre.style.height;
 }
