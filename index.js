@@ -88,20 +88,23 @@ function pInformacion(vtitulo, vcodigo, vcombinacion, vimagen, vColores1, vColor
   if (vOrientacion.includes("movil") && vOrientacion.includes("vertical")) {
     vtop = "75%";
     vleft = "50%";
+    vmaxWidth = "60%";
   }
   else {
     if (vOrientacion.includes("horizontal")) {
       vtop = "50%";
       vleft = "75%";
+      vmaxWidth = "20%";
     }
   }
+
   // Crear el elemento contenedor del rectángulo de información
   var contenedor = document.createElement("div");
     contenedor.style.background = "rgba(" + parseInt(vColores2[1]+vColores2[2],16) +", " + parseInt(vColores2[3]+vColores2[4],16) + ", " + parseInt(vColores2[5]+vColores2[6],16) + ", 0.25)";
     contenedor.style.display = "block";
     contenedor.style.padding = "20px";
     contenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
-    contenedor.style.maxWidth = "300px";
+    contenedor.style.maxWidth = vmaxWidth;
     contenedor.style.position = "absolute";
     contenedor.style.left = vleft;
     contenedor.style.top = vtop;
