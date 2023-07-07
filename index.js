@@ -136,8 +136,10 @@ function fInformacion(pTitulo, pCodigo, pCombinacion, pSvg, pColores1, pColores2
         });
       oContenedor.appendChild(oCierre);
 
-      var iconSpan = document.getElementById('idSvg');
+      //var iconSpan = document.getElementById('idSvg');
+      var iconSpan = document.getElementsByTagName('span#idSvg');
       // Cargar el archivo SVG
+      console.log(pSvg);
       fetch(pSvg)
           .then(response => response.text())
           .then(svgData => {
