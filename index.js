@@ -121,7 +121,7 @@ function fInformacion(pTitulo, pCodigo, pCombinacion, pSvg, pColores1, pColores2
       // Crear el elemento de oCierre
       var oCierre = document.createElement("span");
         oCierre.setAttribute("id","idSvg");
-        //oCierre.style.backgroundRepeat = "no-repeat";
+        oCierre.style.backgroundRepeat = "no-repeat";
         oCierre.style.backgroundPosition = "center";
         oCierre.style.backgroundSize = "cover";
         oCierre.style.position = "absolute";
@@ -146,26 +146,23 @@ function fInformacion(pTitulo, pCodigo, pCombinacion, pSvg, pColores1, pColores2
       
     // Agregar el oContenedor al cuerpo de la página
     document.body.appendChild(oContenedor);
-
-    var iconSpan = document.getElementById('idSvg');
-    //var iconSpan = document.getElementsByTagName('span#idSvg');
-    // Cargar el archivo SVG
-    //console.log(href = `${pSvg}`);
-    fetch(pSvg)
-        .then(response => response.text())
-        .then(svgData => {
-            // Modificar el contenido del SVG
-            var modifiedSVG = svgData.replace('fill="currentColor"', 'fill="red"');
-    
-            // Insertar el SVG modificado dentro del span
-            iconSpan.innerHTML = modifiedSVG;
-        })
-        .catch(error => {
-            console.error('Error al cargar el archivo SVG:', error);
-        });
-
-
-
+    vRuta = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/65fcf16ce08f702d610088fa21904c27b85a1057/imagenes/MI3D-Close.svg") + pSvg;
+    fImagenSvg('idSvg', vRuta, pColores1);
+}
+function fImagenSvg(pIdObjeto, pArchivoSvg, pColor) {
+  var iconSpan = document.getElementById(pIdObjeto);
+  // Cargar el archivo SVG
+  fetch(pArchivoSvg)
+      .then(response => response.text())
+      .then(svgData => {
+          // Modificar el contenido del SVG
+          var modifiedSVG = svgData.replace(".fil0 {fill:black;fill-rule:nonzero}", ".fil0 {fill:" + pColor + ";fill-rule:nonzero}");
+          // Insertar el SVG modificado dentro del span
+          iconSpan.innerHTML = modifiedSVG;
+      })
+      .catch(error => {
+          console.error('Error al cargar el archivo SVG:', error);
+      });
     //Agregar imagen a la esquina del cuadrado
     //var oImage = document.getElementById('idImagen');
     //oImage.style.width = oCierre.style.width;
