@@ -82,7 +82,7 @@ function fObtenerLink2(pLink){ //Obtener la ruta de la "carpeta" donde se encuen
   }
   return vNuevoLink;
 }
-function fInformacion(pTitulo, pCodigo, pCombinacion, pImagen, pColores1, pColores2) {
+function fInformacion(pTitulo, pCodigo, pCombinacion, pSvg, pColores1, pColores2) {
   // Posicion y Medidas de acuerdo a pantalla y orientacion
   vOrientacion = fTipoPantalla();
   if (vOrientacion.includes("movil") && vOrientacion.includes("vertical")) {
@@ -103,6 +103,9 @@ function fInformacion(pTitulo, pCodigo, pCombinacion, pImagen, pColores1, pColor
   // Crear el elemento oContenedor del rectángulo de información
   var oContenedor = document.createElement("div");
     oContenedor.style.background = "rgba(" + parseInt(pColores2[1]+pColores2[2],16) +", " + parseInt(pColores2[3]+pColores2[4],16) + ", " + parseInt(pColores2[5]+pColores2[6],16) + ", 0.25)";
+    //oContenedor.style.background = "rgb(" + parseInt(pColores2[1]+pColores2[2],16) +", " + parseInt(pColores2[3]+pColores2[4],16) + ", " + parseInt(pColores2[5]+pColores2[6],16) + ")";
+    oContenedor.style.opacity = "0.9";
+    oContenedor.style.filter = "blur(10px)";
     oContenedor.style.display = "block";
     oContenedor.style.padding = "20px";
     oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
@@ -117,18 +120,38 @@ function fInformacion(pTitulo, pCodigo, pCombinacion, pImagen, pColores1, pColor
 
       // Crear el elemento de oCierre
       var oCierre = document.createElement("span");
-        oCierre.innerHTML = "<img id='cImagen'" + "src = '" + pImagen + "'>";
+        oCierre.setAttribute("id","idSvg");
+        //oCierre.style.backgroundRepeat = "no-repeat";
+        oCierre.style.backgroundPosition = "center";
+        oCierre.style.backgroundSize = "cover";
         oCierre.style.position = "absolute";
         oCierre.style.right = "0px";
         oCierre.style.top = "0px";
-        oCierre.style.width = "20px";
-        oCierre.style.height = "20px";
+        oCierre.style.width = "25px";
+        oCierre.style.height = "25px";
         oCierre.style.cursor = "pointer";
         oCierre.addEventListener("click", function() {
             oContenedor.parentNode.removeChild(oContenedor);
             return false;
         });
       oContenedor.appendChild(oCierre);
+
+      var iconSpan = document.getElementById('idSvg');
+      // Cargar el archivo SVG
+      fetch(pSvg)
+          .then(response => response.text())
+          .then(svgData => {
+              // Modificar el contenido del SVG
+              var modifiedSVG = svgData.replace('fill="currentColor"', 'fill="red"');
+      
+              // Insertar el SVG modificado dentro del span
+              iconSpan.innerHTML = modifiedSVG;
+          })
+          .catch(error => {
+              console.error('Error al cargar el archivo SVG:', error);
+          });
+
+
 
       // Crear el contenido título + codigo + combinacion
       var oTitulo = document.createElement("h3");
@@ -142,7 +165,12 @@ function fInformacion(pTitulo, pCodigo, pCombinacion, pImagen, pColores1, pColor
     document.body.appendChild(oContenedor);
 
     //Agregar imagen a la esquina del cuadrado
-    var oImage = document.getElementById('cImagen');
-    oImage.style.width = oCierre.style.width;
-    oImage.style.height = oCierre.style.height;
+    //var oImage = document.getElementById('idImagen');
+    //oImage.style.width = oCierre.style.width;
+    //oImage.style.height = oCierre.style.height;
+    //oImage.style.display = "inline-block";
+    //oImage.style.backgroundImage = "url(" + pSvg + ")";
+    //oImage.style.mask = "url(" + pSvg + ")";
+    //oImage.style.maskSize = "cover";
+    //oImage.style.background = "red";
 }

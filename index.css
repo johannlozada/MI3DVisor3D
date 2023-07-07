@@ -208,10 +208,10 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   .marcodimensiones{
     font-size: 5vw;
   }
-  #variantesSelect {
+  #idVariantesSelect {
     font-size: 5vw;
   }
-  #variantesContainer {
+  #idVariantesSelect {
     font-size: 5vw;
   }
   .leyenda {
@@ -225,9 +225,9 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
     width: 150px;
     height: 150px;
   }
-  #fondocliente {
-    height: 100%;
-    left: -90%;
+  #idFondoCliente {
+    height: 100vh;
+    left: -80%;
     transform: rotate(-25deg);
   }
 }
