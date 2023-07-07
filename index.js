@@ -136,25 +136,6 @@ function fInformacion(pTitulo, pCodigo, pCombinacion, pSvg, pColores1, pColores2
         });
       oContenedor.appendChild(oCierre);
 
-      //var iconSpan = document.getElementById('idSvg');
-      var iconSpan = document.getElementsByTagName('span#idSvg');
-      // Cargar el archivo SVG
-      console.log(pSvg);
-      fetch(pSvg)
-          .then(response => response.text())
-          .then(svgData => {
-              // Modificar el contenido del SVG
-              var modifiedSVG = svgData.replace('fill="currentColor"', 'fill="red"');
-      
-              // Insertar el SVG modificado dentro del span
-              iconSpan.innerHTML = modifiedSVG;
-          })
-          .catch(error => {
-              console.error('Error al cargar el archivo SVG:', error);
-          });
-
-
-
       // Crear el contenido título + codigo + combinacion
       var oTitulo = document.createElement("h3");
       oTitulo.style.position = "flex";
@@ -165,6 +146,25 @@ function fInformacion(pTitulo, pCodigo, pCombinacion, pSvg, pColores1, pColores2
       
     // Agregar el oContenedor al cuerpo de la página
     document.body.appendChild(oContenedor);
+
+    var iconSpan = document.getElementById('idSvg');
+    //var iconSpan = document.getElementsByTagName('span#idSvg');
+    // Cargar el archivo SVG
+    //console.log(href = `${pSvg}`);
+    fetch(pSvg)
+        .then(response => response.text())
+        .then(svgData => {
+            // Modificar el contenido del SVG
+            var modifiedSVG = svgData.replace('fill="currentColor"', 'fill="red"');
+    
+            // Insertar el SVG modificado dentro del span
+            iconSpan.innerHTML = modifiedSVG;
+        })
+        .catch(error => {
+            console.error('Error al cargar el archivo SVG:', error);
+        });
+
+
 
     //Agregar imagen a la esquina del cuadrado
     //var oImage = document.getElementById('idImagen');
