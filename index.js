@@ -127,6 +127,7 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
     oContenedor.style.overflowWrap = "break-word";
     oContenedor.style.width = "max-content";
     oContenedor.style.height = "max-content";
+    oContenedor.style.color = "rgb(" + parseInt(pColores1[1]+pColores1[2],16) +", " + parseInt(pColores1[3]+pColores1[4],16) + ", " + parseInt(pColores1[5]+pColores1[6],16) + ")";
 
       // Crear la ubicacion para el boton Cerrar X
       var oCierre = document.createElement("span");
@@ -147,13 +148,18 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
       oContenedor.appendChild(oCierre);
 
       // Crear el contenido título + codigo + combinacion
-      var oTitulo = document.createElement("h3");
-      oTitulo.style.position = "flex";
-      oTitulo.style.top = vTop + "px";
-      oTitulo.style.color = "rgb(" + parseInt(pColores1[1]+pColores1[2],16) +", " + parseInt(pColores1[3]+pColores1[4],16) + ", " + parseInt(pColores1[5]+pColores1[6],16) + ")";
-      oTitulo.innerHTML = pTitulo + "<br><br>" + pCodigo + "<br><br>" + pDescripcion;
+      var oTitulo = document.createElement("div");
+      oTitulo.innerHTML = "<b><u>" + pTitulo + "</u></b><br><br>";
       oContenedor.appendChild(oTitulo);
-      
+
+      var oCodigo = document.createElement("div");
+      oCodigo.innerHTML = "<b>" + pCodigo + "</b><br><br>";
+      oContenedor.appendChild(oCodigo);
+
+      var oDescripcion = document.createElement("div");
+      oDescripcion.innerHTML = pDescripcion;
+      oContenedor.appendChild(oDescripcion);
+
     // Agregar el oContenedor al cuerpo de la página
     document.body.appendChild(oContenedor);
 
@@ -171,16 +177,21 @@ function fImagenSvg(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamaño) {
           // Modificar el contenido del SVG necesario
           var modifiedSVG = svgData.replace('svg xmlns=', 'svg id="' + vIdentificador + '" xmlns=');
           modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
-          modifiedSVG = modifiedSVG.replace('width="4.1516mm"', 'width="' + pTamaño + '"');
-          //modifiedSVG = modifiedSVG.replace('viewBox="0 0 4.84 4.84"', 'viewBox="0 0 5 5"');
-          modifiedSVG = modifiedSVG.replace('height="4.1516mm"', 'height="' + pTamaño + '"');
-          modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + vIdentificador + ':hover{ transform: scale(1.2); }');
+          modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + pTamaño);
+          modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + pTamaño);
+          modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + vIdentificador + ':hover { transform: scale(1.2); }');
           modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
-          console.log(modifiedSVG);
+          //console.log(modifiedSVG);
           // Insertar el SVG modificado dentro del span
           oContenedor1.innerHTML = modifiedSVG;
       })
       .catch(error => {
           console.error('Error al cargar el archivo SVG:', error);
       })
+    }
+    function fTest() {
+      var testValues = "fg8uj.example";
+      var testValuesx = 'width="4.1516mm"';
+      console.log(testValues, "=  ", testValues.replace(/\b[\w?*]+\.example/, "example"));
+      console.log(testValuesx, "=  ", testValuesx.replace(/width="\b[\w?*.]+/, 'width="123'));
     }

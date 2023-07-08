@@ -474,13 +474,20 @@
                         });
                 };
                 fHotspotVariante();
-                vCombinacion = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo";
+                vCombinacion = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo " + "<br>" +
+                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo";
                 fVentanaInformacion("Titulo Ventana", "Codigo Producto", vCombinacion, vRutaPrograma+"imagenes/MI3D-Close.svg", vColores1, vColores2);
+                //Inicio FUNCION Barra Herramientas
                 var vOpciones = {
-                    "id" : "1",
-                    "name" : ""
+                    "id" : "1", // Identificador
+                    "titulo" : "", // Titulo o texto que aparecera por encima
+                    "imagen" : "", // Imagem que mostrara
+                    "color1" : "", // Color principal
+                    "color2" : "", // Color fondo
+                    "activo" : "", // Indicar si esta activo para generar un contraste
+                    "llamar" : "", // Que funcion llamara cuando se ejecute
                 };
-                function fMenu(pDireccion, pOpciones, pColores1, pColores2) {
+                function fBarraHerramienta(pDireccion, pOpciones, pColores1, pColores2) { //pDireccion = "1 IzqSup, 2 DerSup, 3 IzqInf, 4 DerInf" + Definir a que lado se van a desplegar (Right/Down/Left/Top)
                     console.log(pDireccion.slice(1,2));
                     switch (pDireccion.slice(0,1)) {
                         case "1":
@@ -503,9 +510,10 @@
                     }
                     vMaxWidth = "20%";
                     var oContenedor = document.createElement("div");
-                    oContenedor.style.background = "rgba(" + parseInt(pColores1[1]+pColores1[2],16) +", " + parseInt(pColores1[3]+pColores1[4],16) + ", " + parseInt(pColores1[5]+pColores1[6],16) + ", 0.5)";
+                    oContenedor.setAttribute("id","idMenu");
+                    oContenedor.style.background = "rgba(" + parseInt(pColores1[1]+pColores1[2],16) +", " + parseInt(pColores1[3]+pColores1[4],16) + ", " + parseInt(pColores1[5]+pColores1[6],16) + ", 0)";
                     oContenedor.style.display = "block";
-                    oContenedor.style.padding = "20px";
+                    oContenedor.style.padding = "0px";
                     oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
                     oContenedor.style.maxWidth = vMaxWidth;
                     oContenedor.style.position = "absolute";
@@ -513,15 +521,19 @@
                     oContenedor.style.top = vTop;
                     oContenedor.style.transform = "translate(-50%, -50%)";
                     oContenedor.style.overflowWrap = "break-word";
-                    oContenedor.style.width = "max-content";
-                    oContenedor.style.height = "max-content";
+                    //oContenedor.style.width = "max-content";
+                    //oContenedor.style.height = "max-content";
 
                     document.body.appendChild(oContenedor);
+
+                    fImagenSvg('idMenu', vRutaPrograma+"imagenes/MI3D-Menu.svg", pColores1, 'Menú', '30px');
+
                     console.log(vTop,vLeft);
                     return "valor";
                 };
-                fMenu("4D", vOpciones, vColores1, vColores2);
+                fBarraHerramienta("4L", vOpciones, vColores1, vColores2);
             });
+            //fTest();
         </script>
     </body>
 </html>
