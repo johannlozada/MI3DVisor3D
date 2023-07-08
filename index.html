@@ -106,6 +106,12 @@
             // Parametros iniciales que tendra q leer del googlesheet
             // Ruta de archivo
             vRuta = "https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf";
+            vRutaPrograma = window.location.href;
+            // SOLO CUANDO SE EJECUTE EN PC
+            if (vRutaPrograma.includes("file")) {
+                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/65fcf16ce08f702d610088fa21904c27b85a1057/imagenes/MI3D-Close.svg")
+            }
+            console.log(vRutaPrograma);
             // Si vPosicion es 0=Piso o 1=Pared GLTF
             vPosicion = "1";
             if (vPosicion === "0") {
