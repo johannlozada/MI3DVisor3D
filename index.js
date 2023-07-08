@@ -15,6 +15,7 @@ document.addEventListener("contextmenu", function(event) {
   event.preventDefault();
 });
 */
+/* Funcion para intercambiar de FullScreen a normal */
 function fToggleFullScreen() {
   if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
@@ -24,6 +25,7 @@ function fToggleFullScreen() {
       }
   }
 }
+/* Saber tipo de pantalla y orientacion */
 function fTipoPantalla() {
   let vTipoPantalla = "";
   let vOrientacion = "";
@@ -47,6 +49,7 @@ function fTipoPantalla() {
   vTipoPantalla = vTipoPantalla + "|" + vOrientacion;
   return vTipoPantalla;
 }
+/* Obtener la ruta del archivo GLTF en github*/
 function fObtenerLink1(pLink){ //Obtener la ruta completa archivo GLTF
   var vContar = 0;
   var vInicio = 0;
@@ -65,6 +68,7 @@ function fObtenerLink1(pLink){ //Obtener la ruta completa archivo GLTF
   vNuevoLink = vNuevoLink + vNuevaCadena;
   return vNuevoLink;
 }
+/* Obtener solo la ruta de cualquier archivo en github*/
 function fObtenerLink2(pLink){ //Obtener la ruta de la "carpeta" donde se encuentra el GLTF
   var vContar = 0;
   var vInicio = 0;
@@ -82,7 +86,14 @@ function fObtenerLink2(pLink){ //Obtener la ruta de la "carpeta" donde se encuen
   }
   return vNuevoLink;
 }
-function fInformacion(pTitulo, pCodigo, pCombinacion, pSvg, pColores1, pColores2) {
+/* VentanaInformacion (
+    pTitulo = Titulo de la ventana
+    pCodigo = Codigo del producto exhibido
+    pDescripcion = Descripcion del producto
+    pSVG = imagen SVG
+    pColores1 = Colores1
+    Pcolores2 = Colores2) */
+function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pColores2) {
   // Posicion y Medidas de acuerdo a pantalla y orientacion
   vOrientacion = fTipoPantalla();
   if (vOrientacion.includes("movil") && vOrientacion.includes("vertical")) {
@@ -102,10 +113,8 @@ function fInformacion(pTitulo, pCodigo, pCombinacion, pSvg, pColores1, pColores2
   }
   // Crear el elemento oContenedor del rectángulo de información
   var oContenedor = document.createElement("div");
-    oContenedor.style.background = "rgba(" + parseInt(pColores2[1]+pColores2[2],16) +", " + parseInt(pColores2[3]+pColores2[4],16) + ", " + parseInt(pColores2[5]+pColores2[6],16) + ", 0.25)";
-    //oContenedor.style.background = "rgb(" + parseInt(pColores2[1]+pColores2[2],16) +", " + parseInt(pColores2[3]+pColores2[4],16) + ", " + parseInt(pColores2[5]+pColores2[6],16) + ")";
-    oContenedor.style.opacity = "0.9";
-    oContenedor.style.filter = "blur(10px)";
+    oContenedor.style.background = "rgba(" + parseInt(pColores2[1]+pColores2[2],16) +", " + parseInt(pColores2[3]+pColores2[4],16) + ", " + parseInt(pColores2[5]+pColores2[6],16) + ", 0.5)";
+    oContenedor.style.filter = "blur(5px)";
     oContenedor.style.display = "block";
     oContenedor.style.padding = "20px";
     oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
@@ -118,17 +127,17 @@ function fInformacion(pTitulo, pCodigo, pCombinacion, pSvg, pColores1, pColores2
     oContenedor.style.width = "max-content";
     oContenedor.style.height = "max-content";
 
-      // Crear el elemento de oCierre
+      // Crear la ubicacion para el boton Cerrar X
       var oCierre = document.createElement("span");
-        oCierre.setAttribute("id","idSvg");
-        oCierre.style.backgroundRepeat = "no-repeat";
-        oCierre.style.backgroundPosition = "center";
-        oCierre.style.backgroundSize = "cover";
-        oCierre.style.position = "absolute";
+        oCierre.setAttribute("id","idSpan");
         oCierre.style.right = "0px";
         oCierre.style.top = "0px";
         oCierre.style.width = "25px";
         oCierre.style.height = "25px";
+        oCierre.style.position = "absolute";
+        oCierre.style.display = "flex";
+        oCierre.style.justifyContent = "center";
+        oCierre.style.alignItems = "center";
         oCierre.style.cursor = "pointer";
         oCierre.addEventListener("click", function() {
             oContenedor.parentNode.removeChild(oContenedor);
@@ -141,35 +150,37 @@ function fInformacion(pTitulo, pCodigo, pCombinacion, pSvg, pColores1, pColores2
       oTitulo.style.position = "flex";
       oTitulo.style.top = vTop + "px";
       oTitulo.style.color = "rgb(" + parseInt(pColores1[1]+pColores1[2],16) +", " + parseInt(pColores1[3]+pColores1[4],16) + ", " + parseInt(pColores1[5]+pColores1[6],16) + ")";
-      oTitulo.innerHTML = pTitulo + "<br><br>" + pCodigo + "<br><br>" + pCombinacion;
+      oTitulo.innerHTML = pTitulo + "<br><br>" + pCodigo + "<br><br>" + pDescripcion;
       oContenedor.appendChild(oTitulo);
       
     // Agregar el oContenedor al cuerpo de la página
     document.body.appendChild(oContenedor);
-    vRuta = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/65fcf16ce08f702d610088fa21904c27b85a1057/imagenes/MI3D-Close.svg") + pSvg;
-    fImagenSvg('idSvg', vRuta, pColores1);
+
+    // Colocar y Cambiar color SVG
+    console.log(window.location);
+    //vRuta = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/65fcf16ce08f702d610088fa21904c27b85a1057/imagenes/MI3D-Close.svg")
+    //vRuta = vRuta + pSvg;
+    //fImagenSvg('idSpan', vRuta, pColores1, 'Cerrar', '20px');
 }
-function fImagenSvg(pIdObjeto, pArchivoSvg, pColor) {
-  var iconSpan = document.getElementById(pIdObjeto);
+function fImagenSvg(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamaño) {
+  var oContenedor1 = document.getElementById(pIdObjeto);
+  vIdentificador = "idSvg"+pIdObjeto;
   // Cargar el archivo SVG
   fetch(pArchivoSvg)
       .then(response => response.text())
       .then(svgData => {
-          // Modificar el contenido del SVG
-          var modifiedSVG = svgData.replace(".fil0 {fill:black;fill-rule:nonzero}", ".fil0 {fill:" + pColor + ";fill-rule:nonzero}");
+          // Modificar el contenido del SVG necesario
+          var modifiedSVG = svgData.replace('svg xmlns=', 'svg id="' + vIdentificador + '" xmlns=');
+          modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
+          modifiedSVG = modifiedSVG.replace('width="4.1516mm"', 'width="' + pTamaño + '"');
+          modifiedSVG = modifiedSVG.replace('height="4.1516mm"', 'height="' + pTamaño + '"');
+          modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + vIdentificador + ':hover{ transform: scale(1.1); }');
+          modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
+          //console.log(modifiedSVG);
           // Insertar el SVG modificado dentro del span
-          iconSpan.innerHTML = modifiedSVG;
+          oContenedor1.innerHTML = modifiedSVG;
       })
       .catch(error => {
           console.error('Error al cargar el archivo SVG:', error);
-      });
-    //Agregar imagen a la esquina del cuadrado
-    //var oImage = document.getElementById('idImagen');
-    //oImage.style.width = oCierre.style.width;
-    //oImage.style.height = oCierre.style.height;
-    //oImage.style.display = "inline-block";
-    //oImage.style.backgroundImage = "url(" + pSvg + ")";
-    //oImage.style.mask = "url(" + pSvg + ")";
-    //oImage.style.maskSize = "cover";
-    //oImage.style.background = "red";
-}
+      })
+    }
