@@ -111,12 +111,13 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
     vLeft = "75%";
     vMaxWidth = "20%";
   }
+  vMargenes = "20px";
   // Crear el elemento oContenedor del rectángulo de información
   var oContenedor = document.createElement("div");
     oContenedor.style.background = "rgba(" + parseInt(pColores2[1]+pColores2[2],16) +", " + parseInt(pColores2[3]+pColores2[4],16) + ", " + parseInt(pColores2[5]+pColores2[6],16) + ", 0.5)";
     oContenedor.style.filter = "blur(5px)";
     oContenedor.style.display = "block";
-    oContenedor.style.padding = "20px";
+    oContenedor.style.padding = vMargenes;
     oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
     oContenedor.style.maxWidth = vMaxWidth;
     oContenedor.style.position = "absolute";
@@ -132,8 +133,8 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
         oCierre.setAttribute("id","idSpan");
         oCierre.style.right = "0px";
         oCierre.style.top = "0px";
-        oCierre.style.width = "25px";
-        oCierre.style.height = "25px";
+        oCierre.style.width = vMargenes;
+        oCierre.style.height = vMargenes;
         oCierre.style.position = "absolute";
         oCierre.style.display = "flex";
         oCierre.style.justifyContent = "center";
@@ -157,8 +158,8 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
     document.body.appendChild(oContenedor);
 
     // Colocar y Cambiar color SVG
-    console.log("JS: ", pSvg);
-    fImagenSvg('idSpan', pSvg, pColores1, 'Cerrar', '20px');
+    //console.log("JS: ", pSvg);
+    fImagenSvg('idSpan', pSvg, pColores1, 'Cerrar', vMargenes);
 }
 function fImagenSvg(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamaño) {
   var oContenedor1 = document.getElementById(pIdObjeto);
@@ -171,10 +172,11 @@ function fImagenSvg(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamaño) {
           var modifiedSVG = svgData.replace('svg xmlns=', 'svg id="' + vIdentificador + '" xmlns=');
           modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
           modifiedSVG = modifiedSVG.replace('width="4.1516mm"', 'width="' + pTamaño + '"');
+          //modifiedSVG = modifiedSVG.replace('viewBox="0 0 4.84 4.84"', 'viewBox="0 0 5 5"');
           modifiedSVG = modifiedSVG.replace('height="4.1516mm"', 'height="' + pTamaño + '"');
-          modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + vIdentificador + ':hover{ transform: scale(1.1); }');
+          modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + vIdentificador + ':hover{ transform: scale(1.2); }');
           modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
-          //console.log(modifiedSVG);
+          console.log(modifiedSVG);
           // Insertar el SVG modificado dentro del span
           oContenedor1.innerHTML = modifiedSVG;
       })
