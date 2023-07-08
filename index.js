@@ -157,10 +157,8 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
     document.body.appendChild(oContenedor);
 
     // Colocar y Cambiar color SVG
-    //console.log(window.location);
-    //vRuta = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/65fcf16ce08f702d610088fa21904c27b85a1057/imagenes/MI3D-Close.svg")
-    //vRuta = vRuta + pSvg;
-    //fImagenSvg('idSpan', vRuta, pColores1, 'Cerrar', '20px');
+    console.log("JS: ", pSvg);
+    fImagenSvg('idSpan', pSvg, pColores1, 'Cerrar', '20px');
 }
 function fImagenSvg(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamaño) {
   var oContenedor1 = document.getElementById(pIdObjeto);

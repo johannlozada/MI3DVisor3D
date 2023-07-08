@@ -105,13 +105,13 @@
             //asas
             // Parametros iniciales que tendra q leer del googlesheet
             // Ruta de archivo
-            vRuta = "https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf";
+            vRutaGltf = "https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf";
             vRutaPrograma = window.location.href;
-            // SOLO CUANDO SE EJECUTE EN PC
+            // SOLO CUANDO SE EJECUTE EN PC ES TEMPORAL
             if (vRutaPrograma.includes("file")) {
-                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/65fcf16ce08f702d610088fa21904c27b85a1057/imagenes/MI3D-Close.svg")
+                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/65fcf16ce08f702d610088fa21904c27b85a1057/")
             }
-            console.log(vRutaPrograma);
+            console.log("HTML", vRutaPrograma);
             // Si vPosicion es 0=Piso o 1=Pared GLTF
             vPosicion = "1";
             if (vPosicion === "0") {
@@ -174,8 +174,8 @@
                 //vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
             }            
             //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
-            oModelViewer.src = fObtenerLink1(vRuta);
-            vModelViewerRuta = fObtenerLink2(vRuta);
+            oModelViewer.src = fObtenerLink1(vRutaGltf);
+            vModelViewerRuta = fObtenerLink2(vRutaGltf);
             //Colocar imagen de fondo oModelViewer
             document.getElementById("idContainer").style.cssText = "background: radial-gradient(farthest-corner at -10vw 110vh," + `${vColores1}` + " 0%," + `${vColores2}` + " 100%);";
             oModelViewer.addEventListener("ar-status", (event) => {
@@ -475,7 +475,7 @@
                 };
                 fHotspotVariante();
                 vCombinacion = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo";
-                fVentanaInformacion("Titulo Ventana", "Codigo Producto", vCombinacion, "imagenes/MI3D-Close.svg", vColores1, vColores2);
+                fVentanaInformacion("Titulo Ventana", "Codigo Producto", vCombinacion, vRutaPrograma+"imagenes/MI3D-Close.svg", vColores1, vColores2);
                 var vOpciones = {
                     "id" : "1",
                     "name" : ""
