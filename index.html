@@ -48,14 +48,6 @@
                     <line class="dimensionLine"></line>
                     <line class="dimensionLine"></line>
                 </svg>
-                <!--Logo para que lleve a paginaweb-->
-                <a href='https://www.google.com' target='_blank'>
-                    <img class='ClassLogoMI3D' src='imagenes/MI3D-Isotipo.png'>
-                </a>
-                <!--Logo de Cliente-->
-                <a href='https://www.google.com' target='_blank'>
-                    <img id='idLogoCliente' class='ClassClienteLogo'>
-                </a>
                 <!--Boton de Realidad Aumentada-->
                 <button slot='ar-button' id='idAr-button'>
                 <!--Activar AR-->
@@ -66,10 +58,6 @@
                 <button id='ar-failure'>
                     No se detecta AR
                 </button>
-                <!--Pantalla Carga-->
-                <div class='ClassCargar'>
-                    <img class='ClassObjetoCargar' src='imagenes/MI3D-Isotipo.png'>
-                </div>
                 <!--Checkbox para activar si se muestran las medidas y/o las variantes-->
                 <div id="marcoleyenda" class="marcoleyenda">
                     Opciones:
@@ -134,6 +122,8 @@
             //para02=posicion en ar del Gltf
             //la idea seria conectar con googlesheets, pasar parametros como codigo=CLI001
             //Hacer un script que busque este codigo en la googlesheets y retorne el link con la direccion del GLTF
+            //Imagen de Carga de Pagina
+            fImagenCarga('idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px');
             var vClickActivo;
             function getURLParameters() {
                 var vUrlParams = {};
@@ -188,8 +178,13 @@
                     document.getElementById("idFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";;
                 }
             })
+            //Colocar Logo de Marca Cliente
+            fImagenImg('idImg1','L10px','T10px', '80px', vModelViewerRuta + 'ClienteLogo.png', false, 'https://www.google.com', '_blank');
+            //Colocar Logo de Marca MI3D
+            fImagenImg('idImg2','L10px','B20px', '40px', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', false, 'https://www.google.com', '_blank');
+            //
             document.getElementById("idFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";
-            document.getElementById("idLogoCliente").src = `${vModelViewerRuta}` + "ClienteLogo.png";
+            //document.getElementById("idLogoCliente").src = `${vModelViewerRuta}` + "ClienteLogo.png";
             oModelViewer.setAttribute("ar-placement", vPosicion);
             oModelViewer.addEventListener("load", () => {
                 //Determinar cuantos variantes tiene un mesh
@@ -488,7 +483,7 @@
                     "llamar" : "", // Que funcion llamara cuando se ejecute
                 };
                 function fBarraHerramienta(pDireccion, pOpciones, pColores1, pColores2) { //pDireccion = "1 IzqSup, 2 DerSup, 3 IzqInf, 4 DerInf" + Definir a que lado se van a desplegar (Right/Down/Left/Top)
-                    console.log(pDireccion.slice(1,2));
+                    //console.log(pDireccion.slice(1,2));
                     switch (pDireccion.slice(0,1)) {
                         case "1":
                             vTop = "5%";
@@ -526,9 +521,9 @@
 
                     document.body.appendChild(oContenedor);
 
-                    fImagenSvg('idMenu', vRutaPrograma+"imagenes/MI3D-Menu.svg", pColores1, 'Menú', '30px');
+                    fImagenSvg('idMenu', vRutaPrograma + "imagenes/MI3D-Menu.svg", pColores1, 'Menú', '30px');
 
-                    console.log(vTop,vLeft);
+                    //console.log(vTop,vLeft);
                     return "valor";
                 };
                 fBarraHerramienta("4L", vOpciones, vColores1, vColores2);

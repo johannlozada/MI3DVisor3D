@@ -1,21 +1,72 @@
-/* Borrar logo de carga */
-window.addEventListener('load', function() {
-  const loadingScreen = document.querySelector('.ClassObjetoCargar');
-  for (var i = 1; i <= 8; i++) {
-    setTimeout(function() {
-      if (i === 9) {
-        loadingScreen.style.display = 'none';
-      }
-    }, i * 1000);
-  }
-});
 /* Desactivar click derecho del mouse */
 /*
 document.addEventListener("contextmenu", function(event) {
   event.preventDefault();
 });
 */
-/* Funcion para intercambiar de FullScreen a normal */
+function fImagenCarga(pIdIdentificador, pDirImagen, pTamano) {
+  //Crear div
+  var oContenedor = document.createElement('div');
+  oContenedor.setAttribute('id', pIdIdentificador + 'N01');
+  oContenedor.style.display = 'flex';
+  oContenedor.style.justifyContent = 'center';
+  oContenedor.style.alignItems = 'center';
+  oContenedor.style.margin = '0';
+  oContenedor.style.position = 'absolute';
+  oContenedor.style.top = '50%';
+  oContenedor.style.left = '50%';
+  oContenedor.style.transform = 'translate(-50%, -50%)';
+  oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
+    //Crear imagen
+    var oImg = document.createElement('img');
+    oImg.setAttribute('id', pIdIdentificador + 'N02');
+    oImg.setAttribute('src', pDirImagen);
+    oImg.setAttribute('class', 'ClassObjetoCargar');
+    oImg.style.width = pTamano;
+    oImg.style.height = pTamano;
+    oImg.style.animation = 'girar 5s linear infinite';
+    oContenedor.appendChild(oImg);
+  document.body.appendChild(oContenedor);
+  //Ocultar despues de la carga
+  window.addEventListener('load', function() {
+  const loadingScreen = document.getElementById(pIdIdentificador + 'N02');
+    for (var i = 1; i <= 8; i++) {
+      setTimeout(function() {
+        if (i === 9) {
+          loadingScreen.style.display = 'none';
+        }
+      }, i * 1000);
+    }
+  });
+}
+/* Funcion para Colocar una imagen en cualquier lugar de la pantalla */
+function fImagenImg(pIdIdentificador, pPosX, pPosY, pTamano, pDirImagen, pEstado, pUrl, pPagina) {
+  var oContenedor = document.createElement('a');
+  oContenedor.setAttribute('href',pUrl);
+  oContenedor.setAttribute('target',pPagina);
+    var oImg = document.createElement('img');
+    oImg.setAttribute('id', pIdIdentificador);
+    oImg.setAttribute('src', pDirImagen);
+    oImg.style.position = "absolute";
+    if (pPosX.includes('L',)) {
+      oImg.style.left = pPosX.slice(1,pPosX.length);
+    }
+    if (pPosX.includes('R',)) {
+      oImg.style.right = pPosX.slice(1,pPosX.length);
+    }
+    if (pPosY.includes('T',)) {
+      oImg.style.top = pPosY.slice(1,pPosY.length);
+    }
+    if (pPosY.includes('B',)) {
+      oImg.style.bottom = pPosY.slice(1,pPosY.length);
+    }
+    oImg.style.width = pTamano;
+    oImg.style.height = pTamano;
+    oImg.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
+    oContenedor.appendChild(oImg);
+  document.body.appendChild(oContenedor);
+}
+/* Funcion para entrar y salir modo FULLSCREEN */
 function fToggleFullScreen() {
   if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
@@ -172,26 +223,26 @@ function fImagenSvg(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamaño) {
   vIdentificador = "idSvg"+pIdObjeto;
   // Cargar el archivo SVG
   fetch(pArchivoSvg)
-      .then(response => response.text())
-      .then(svgData => {
-          // Modificar el contenido del SVG necesario
-          var modifiedSVG = svgData.replace('svg xmlns=', 'svg id="' + vIdentificador + '" xmlns=');
-          modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
-          modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + pTamaño);
-          modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + pTamaño);
-          modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + vIdentificador + ':hover { transform: scale(1.2); }');
-          modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
-          //console.log(modifiedSVG);
-          // Insertar el SVG modificado dentro del span
-          oContenedor1.innerHTML = modifiedSVG;
+    .then(response => response.text())
+    .then(svgData => {
+        // Modificar el contenido del SVG necesario
+        var modifiedSVG = svgData.replace('svg xmlns=', 'svg id="' + vIdentificador + '" xmlns=');
+        modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
+        modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + pTamaño);
+        modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + pTamaño);
+        modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + vIdentificador + ':hover { transform: scale(1.2); }');
+        modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
+        //console.log(modifiedSVG);
+        // Insertar el SVG modificado dentro del span
+        oContenedor1.innerHTML = modifiedSVG;
       })
       .catch(error => {
-          console.error('Error al cargar el archivo SVG:', error);
+        console.error('Error al cargar el archivo SVG:', error);
       })
-    }
-    function fTest() {
-      var testValues = "fg8uj.example";
-      var testValuesx = 'width="4.1516mm"';
-      console.log(testValues, "=  ", testValues.replace(/\b[\w?*]+\.example/, "example"));
-      console.log(testValuesx, "=  ", testValuesx.replace(/width="\b[\w?*.]+/, 'width="123'));
-    }
+}
+function fTest() {
+  var testValues = "fg8uj.example";
+  var testValuesx = 'width="4.1516mm"';
+  console.log(testValues, "=  ", testValues.replace(/\b[\w?*]+\.example/, "example"));
+  console.log(testValuesx, "=  ", testValuesx.replace(/width="\b[\w?*.]+/, 'width="123'));
+}

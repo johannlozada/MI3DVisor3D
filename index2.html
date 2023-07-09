@@ -14,7 +14,7 @@
     </head>
     <body>
         <!--Cuerpo 3D-->
-        <div id="container">
+        <div id="idContainer">
             <model-viewer id='aModelo3d'
                 src=''
                 alt='MI3D - Visor 3D'
@@ -28,7 +28,7 @@
                 scale='1 1 1'
                 autoplay
                 >
-                <img id="hFondoCliente" src=" ">
+                <img id="idFondoCliente" src=" ">
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
@@ -41,23 +41,15 @@
                 <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Y" data-position="-1 -1 0" data-normal="-1 0 0"></button>
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y+Z" data-position="-1 -1 1" data-normal="-1 0 0"></button>
 
-                <svg id="dimLines" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="dimensionLineContainer">
+                <svg id="idDimLines" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="dimensionLineContainer">
                     <line class="dimensionLine"></line>
                     <line class="dimensionLine"></line>
                     <line class="dimensionLine"></line>
                     <line class="dimensionLine"></line>
                     <line class="dimensionLine"></line>
                 </svg>
-                <!--Logo para que lleve a paginaweb-->
-                <a href='https://www.google.com' target='_blank'>
-                    <img class='logo-mi3d' src='imagenes/MI3D-Isotipo.png'>
-                </a>
-                <!--Logo de Cliente-->
-                <a href='https://www.google.com' target='_blank'>
-                    <img id='idLogoCliente' class='ClienteLogo'>
-                </a>
                 <!--Boton de Realidad Aumentada-->
-                <button slot='ar-button' id='ar-button'>
+                <button slot='ar-button' id='idAr-button'>
                 <!--Activar AR-->
                 </button>
                 <div id='ar-prompt'>
@@ -67,8 +59,8 @@
                     No se detecta AR
                 </button>
                 <!--Pantalla Carga-->
-                <div class='cargar'>
-                    <img class='objetocargar' src='imagenes/MI3D-Isotipo.png'>
+                <div class='ClassCargar'>
+                    <img class='ClassObjetoCargar' src='imagenes/MI3D-Isotipo.png'>
                 </div>
                 <!--Checkbox para activar si se muestran las medidas y/o las variantes-->
                 <div id="marcoleyenda" class="marcoleyenda">
@@ -93,9 +85,9 @@
                 <!-- Parámetros pasados en la URL: -->
                 <div id="parametros"></div>
                 <!-- Elemento select y contenedor para la lista de opciones -->
-                <select id='variantesSelect' style='display: none;'>
+                <select id='idVariantesSelect' style='display: none;'>
                 </select>
-                <div id='variantesContainer'>
+                <div id='idVariantesContainer'>
                 </div>
             </model-viewer>
 
@@ -105,7 +97,13 @@
             //asas
             // Parametros iniciales que tendra q leer del googlesheet
             // Ruta de archivo
-            vRuta = "https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf";
+            vRutaGltf = "https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf";
+            vRutaPrograma = window.location.href;
+            // SOLO CUANDO SE EJECUTE EN PC ES TEMPORAL
+            if (vRutaPrograma.includes("file")) {
+                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/65fcf16ce08f702d610088fa21904c27b85a1057/")
+            }
+            //console.log("HTML", vRutaPrograma);
             // Si vPosicion es 0=Piso o 1=Pared GLTF
             vPosicion = "1";
             if (vPosicion === "0") {
@@ -157,7 +155,7 @@
             window.onload = fMostrarParametros();
             //Determinar qué tipo de dispositivo se está usando
             const oModelViewer = document.querySelector("model-viewer#aModelo3d");
-            const vresultado1 = document.getElementById("ar-button");
+            const vresultado1 = document.getElementById("idAr-button");
             vtipopantalla = fTipoPantalla();
             console.log(vtipopantalla);
             if (vtipopantalla.includes("movil")) {
@@ -168,27 +166,32 @@
                 //vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
             }            
             //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
-            oModelViewer.src = fObtenerLink1(vRuta);
-            vModelViewerRuta = fObtenerLink2(vRuta);
+            oModelViewer.src = fObtenerLink1(vRutaGltf);
+            vModelViewerRuta = fObtenerLink2(vRutaGltf);
             //Colocar imagen de fondo oModelViewer
-            document.getElementById("container").style.cssText = "background: radial-gradient(farthest-corner at -10vw 110vh," + `${vColores1}` + " 0%," + `${vColores2}` + " 100%);";
+            document.getElementById("idContainer").style.cssText = "background: radial-gradient(farthest-corner at -10vw 110vh," + `${vColores1}` + " 0%," + `${vColores2}` + " 100%);";
             oModelViewer.addEventListener("ar-status", (event) => {
                 if (event.detail.status != "failed") {
-                    document.getElementById("hFondoCliente").src = "";
+                    document.getElementById("idFondoCliente").src = "";
                 }
             })
             oModelViewer.addEventListener("ar-status", (event) => {
                 if (event.detail.status == "not-presenting") {
-                    document.getElementById("hFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";;
+                    document.getElementById("idFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";;
                 }
             })
-            document.getElementById("hFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";
-            document.getElementById("idLogoCliente").src = `${vModelViewerRuta}` + "ClienteLogo.png";
+            //Colocar Logo de Marca Cliente
+            fImagenImg('idImg1','L10px','T10px', '80px', vModelViewerRuta + 'ClienteLogo.png', false, 'https://www.google.com', '_blank');
+            //Colocar Logo de Marca MI3D
+            fImagenImg('idImg2','L10px','B20px', '40px', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', false, 'https://www.google.com', '_blank');
+            //
+            document.getElementById("idFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";
+            //document.getElementById("idLogoCliente").src = `${vModelViewerRuta}` + "ClienteLogo.png";
             oModelViewer.setAttribute("ar-placement", vPosicion);
             oModelViewer.addEventListener("load", () => {
                 //Determinar cuantos variantes tiene un mesh
-                const oVariantesSelect = document.getElementById("variantesSelect");
-                const oVariantesContainer = document.getElementById("variantesContainer");
+                const oVariantesSelect = document.getElementById("idVariantesSelect");
+                const oVariantesContainer = document.getElementById("idVariantesContainer");
                 function fGenerarListaVariantes(pX, pY, pMaterial, pMaterialDefecto) {
                     const vVariante = oModelViewer.availableVariants;
                     oVariantesSelect.innerHTML = "";
@@ -205,7 +208,7 @@
                             oOpcion.value = vVariante[i];
                             oOpcion.appendChild(document.createTextNode(vVariante[i]));
                             oVariantesSelect.appendChild(oOpcion);
-                            document.getElementById("variantesSelect").value = pMaterialDefecto;
+                            document.getElementById("idVariantesSelect").value = pMaterialDefecto;
                         }
                     }
                     // Permite cambiar la variante en el gltf
@@ -256,7 +259,7 @@
                     oVariantesSelect.style.display = 'none';
                 });
                 //Detecta cuando se da click en cualquier lado
-                document.getElementById("variantesContainer").addEventListener("mousedown", function(e){
+                document.getElementById("idVariantesContainer").addEventListener("mousedown", function(e){
                     oVariantesSelect.style.display = 'none';
                 });
                 //checkbox variante Oculto/Visible
@@ -280,7 +283,7 @@
                     fVariableVisible(hotspot);
                 });*/
                 //checkbox dimension Pasar el valor cuando carga
-                fMedidasVisible(oModelViewer.querySelector('#dimLines'));
+                fMedidasVisible(oModelViewer.querySelector('#idDimLines'));
                 oModelViewer.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
                     vClickActivo = !oCheckboxVariantes.checked;
                     fMedidasVisible(hotspot);
@@ -325,7 +328,7 @@
                 });
                 //checkbox dimension Pasar el valor
                 oCheckboxMedidas.addEventListener('change', () => {
-                    fMedidasVisible(oModelViewer.querySelector('#dimLines'));
+                    fMedidasVisible(oModelViewer.querySelector('#idDimLines'));
                     oModelViewer.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
                         fMedidasVisible(hotspot);
                     });
@@ -468,11 +471,66 @@
                         });
                 };
                 fHotspotVariante();
-                vCombinacion = " Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo Texto de Ejemplo";
-                fInformacion("Centro TV - Venecia", "Cod: TV-150523001", vCombinacion, "imagenes/MI3D-favicon.ico", vColores1, vColores2);
-                function fMenu() {
+                vCombinacion = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo " + "<br>" +
+                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo";
+                fVentanaInformacion("Titulo Ventana", "Codigo Producto", vCombinacion, vRutaPrograma+"imagenes/MI3D-Close.svg", vColores1, vColores2);
+                //Inicio FUNCION Barra Herramientas
+                var vOpciones = {
+                    "id" : "1", // Identificador
+                    "titulo" : "", // Titulo o texto que aparecera por encima
+                    "imagen" : "", // Imagem que mostrara
+                    "color1" : "", // Color principal
+                    "color2" : "", // Color fondo
+                    "activo" : "", // Indicar si esta activo para generar un contraste
+                    "llamar" : "", // Que funcion llamara cuando se ejecute
                 };
+                function fBarraHerramienta(pDireccion, pOpciones, pColores1, pColores2) { //pDireccion = "1 IzqSup, 2 DerSup, 3 IzqInf, 4 DerInf" + Definir a que lado se van a desplegar (Right/Down/Left/Top)
+                    console.log(pDireccion.slice(1,2));
+                    switch (pDireccion.slice(0,1)) {
+                        case "1":
+                            vTop = "5%";
+                            vLeft = "5%";
+                            break;
+                        case "2":
+                            vTop = "5%";
+                            vLeft = "95%";
+                            break;
+                        case "3":
+                            vTop = "95%";
+                            vLeft = "5%";
+                            break;
+                        case "4":
+                            vTop = "95%";
+                            vLeft = "95%";
+                            break;
+                        default:
+                    }
+                    vMaxWidth = "20%";
+                    var oContenedor = document.createElement("div");
+                    oContenedor.setAttribute("id","idMenu");
+                    oContenedor.style.background = "rgba(" + parseInt(pColores1[1]+pColores1[2],16) +", " + parseInt(pColores1[3]+pColores1[4],16) + ", " + parseInt(pColores1[5]+pColores1[6],16) + ", 0)";
+                    oContenedor.style.display = "block";
+                    oContenedor.style.padding = "0px";
+                    oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
+                    oContenedor.style.maxWidth = vMaxWidth;
+                    oContenedor.style.position = "absolute";
+                    oContenedor.style.left = vLeft;
+                    oContenedor.style.top = vTop;
+                    oContenedor.style.transform = "translate(-50%, -50%)";
+                    oContenedor.style.overflowWrap = "break-word";
+                    //oContenedor.style.width = "max-content";
+                    //oContenedor.style.height = "max-content";
+
+                    document.body.appendChild(oContenedor);
+
+                    fImagenSvg('idMenu', vRutaPrograma+"imagenes/MI3D-Menu.svg", pColores1, 'Menú', '30px');
+
+                    console.log(vTop,vLeft);
+                    return "valor";
+                };
+                fBarraHerramienta("4L", vOpciones, vColores1, vColores2);
             });
+            //fTest();
         </script>
     </body>
 </html>
