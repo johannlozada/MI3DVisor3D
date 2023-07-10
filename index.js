@@ -1,3 +1,24 @@
+/* Colocar CSS inicial */
+const oStyle = document.createElement("style");
+var vEstiloCSS = '\
+  @keyframes girar {\
+    0% {\
+      transform: rotate(0deg);\
+    }\
+    100% {\
+      transform: rotate(360deg);\
+    }\
+  }\
+  @keyframes fadein {\
+    from {\
+        opacity:1;\
+    }\
+    to {\
+        opacity:0;\
+    }\
+}';
+oStyle.textContent = vEstiloCSS;
+document.head.appendChild(oStyle);
 /* Desactivar click derecho del mouse */
 /*
 document.addEventListener("contextmenu", function(event) {
@@ -7,36 +28,35 @@ document.addEventListener("contextmenu", function(event) {
 function fImagenCarga(pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer) {
   //Crear div
   var oContenedor = document.createElement('div');
-  oContenedor.setAttribute('id', pIdIdentificador + 'N01');
-  oContenedor.style.display = 'flex';
-  oContenedor.style.justifyContent = 'center';
-  oContenedor.style.alignItems = 'center';
-  oContenedor.style.margin = '0';
-  oContenedor.style.position = 'absolute';
-  oContenedor.style.top = '50%';
-  oContenedor.style.left = '50%';
-  oContenedor.style.transform = 'translate(-50%, -50%)';
-  oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
-    //Crear imagen
-    var oImg = document.createElement('img');
-    oImg.setAttribute('id', pIdIdentificador + 'N02');
-    oImg.setAttribute('src', pDirImagen);
-    oImg.setAttribute('class', 'ClassObjetoCargar');
-    oImg.style.width = pTamano;
-    oImg.style.height = pTamano;
-    oImg.style.animation = 'girar 5s linear infinite';
-    oContenedor.appendChild(oImg);
+    oContenedor.setAttribute('id', pIdIdentificador + 'N01');
+    oContenedor.style.display = 'flex';
+    oContenedor.style.justifyContent = 'center';
+    oContenedor.style.alignItems = 'center';
+    oContenedor.style.margin = '0';
+    oContenedor.style.position = 'absolute';
+    oContenedor.style.top = '50%';
+    oContenedor.style.left = '50%';
+    oContenedor.style.transform = 'translate(-50%, -50%)';
+    oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
+      //Crear imagen
+      var oImg = document.createElement('img');
+        oImg.setAttribute('id', pIdIdentificador + 'N02');
+        oImg.setAttribute('src', pDirImagen);
+        oImg.setAttribute('class', 'ClassObjetoCargar');
+        oImg.style.width = pTamano;
+        oImg.style.height = pTamano;
+        oImg.style.animation = 'girar 5s linear infinite';
+      oContenedor.appendChild(oImg);
   document.body.appendChild(oContenedor);
   //Ocultar despues de la carga el GLTF
-  window.addEventListener('load', function() {
-    const loadingScreen = document.getElementById(pIdIdentificador + 'N02');
-      for (var i = 1; i <= 20; i++) {
-        setTimeout(function() {
-          if (pObjetoModelViewer.loaded) {
-            loadingScreen.style.display = 'none';
-          }
-        }, i * 1000);
-      }
+  pObjetoModelViewer.addEventListener('load', function() {
+    if (pObjetoModelViewer.loaded) {
+      vtiempo = '0.25';
+      oContenedor.style.animation = 'fadein ' + vtiempo + 's';
+      setTimeout(() => {
+        oImg.style.display = 'none';
+      }, Number(vtiempo)*990);
+    }
   });
 }
 /* Funcion para Colocar una imagen en cualquier lugar de la pantalla*/

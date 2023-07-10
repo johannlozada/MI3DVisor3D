@@ -184,9 +184,9 @@
             fImagenImg('idImg1','L10px','T10px', '80px', vModelViewerRuta + 'ClienteLogo.png', false, 'https://www.google.com', '_blank');
             //Colocar Logo de Marca MI3D
             fImagenImg('idImg2','L10px','B20px', '40px', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', false, 'https://www.google.com', '_blank');
-            //
+            //Colocar logo de Marca cliente como fondo
+            fImagenImg('idImgFondo','L50%','T50%', '180%', vModelViewerRuta + 'ClienteFondo.png', false, '', '');
             document.getElementById("idFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";
-            //document.getElementById("idLogoCliente").src = `${vModelViewerRuta}` + "ClienteLogo.png";
             oModelViewer.setAttribute("ar-placement", vPosicion);
             oModelViewer.addEventListener("load", () => {
                 // devulve true cuando cargo GLTF
