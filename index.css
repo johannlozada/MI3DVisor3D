@@ -12,7 +12,7 @@ body {
   background-size: 100% 100%;
   position: absolute;
 }
-#idFondoCliente {
+/*#idFondoCliente {
   opacity: 0.25;
   width: auto;
   height: 180%;
@@ -22,7 +22,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   z-index: -1000;
-}
+}*/
 #idVariantesSelect {
   position: absolute;
 }
@@ -146,7 +146,7 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
 .hide{
   display: none;
 }
-.leyenda {
+.idAyuda {
   display: none;
   justify-content: center;
   align-items: center;

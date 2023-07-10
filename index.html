@@ -28,7 +28,7 @@
                 scale='1 1 1'
                 autoplay
                 >
-                <img id="idFondoCliente" src=" ">
+                <!-- <img id="idFondoCliente" src=" "> -->
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
@@ -77,7 +77,6 @@
                     <input id="show-pantalla" type="checkbox">
                     <label for="show-pantalla">  Pantalla Completa</label>
                 </div>
-                <img id="idLeyenda" class="leyenda" src='imagenes/MI3D-Leyenda01.png'>
                 <!-- Parámetros pasados en la URL: -->
                 <div id="parametros"></div>
                 <!-- Elemento select y contenedor para la lista de opciones -->
@@ -153,7 +152,7 @@
             oModelViewer.src = fObtenerLink1(vRutaGltf);
             vModelViewerRuta = fObtenerLink2(vRutaGltf);
             //Colocar logo de Marca cliente como fondo
-            //fImagenImg(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.25', vModelViewerRuta + 'ClienteFondo.png', false, '', '','-1');
+            fImagenImg(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.25', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1');
             //Imagen de Carga de Pagina
             fImagenCarga('idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
             const vresultado1 = document.getElementById("idAr-button");
@@ -180,10 +179,13 @@
                 }
             })
             //Colocar Logo de Marca Cliente
-            fImagenImg(oModelViewer, 'idImg1','L10px','T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', false, 'https://www.google.com', '_blank','0');
+            fImagenImg(oModelViewer, 'idImg1','L10px','T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', true, 'https://www.google.com', '_blank','0');
             //Colocar Logo de Marca MI3D
-            fImagenImg(oModelViewer, 'idImg2','L10px','B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', false, 'https://www.google.com', '_blank','0');
-            document.getElementById("idFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";
+            fImagenImg(oModelViewer, 'idImg2','L10px','B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', true, 'https://www.google.com', '_blank','0');
+            //Llamar imagen de ayuda
+            fImagenImg(oModelViewer, 'idAyuda','L50%','T50%', '35%', 'translate(-50%, -50%)', '0.7', vRutaPrograma + 'imagenes/MI3D-Leyenda01.png', true, '', '','0');
+            //Colocar fondo con logo cliente
+            //document.getElementById("idFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";
             oModelViewer.setAttribute("ar-placement", vPosicion);
             oModelViewer.addEventListener("load", () => {
                 // devulve true cuando cargo GLTF
@@ -249,7 +251,7 @@
                 const oCheckboxAyuda = oModelViewer.querySelector('#show-leyenda');
                 const oCheckboxInformacion = oModelViewer.querySelector('#show-informacion');
                 const oCheckboxPantalla = oModelViewer.querySelector('#show-pantalla');
-                const oIdLeyenda = document.getElementById('idLeyenda');
+                const oIdLeyenda = document.getElementById('idAyuda');
                 //Cuando haces click genera la OptionList - Determinar a qué variantes se les da click
                 oModelViewer.addEventListener("click", fMostrarListavariantes);
                 //Ocultar el selector de variantes cuando se selecciona una opción

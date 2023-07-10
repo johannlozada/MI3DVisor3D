@@ -72,49 +72,59 @@ function fImagenCarga(pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer)
   });
 }
 /* Funcion para Colocar una imagen en cualquier lugar de la pantalla*/
-function fImagenImg(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pRotacion, pOpacidad, pDirImagen, pEstado, pUrl, pPagina, pZindex) {
-  var oContenedor = document.createElement('a');
-    if (pUrl.length != 0 && pPagina.length != 0) {
-      oContenedor.setAttribute('href',pUrl);
-      oContenedor.setAttribute('target',pPagina);
-    }
-    var oImg = document.createElement('img');
-      oImg.setAttribute('id', pIdIdentificador);
-      oImg.setAttribute('src', pDirImagen);
-      if (pPosX.includes('L',)) {
-        oImg.style.left = pPosX.slice(1,pPosX.length);
+function fImagenImg(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransformacion, pOpacidad, pDirImagen, pEstado, pUrl, pPagina, pZindex) {
+  pPadre.addEventListener('load', function() {
+    var oContenedor = document.createElement('a');
+      if (pEstado) {
+        oContenedor.style.display = 'flex';
       }
-      if (pPosX.includes('R',)) {
-        oImg.style.right = pPosX.slice(1,pPosX.length);
+      else {
+        oContenedor.style.display = 'none';
       }
-      if (pPosY.includes('T',)) {
-        oImg.style.top = pPosY.slice(1,pPosY.length);
+      if (pUrl.length != 0 && pPagina.length != 0) {
+        oContenedor.setAttribute('href',pUrl);
+        oContenedor.setAttribute('target',pPagina);
       }
-      if (pPosY.includes('B',)) {
-        oImg.style.bottom = pPosY.slice(1,pPosY.length);
-      }
-      if (pPosX.includes('C',)) {
-        vTranslacionX = pPosX.slice(1,pPosX.length);
-        //oImg.style.left = pPosX.slice(1,pPosX.length);
-      }
-      if (pPosY.includes('C',)) {
-        vTranslacionY = pPosY.slice(1,pPosY.length);
-        //oImg.style.top = pPosY.slice(1,pPosY.length);
-      }
-      oImg.style.position = 'absolute';
-      oImg.style.display = 'flex';
-      oImg.style.opacity =  pOpacidad;
-      oImg.style.backgroundPosition = 'center';
-      oImg.style.backgroundRepeat = 'no-repeat';
-      oImg.style.backgroundSize = 'cover';
-      oImg.style.transform = pRotacion;
-      oImg.style.width = 'auto';
-      oImg.style.height = pTamano;
-      oImg.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
-    oContenedor.appendChild(oImg);
-  pPadre.appendChild(oContenedor);
-  oImg.style.zIndex = pZindex;
-  console.log(pZindex);
+      var oImg = document.createElement('img');
+        oImg.setAttribute('id', pIdIdentificador);
+        oImg.setAttribute('src', pDirImagen);
+        if (pPosX.includes('L',)) {
+          oImg.style.left = pPosX.slice(1,pPosX.length);
+        }
+        if (pPosX.includes('R',)) {
+          oImg.style.right = pPosX.slice(1,pPosX.length);
+        }
+        if (pPosY.includes('T',)) {
+          oImg.style.top = pPosY.slice(1,pPosY.length);
+        }
+        if (pPosY.includes('B',)) {
+          oImg.style.bottom = pPosY.slice(1,pPosY.length);
+        }
+        if (pPosX.includes('C',)) {
+          //vTranslacionX = pPosX.slice(1,pPosX.length);
+          //oImg.style.left = '50%';
+        }
+        if (pPosY.includes('C',)) {
+          //vTranslacionY = pPosY.slice(1,pPosY.length);
+          //oImg.style.top = '50%';
+        }
+        oImg.style.justifyContent = 'center';
+        oImg.style.alignItems = 'center';
+        oImg.style,margin = '0';
+        oImg.style.position = 'absolute';
+        oImg.style.display = 'flex';
+        oImg.style.opacity =  pOpacidad;
+        oImg.style.backgroundPosition = 'center';
+        oImg.style.backgroundRepeat = 'no-repeat';
+        oImg.style.backgroundSize = 'cover';
+        oImg.style.transform = pTransformacion;
+        oImg.style.width = 'auto';
+        oImg.style.height = pTamano;
+        oImg.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
+      oContenedor.appendChild(oImg);
+    pPadre.appendChild(oContenedor);
+    oImg.style.zIndex = pZindex;
+  });
 }
 /* Funcion para entrar y salir modo FULLSCREEN */
 function fToggleFullScreen() {
