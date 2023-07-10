@@ -4,7 +4,7 @@ document.addEventListener("contextmenu", function(event) {
   event.preventDefault();
 });
 */
-function fImagenCarga(pIdIdentificador, pDirImagen, pTamano) {
+function fImagenCarga(pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer) {
   //Crear div
   var oContenedor = document.createElement('div');
   oContenedor.setAttribute('id', pIdIdentificador + 'N01');
@@ -27,19 +27,19 @@ function fImagenCarga(pIdIdentificador, pDirImagen, pTamano) {
     oImg.style.animation = 'girar 5s linear infinite';
     oContenedor.appendChild(oImg);
   document.body.appendChild(oContenedor);
-  //Ocultar despues de la carga
+  //Ocultar despues de la carga el GLTF
   window.addEventListener('load', function() {
-  const loadingScreen = document.getElementById(pIdIdentificador + 'N02');
-    for (var i = 1; i <= 8; i++) {
-      setTimeout(function() {
-        if (i === 9) {
-          loadingScreen.style.display = 'none';
-        }
-      }, i * 1000);
-    }
+    const loadingScreen = document.getElementById(pIdIdentificador + 'N02');
+      for (var i = 1; i <= 20; i++) {
+        setTimeout(function() {
+          if (pObjetoModelViewer.loaded) {
+            loadingScreen.style.display = 'none';
+          }
+        }, i * 1000);
+      }
   });
 }
-/* Funcion para Colocar una imagen en cualquier lugar de la pantalla */
+/* Funcion para Colocar una imagen en cualquier lugar de la pantalla*/
 function fImagenImg(pIdIdentificador, pPosX, pPosY, pTamano, pDirImagen, pEstado, pUrl, pPagina) {
   var oContenedor = document.createElement('a');
   oContenedor.setAttribute('href',pUrl);
@@ -144,6 +144,7 @@ function fObtenerLink2(pLink){ //Obtener la ruta de la "carpeta" donde se encuen
     pSVG = imagen SVG
     pColores1 = Colores1
     Pcolores2 = Colores2) */
+    //COLOCAR UBICACION Y CORREGIR PROBLEMA DE CAMBIO DE TAMAÑO DE PANTALLA COMO SE HIZO CON LOS LOGOS
 function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pColores2) {
   // Posicion y Medidas de acuerdo a pantalla y orientacion
   vOrientacion = fTipoPantalla();
@@ -240,6 +241,7 @@ function fImagenSvg(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamaño) {
         console.error('Error al cargar el archivo SVG:', error);
       })
 }
+// funcion PARA HACER PRUEBAS
 function fTest() {
   var testValues = "fg8uj.example";
   var testValuesx = 'width="4.1516mm"';

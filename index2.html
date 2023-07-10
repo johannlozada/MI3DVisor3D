@@ -58,10 +58,6 @@
                 <button id='ar-failure'>
                     No se detecta AR
                 </button>
-                <!--Pantalla Carga-->
-                <div class='ClassCargar'>
-                    <img class='ClassObjetoCargar' src='imagenes/MI3D-Isotipo.png'>
-                </div>
                 <!--Checkbox para activar si se muestran las medidas y/o las variantes-->
                 <div id="marcoleyenda" class="marcoleyenda">
                     Opciones:
@@ -126,6 +122,8 @@
             //para02=posicion en ar del Gltf
             //la idea seria conectar con googlesheets, pasar parametros como codigo=CLI001
             //Hacer un script que busque este codigo en la googlesheets y retorne el link con la direccion del GLTF
+            //Imagen de Carga de Pagina
+            fImagenCarga('idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px');
             var vClickActivo;
             function getURLParameters() {
                 var vUrlParams = {};
@@ -485,7 +483,7 @@
                     "llamar" : "", // Que funcion llamara cuando se ejecute
                 };
                 function fBarraHerramienta(pDireccion, pOpciones, pColores1, pColores2) { //pDireccion = "1 IzqSup, 2 DerSup, 3 IzqInf, 4 DerInf" + Definir a que lado se van a desplegar (Right/Down/Left/Top)
-                    console.log(pDireccion.slice(1,2));
+                    //console.log(pDireccion.slice(1,2));
                     switch (pDireccion.slice(0,1)) {
                         case "1":
                             vTop = "5%";
@@ -523,9 +521,9 @@
 
                     document.body.appendChild(oContenedor);
 
-                    fImagenSvg('idMenu', vRutaPrograma+"imagenes/MI3D-Menu.svg", pColores1, 'Menú', '30px');
+                    fImagenSvg('idMenu', vRutaPrograma + "imagenes/MI3D-Menu.svg", pColores1, 'Menú', '30px');
 
-                    console.log(vTop,vLeft);
+                    //console.log(vTop,vLeft);
                     return "valor";
                 };
                 fBarraHerramienta("4L", vOpciones, vColores1, vColores2);

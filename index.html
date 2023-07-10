@@ -122,8 +122,6 @@
             //para02=posicion en ar del Gltf
             //la idea seria conectar con googlesheets, pasar parametros como codigo=CLI001
             //Hacer un script que busque este codigo en la googlesheets y retorne el link con la direccion del GLTF
-            //Imagen de Carga de Pagina
-            fImagenCarga('idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px');
             var vClickActivo;
             function getURLParameters() {
                 var vUrlParams = {};
@@ -151,9 +149,13 @@
             }
             // Llamar a la función para mostrar los parámetros cuando la página se cargue
             window.onload = fMostrarParametros();
-            //Determinar qué tipo de dispositivo se está usando
+            // Declara Objeto ModelViewer del GLTF
             const oModelViewer = document.querySelector("model-viewer#aModelo3d");
+            //Imagen de Carga de Pagina
+            fImagenCarga('idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
+
             const vresultado1 = document.getElementById("idAr-button");
+            //Determinar qué tipo de dispositivo se está usando
             vtipopantalla = fTipoPantalla();
             console.log(vtipopantalla);
             if (vtipopantalla.includes("movil")) {
@@ -187,6 +189,7 @@
             //document.getElementById("idLogoCliente").src = `${vModelViewerRuta}` + "ClienteLogo.png";
             oModelViewer.setAttribute("ar-placement", vPosicion);
             oModelViewer.addEventListener("load", () => {
+                // devulve true cuando cargo GLTF
                 //Determinar cuantos variantes tiene un mesh
                 const oVariantesSelect = document.getElementById("idVariantesSelect");
                 const oVariantesContainer = document.getElementById("idVariantesContainer");
