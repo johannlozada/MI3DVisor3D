@@ -90,16 +90,14 @@
         </div>
     
         <script>
-            //asas
             // Parametros iniciales que tendra q leer del googlesheet
             // Ruta de archivo
             vRutaGltf = "https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf";
             vRutaPrograma = window.location.href;
-            // SOLO CUANDO SE EJECUTE EN PC ES TEMPORAL
+            // SOLO CUANDO SE EJECUTE EN PC / ES TEMPORAL
             if (vRutaPrograma.includes("file")) {
                 vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/65fcf16ce08f702d610088fa21904c27b85a1057/")
             }
-            //console.log("HTML", vRutaPrograma);
             // Si vPosicion es 0=Piso o 1=Pared GLTF
             vPosicion = "1";
             if (vPosicion === "0") {
@@ -151,9 +149,13 @@
             window.onload = fMostrarParametros();
             // Declara Objeto ModelViewer del GLTF
             const oModelViewer = document.querySelector("model-viewer#aModelo3d");
+            //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
+            oModelViewer.src = fObtenerLink1(vRutaGltf);
+            vModelViewerRuta = fObtenerLink2(vRutaGltf);
+            //Colocar logo de Marca cliente como fondo
+            //fImagenImg(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.25', vModelViewerRuta + 'ClienteFondo.png', false, '', '','-1');
             //Imagen de Carga de Pagina
             fImagenCarga('idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
-
             const vresultado1 = document.getElementById("idAr-button");
             //Determinar qué tipo de dispositivo se está usando
             vtipopantalla = fTipoPantalla();
@@ -165,10 +167,7 @@
                 //vresultado1.innerHTML = "";
                 //vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
             }            
-            //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
-            oModelViewer.src = fObtenerLink1(vRutaGltf);
-            vModelViewerRuta = fObtenerLink2(vRutaGltf);
-            //Colocar imagen de fondo oModelViewer
+            //Colocar color de fondo oModelViewer
             document.getElementById("idContainer").style.cssText = "background: radial-gradient(farthest-corner at -10vw 110vh," + `${vColores1}` + " 0%," + `${vColores2}` + " 100%);";
             oModelViewer.addEventListener("ar-status", (event) => {
                 if (event.detail.status != "failed") {
@@ -181,11 +180,9 @@
                 }
             })
             //Colocar Logo de Marca Cliente
-            fImagenImg('idImg1','L10px','T10px', '80px', vModelViewerRuta + 'ClienteLogo.png', false, 'https://www.google.com', '_blank');
+            fImagenImg(oModelViewer, 'idImg1','L10px','T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', false, 'https://www.google.com', '_blank','0');
             //Colocar Logo de Marca MI3D
-            fImagenImg('idImg2','L10px','B20px', '40px', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', false, 'https://www.google.com', '_blank');
-            //Colocar logo de Marca cliente como fondo
-            fImagenImg('idImgFondo','L50%','T50%', '180%', vModelViewerRuta + 'ClienteFondo.png', false, '', '');
+            fImagenImg(oModelViewer, 'idImg2','L10px','B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', false, 'https://www.google.com', '_blank','0');
             document.getElementById("idFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";
             oModelViewer.setAttribute("ar-placement", vPosicion);
             oModelViewer.addEventListener("load", () => {
@@ -474,7 +471,7 @@
                 fHotspotVariante();
                 vCombinacion = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo " + "<br>" +
                     "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo";
-                fVentanaInformacion("Titulo Ventana", "Codigo Producto", vCombinacion, vRutaPrograma+"imagenes/MI3D-Close.svg", vColores1, vColores2);
+//                fVentanaInformacion("Titulo Ventana", "Codigo Producto", vCombinacion, vRutaPrograma+"imagenes/MI3D-Close.svg", vColores1, vColores2);
                 //Inicio FUNCION Barra Herramientas
                 var vOpciones = {
                     "id" : "1", // Identificador

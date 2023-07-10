@@ -1,3 +1,15 @@
+/* Borrar logo de carga */
+/*
+window.addEventListener('load', function() {
+  const loadingScreen = document.querySelector('.ClassObjetoCargar');
+  for (var i = 1; i <= 8; i++) {
+    setTimeout(function() {
+      if (i === 9) {
+        loadingScreen.style.display = 'none';
+      }
+    }, i * 1000);
+  }
+});
 /* Colocar CSS inicial */
 const oStyle = document.createElement("style");
 var vEstiloCSS = '\
@@ -60,31 +72,49 @@ function fImagenCarga(pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer)
   });
 }
 /* Funcion para Colocar una imagen en cualquier lugar de la pantalla*/
-function fImagenImg(pIdIdentificador, pPosX, pPosY, pTamano, pDirImagen, pEstado, pUrl, pPagina) {
+function fImagenImg(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pRotacion, pOpacidad, pDirImagen, pEstado, pUrl, pPagina, pZindex) {
   var oContenedor = document.createElement('a');
-  oContenedor.setAttribute('href',pUrl);
-  oContenedor.setAttribute('target',pPagina);
+    if (pUrl.length != 0 && pPagina.length != 0) {
+      oContenedor.setAttribute('href',pUrl);
+      oContenedor.setAttribute('target',pPagina);
+    }
     var oImg = document.createElement('img');
-    oImg.setAttribute('id', pIdIdentificador);
-    oImg.setAttribute('src', pDirImagen);
-    oImg.style.position = "absolute";
-    if (pPosX.includes('L',)) {
-      oImg.style.left = pPosX.slice(1,pPosX.length);
-    }
-    if (pPosX.includes('R',)) {
-      oImg.style.right = pPosX.slice(1,pPosX.length);
-    }
-    if (pPosY.includes('T',)) {
-      oImg.style.top = pPosY.slice(1,pPosY.length);
-    }
-    if (pPosY.includes('B',)) {
-      oImg.style.bottom = pPosY.slice(1,pPosY.length);
-    }
-    oImg.style.width = pTamano;
-    oImg.style.height = pTamano;
-    oImg.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
+      oImg.setAttribute('id', pIdIdentificador);
+      oImg.setAttribute('src', pDirImagen);
+      if (pPosX.includes('L',)) {
+        oImg.style.left = pPosX.slice(1,pPosX.length);
+      }
+      if (pPosX.includes('R',)) {
+        oImg.style.right = pPosX.slice(1,pPosX.length);
+      }
+      if (pPosY.includes('T',)) {
+        oImg.style.top = pPosY.slice(1,pPosY.length);
+      }
+      if (pPosY.includes('B',)) {
+        oImg.style.bottom = pPosY.slice(1,pPosY.length);
+      }
+      if (pPosX.includes('C',)) {
+        vTranslacionX = pPosX.slice(1,pPosX.length);
+        //oImg.style.left = pPosX.slice(1,pPosX.length);
+      }
+      if (pPosY.includes('C',)) {
+        vTranslacionY = pPosY.slice(1,pPosY.length);
+        //oImg.style.top = pPosY.slice(1,pPosY.length);
+      }
+      oImg.style.position = 'absolute';
+      oImg.style.display = 'flex';
+      oImg.style.opacity =  pOpacidad;
+      oImg.style.backgroundPosition = 'center';
+      oImg.style.backgroundRepeat = 'no-repeat';
+      oImg.style.backgroundSize = 'cover';
+      oImg.style.transform = pRotacion;
+      oImg.style.width = 'auto';
+      oImg.style.height = pTamano;
+      oImg.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
     oContenedor.appendChild(oImg);
-  document.body.appendChild(oContenedor);
+  pPadre.appendChild(oContenedor);
+  oImg.style.zIndex = pZindex;
+  console.log(pZindex);
 }
 /* Funcion para entrar y salir modo FULLSCREEN */
 function fToggleFullScreen() {
@@ -221,23 +251,23 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
 
       // Crear el contenido título + codigo + combinacion
       var oTitulo = document.createElement("div");
-      oTitulo.innerHTML = "<b><u>" + pTitulo + "</u></b><br><br>";
+        oTitulo.innerHTML = "<b><u>" + pTitulo + "</u></b><br><br>";
       oContenedor.appendChild(oTitulo);
 
       var oCodigo = document.createElement("div");
-      oCodigo.innerHTML = "<b>" + pCodigo + "</b><br><br>";
+        oCodigo.innerHTML = "<b>" + pCodigo + "</b><br><br>";
       oContenedor.appendChild(oCodigo);
 
       var oDescripcion = document.createElement("div");
-      oDescripcion.innerHTML = pDescripcion;
+        oDescripcion.innerHTML = pDescripcion;
       oContenedor.appendChild(oDescripcion);
 
     // Agregar el oContenedor al cuerpo de la página
-    document.body.appendChild(oContenedor);
+  document.body.appendChild(oContenedor);
 
-    // Colocar y Cambiar color SVG
-    //console.log("JS: ", pSvg);
-    fImagenSvg('idSpan', pSvg, pColores1, 'Cerrar', vMargenes);
+  // Colocar y Cambiar color SVG
+  //console.log("JS: ", pSvg);
+  fImagenSvg('idSpan', pSvg, pColores1, 'Cerrar', vMargenes);
 }
 function fImagenSvg(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamaño) {
   var oContenedor1 = document.getElementById(pIdObjeto);
@@ -248,13 +278,13 @@ function fImagenSvg(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamaño) {
     .then(svgData => {
         // Modificar el contenido del SVG necesario
         var modifiedSVG = svgData.replace('svg xmlns=', 'svg id="' + vIdentificador + '" xmlns=');
-        modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
-        modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + pTamaño);
-        modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + pTamaño);
-        modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + vIdentificador + ':hover { transform: scale(1.2); }');
-        modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
-        //console.log(modifiedSVG);
-        // Insertar el SVG modificado dentro del span
+          modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
+          modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + pTamaño);
+          modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + pTamaño);
+          modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + vIdentificador + ':hover { transform: scale(1.2); }');
+          modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
+          //console.log(modifiedSVG);
+          // Insertar el SVG modificado dentro del span
         oContenedor1.innerHTML = modifiedSVG;
       })
       .catch(error => {
