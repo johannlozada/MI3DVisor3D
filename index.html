@@ -475,26 +475,27 @@
                     "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo";
                 //fVentanaInformacion("Titulo Ventana", "Codigo Producto", vCombinacion, vRutaPrograma+"imagenes/MI3D-Close.svg", vColores1, vColores2);
                 //Inicio FUNCION Barra Herramientas
-                var vJsonBarra = '[' +
-                    '{ "id" : "00", "titulo" : "Opciones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
-                    '{ "id" : "01", "titulo" : "-", "imagen" : "", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
-                    '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimension.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
-                    '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
-                    '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
-                    '{ "id" : "05", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
-                    '{ "id" : "06", "titulo" : "-", "imagen" : "", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
-                    '{ "id" : "07", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
-                    '{ "id" : "08", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
-                    '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
-                    '{ "id" : "10", "titulo" : "-", "imagen" : "", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
-                    '{ "id" : "11", "titulo" : "Ayuda", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.svg" + '", "color1" : vColores1, "color2" : vColores1, "activo" : "1", "llamar" : "" }' +
-                ']';
-                console.log(vJsonBarra);
                 //fBarraHerramientax(oModelViewer, 'idPrueba', 'L150px', 'T150px', '50px', '4', vRutaPrograma+"imagenes/MI3D-Close.svg" , true, vColores1);
                 //Probando imagen
             });
             //fTest();
-            fBarraHerramienta(oModelViewer, 'idBarraHerramienta', 'R5%', 'T50%', '40px', true, vColores2, vColores1);
+            let vJsonBarra = '[' + 
+                '{ "id" : "00", "titulo" : "Opciones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "01", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimension.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variante.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "05", "titulo" : "RealidadAumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "06", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "07", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "08", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "10", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "11", "titulo" : "Ayuda", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "12", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" }' +
+            ']';
+            const oJsonBarra = JSON.parse(vJsonBarra);
+            fBarraHerramienta(oModelViewer, 'idBarraHerramienta', 'R5%', 'T50%', '30px', true, vColores2, vColores1, oJsonBarra);
             //fImagenImg(oModelViewer, 'idImg03', 'R5%', 'T50%', '80px', 'translate(0%, -50%)', '1', vModelViewerRuta + 'ClienteLogo.png', true, '', '', '0', '');
         </script>
     </body>

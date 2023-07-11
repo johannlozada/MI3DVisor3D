@@ -318,13 +318,12 @@ function fTest() {
 function fBarraHerramientax(pPadre, pId, pPosX, pPosY, pTamano, pDireccion, pDirImagen, pEstado, pColores1) {
   oContenedor.style.display = "block";
   oContenedor.style.maxWidth = vMaxWidth;
-  oContenedor.style.transform = "translate(-50%, -50%)";
   oContenedor.style.overflowWrap = "break-word";
   //oContenedor.style.width = "max-content";
   //oContenedor.style.height = "max-content";
   XfImagenSvg2('idMenu', vRutaPrograma + "imagenes/MI3D-Menu.svg", pColores1, 'Menú', '30px');
 };
-function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColores1, pColores2) {
+function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColores1, pColores2, pOpciones) {
   pPadre.addEventListener('load', function() {
     var oContenedor = document.createElement("div");
       if (pEstado) {
@@ -348,12 +347,34 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
       }
       oContenedor.style.position = 'absolute';
       oContenedor.style.borderRadius = '5px 5px 5px 5px';
-      oContenedor.style.padding = "0px";
+      oContenedor.style.padding = "3px";
       oContenedor.style.width = pTamano;
       oContenedor.style.height = pTamano;
       oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
       //oContenedor.style.background = 'rgba(0, 0, 0, 0.5)';
       oContenedor.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.5)';
+      fImagenSVG(oContenedor, pTamano, pColores2, pOpciones[0].titulo, pOpciones[0].imagen);
+      fImagenSVG(oContenedor, pTamano, pColores2, pOpciones[2].titulo, pOpciones[2].imagen);
     pPadre.appendChild(oContenedor);
   });
+}
+function fImagenSVG (pPadre, pTamano, pColor, pInformacion, pArchivoSvg) {
+  console.log(pPadre, pTamano, pColor, pInformacion, pArchivoSvg);
+  vIdentificador = 'idSvg'+pInformacion;
+  fetch(pArchivoSvg)
+    .then(response => response.text())
+    .then(svgData => {
+        // Modificar el contenido del SVG necesario
+        var modifiedSVG = svgData.replace('svg xmlns=', 'svg id="' + vIdentificador + '" xmlns=');
+          modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
+          modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + pTamano);
+          modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + pTamano);
+          modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + vIdentificador + ':hover { transform: scale(1.1); }');
+          modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
+        pPadre.innerHTML = modifiedSVG;
+        document.getElementById('idSvg'+pInformacion).style.cursor = 'pointer';
+      })
+      .catch(error => {
+        console.error('Error al cargar el archivo SVG:', error);
+      })
 }
