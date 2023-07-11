@@ -10,7 +10,7 @@ window.addEventListener('load', function() {
     }, i * 1000);
   }
 });
-/* Colocar CSS inicial */
+/**** Colocar CSS inicial en HEAD */
 const oStyle = document.createElement("style");
 oStyle.textContent = '\
   @keyframes girar {\
@@ -33,13 +33,14 @@ oStyle.textContent = '\
     [1];\
   }';
 document.head.appendChild(oStyle);
-/* Desactivar click derecho del mouse */
+/**** Desactivar click derecho del mouse */
 /*
 document.addEventListener("contextmenu", function(event) {
   event.preventDefault();
 });
 */
-function fImagenCarga(pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer) {
+/**** Imagen al cargar la pagina */
+function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer) {
   //Crear div
   var oContenedor = document.createElement('div');
     oContenedor.setAttribute('id', pIdIdentificador + 'N01');
@@ -73,7 +74,7 @@ function fImagenCarga(pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer)
     }
   });
 }
-/* Funcion para Colocar una imagen en cualquier lugar de la pantalla*/
+/**** Funcion para Colocar una imagen en cualquier lugar de la pantalla*/
 function fImagenImg(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransformacion, pOpacidad, pDirImagen, pEstado, pUrl, pPagina, pZindex, pCssCodigo) {
   pPadre.addEventListener('load', function() {
     var oContenedor = document.createElement('a');
@@ -123,8 +124,7 @@ function fImagenImg(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransforma
         oImg.style.width = 'auto';
         oImg.style.height = pTamano;
         oImg.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
-        //oStyle.textContent = "#" + pIdIdentificador + pCssCodigo;
-        console.log("#" + pIdIdentificador + pCssCodigo);
+        //console.log("#" + pIdIdentificador + pCssCodigo); FALTA COMPLETAR ESTA INFORMACION EN EL HEAD PARA QUE AFECTE LA PAGINA
         if (pCssCodigo.length>0) {
           oStyle.textContent = oStyle.textContent.replace('[1];', '#' + pIdIdentificador + pCssCodigo);
         }
@@ -210,7 +210,7 @@ function fObtenerLink2(pLink){ //Obtener la ruta de la "carpeta" donde se encuen
     pDescripcion = Descripcion del producto
     pSVG = imagen SVG
     pColores1 = Colores1
-    Pcolores2 = Colores2) */
+    PColores2 = Colores2) */
     //COLOCAR UBICACION Y CORREGIR PROBLEMA DE CAMBIO DE TAMAÑO DE PANTALLA COMO SE HIZO CON LOS LOGOS
 function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pColores2) {
   // Posicion y Medidas de acuerdo a pantalla y orientacion
@@ -284,9 +284,9 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
 
   // Colocar y Cambiar color SVG
   //console.log("JS: ", pSvg);
-  fImagenSvg('idSpan', pSvg, pColores1, 'Cerrar', vMargenes);
+  fImagenSvg2('idSpan', pSvg, pColores1, 'Cerrar', vMargenes);
 }
-function fImagenSvg(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamaño) {
+function XfImagenSvg2(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamano) {
   var oContenedor1 = document.getElementById(pIdObjeto);
   vIdentificador = "idSvg"+pIdObjeto;
   // Cargar el archivo SVG
@@ -296,8 +296,8 @@ function fImagenSvg(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamaño) {
         // Modificar el contenido del SVG necesario
         var modifiedSVG = svgData.replace('svg xmlns=', 'svg id="' + vIdentificador + '" xmlns=');
           modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
-          modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + pTamaño);
-          modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + pTamaño);
+          modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + pTamano);
+          modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + pTamano);
           modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + vIdentificador + ':hover { transform: scale(1.2); }');
           modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
           //console.log(modifiedSVG);
@@ -314,4 +314,46 @@ function fTest() {
   var testValuesx = 'width="4.1516mm"';
   console.log(testValues, "=  ", testValues.replace(/\b[\w?*]+\.example/, "example"));
   console.log(testValuesx, "=  ", testValuesx.replace(/width="\b[\w?*.]+/, 'width="123'));
+}
+function fBarraHerramientax(pPadre, pId, pPosX, pPosY, pTamano, pDireccion, pDirImagen, pEstado, pColores1) {
+  oContenedor.style.display = "block";
+  oContenedor.style.maxWidth = vMaxWidth;
+  oContenedor.style.transform = "translate(-50%, -50%)";
+  oContenedor.style.overflowWrap = "break-word";
+  //oContenedor.style.width = "max-content";
+  //oContenedor.style.height = "max-content";
+  XfImagenSvg2('idMenu', vRutaPrograma + "imagenes/MI3D-Menu.svg", pColores1, 'Menú', '30px');
+};
+function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColores1, pColores2) {
+  pPadre.addEventListener('load', function() {
+    var oContenedor = document.createElement("div");
+      if (pEstado) {
+        oContenedor.style.display = 'flex';
+      }
+      else {
+        oContenedor.style.display = 'none';
+      }
+      oContenedor.setAttribute('id', pId);
+      if (pPosX.includes('L',)) {
+        oContenedor.style.left = pPosX.slice(1,pPosX.length);
+      }
+      if (pPosX.includes('R',)) {
+        oContenedor.style.right = pPosX.slice(1,pPosX.length);
+      }
+      if (pPosY.includes('T',)) {
+        oContenedor.style.top = pPosY.slice(1,pPosY.length);
+      }
+      if (pPosY.includes('B',)) {
+        oContenedor.style.bottom = pPosY.slice(1,pPosY.length);
+      }
+      oContenedor.style.position = 'absolute';
+      oContenedor.style.borderRadius = '5px 5px 5px 5px';
+      oContenedor.style.padding = "0px";
+      oContenedor.style.width = pTamano;
+      oContenedor.style.height = pTamano;
+      oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
+      //oContenedor.style.background = 'rgba(0, 0, 0, 0.5)';
+      oContenedor.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.5)';
+    pPadre.appendChild(oContenedor);
+  });
 }

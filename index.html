@@ -14,8 +14,8 @@
     </head>
     <body>
         <!--Cuerpo 3D-->
-        <div id="idContainer">
-            <model-viewer id='aModelo3d'
+        <div id="idContenedor">
+            <model-viewer id='IdModelo3d'
                 src=''
                 alt='MI3D - Visor 3D'
                 shadow-intensity='1'
@@ -28,27 +28,25 @@
                 scale='1 1 1'
                 autoplay
                 >
-                <!-- <img id="idFondoCliente" src=" "> -->
-                
-                    <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
-                    <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
-                    <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
-                    <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Z" data-position="1 0 -1" data-normal="1 0 0"></button>
-                    <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X+Y-Z" data-position="1 1 -1" data-normal="0 1 0"></button>
-                    <button id="HotSpotDimension" class="dim" slot="hotspot-dim+Y-Z" data-position="0 -1 -1" data-normal="0 1 0"></button>
-                    <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X+Y-Z" data-position="-1 1 -1" data-normal="0 1 0"></button>
-                    <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Z" data-position="-1 0 -1" data-normal="-1 0 0"></button>
-                    <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y-Z" data-position="-1 -1 -1" data-normal="-1 0 0"></button>
-                    <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Y" data-position="-1 -1 0" data-normal="-1 0 0"></button>
-                    <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y+Z" data-position="-1 -1 1" data-normal="-1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Z" data-position="1 0 -1" data-normal="1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X+Y-Z" data-position="1 1 -1" data-normal="0 1 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+Y-Z" data-position="0 -1 -1" data-normal="0 1 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X+Y-Z" data-position="-1 1 -1" data-normal="0 1 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Z" data-position="-1 0 -1" data-normal="-1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y-Z" data-position="-1 -1 -1" data-normal="-1 0 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Y" data-position="-1 -1 0" data-normal="-1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y+Z" data-position="-1 -1 1" data-normal="-1 0 0"></button>
 
-                    <svg id="idDimLines" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="dimensionLineContainer">
-                        <line class="dimensionLine"></line>
-                        <line class="dimensionLine"></line>
-                        <line class="dimensionLine"></line>
-                        <line class="dimensionLine"></line>
-                        <line class="dimensionLine"></line>
-                    </svg>
+                <svg id="idDimLines" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="dimensionLineContainer">
+                    <line class="dimensionLine"></line>
+                    <line class="dimensionLine"></line>
+                    <line class="dimensionLine"></line>
+                    <line class="dimensionLine"></line>
+                    <line class="dimensionLine"></line>
+                </svg>
                 
                 <!--Boton de Realidad Aumentada-->
                 <button slot='ar-button' id='idAr-button'>
@@ -86,6 +84,7 @@
                 </select>
                 <div id='idVariantesContainer'>
                 </div>
+                
             </model-viewer>
 
         </div>
@@ -149,7 +148,7 @@
             // Llamar a la función para mostrar los parámetros cuando la página se cargue
             window.onload = fMostrarParametros();
             // Declara Objeto ModelViewer del GLTF
-            const oModelViewer = document.querySelector("model-viewer#aModelo3d");
+            const oModelViewer = document.querySelector("model-viewer#IdModelo3d");
             //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
             oModelViewer.src = fObtenerLink1(vRutaGltf);
             vModelViewerRuta = fObtenerLink2(vRutaGltf);
@@ -157,7 +156,7 @@
             vCssidImgFondo = '{ height: 100vh; left: 10%; }; [1];';
             fImagenImg(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.25', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssidImgFondo);
             //Imagen de Carga de Pagina
-            fImagenCarga('idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
+            fImagenCarga('', 'idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
             const vresultado1 = document.getElementById("idAr-button");
             //Determinar qué tipo de dispositivo se está usando
             vtipopantalla = fTipoPantalla();
@@ -170,7 +169,7 @@
                 //vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
             }            
             //Colocar color de fondo oModelViewer
-            document.getElementById("idContainer").style.cssText = "background: radial-gradient(farthest-corner at -10vw 110vh," + `${vColores1}` + " 0%," + `${vColores2}` + " 100%);";
+            document.getElementById("idContenedor").style.cssText = "background: radial-gradient(farthest-corner at -10vw 110vh," + `${vColores1}` + " 0%," + `${vColores2}` + " 100%);";
             oModelViewer.addEventListener("ar-status", (event) => {
                 if (event.detail.status != "failed") {
                     document.getElementById("idFondoCliente").src = "";
@@ -183,16 +182,13 @@
             })
             //Colocar Logo de Marca Cliente
             vCssidImg1 = '{ height: 40px; }; [1];';
-            fImagenImg(oModelViewer, 'idImg1','L10px','T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', true, 'https://www.google.com', '_blank','0', vCssidImg1);
+            fImagenImg(oModelViewer, 'idImg01', 'L10px', 'T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', true, 'https://www.google.com', '_blank','0', vCssidImg1);
             //Colocar Logo de Marca MI3D
-            fImagenImg(oModelViewer, 'idImg2','L10px','B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', true, 'https://www.google.com', '_blank','0', '');
+            fImagenImg(oModelViewer, 'idImg02', 'L10px', 'B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', true, 'https://www.google.com', '_blank','0', '');
             //Llamar imagen de ayuda
-            fImagenImg(oModelViewer, 'idAyuda','L50%','T50%', '35%', 'translate(-50%, -50%)', '0.7', vRutaPrograma + 'imagenes/MI3D-Leyenda01.png', true, '', '','0', '');
-            //Colocar fondo con logo cliente
-            //document.getElementById("idFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";
+            fImagenImg(oModelViewer, 'idAyuda', 'L50%', 'T50%', '35%', 'translate(-50%, -50%)', '0.7', vRutaPrograma + 'imagenes/MI3D-Leyenda01.png', true, '', '','100', '');
             oModelViewer.setAttribute("ar-placement", vPosicion);
             oModelViewer.addEventListener("load", () => {
-                // devulve true cuando cargo GLTF
                 //Determinar cuantos variantes tiene un mesh
                 const oVariantesSelect = document.getElementById("idVariantesSelect");
                 const oVariantesContainer = document.getElementById("idVariantesContainer");
@@ -477,64 +473,19 @@
                 fHotspotVariante();
                 vCombinacion = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo " + "<br>" +
                     "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo";
-//                fVentanaInformacion("Titulo Ventana", "Codigo Producto", vCombinacion, vRutaPrograma+"imagenes/MI3D-Close.svg", vColores1, vColores2);
+                //fVentanaInformacion("Titulo Ventana", "Codigo Producto", vCombinacion, vRutaPrograma+"imagenes/MI3D-Close.svg", vColores1, vColores2);
                 //Inicio FUNCION Barra Herramientas
-                var vOpciones = {
-                    "id" : "1", // Identificador
-                    "titulo" : "", // Titulo o texto que aparecera por encima
-                    "imagen" : "", // Imagem que mostrara
-                    "color1" : "", // Color principal
-                    "color2" : "", // Color fondo
-                    "activo" : "", // Indicar si esta activo para generar un contraste
-                    "llamar" : "", // Que funcion llamara cuando se ejecute
-                };
-                function fBarraHerramienta(pDireccion, pOpciones, pColores1, pColores2) { //pDireccion = "1 IzqSup, 2 DerSup, 3 IzqInf, 4 DerInf" + Definir a que lado se van a desplegar (Right/Down/Left/Top)
-                    //console.log(pDireccion.slice(1,2));
-                    switch (pDireccion.slice(0,1)) {
-                        case "1":
-                            vTop = "5%";
-                            vLeft = "5%";
-                            break;
-                        case "2":
-                            vTop = "5%";
-                            vLeft = "95%";
-                            break;
-                        case "3":
-                            vTop = "95%";
-                            vLeft = "5%";
-                            break;
-                        case "4":
-                            vTop = "95%";
-                            vLeft = "95%";
-                            break;
-                        default:
-                    }
-                    vMaxWidth = "20%";
-                    var oContenedor = document.createElement("div");
-                    oContenedor.setAttribute("id","idMenu");
-                    oContenedor.style.background = "rgba(" + parseInt(pColores1[1]+pColores1[2],16) +", " + parseInt(pColores1[3]+pColores1[4],16) + ", " + parseInt(pColores1[5]+pColores1[6],16) + ", 0)";
-                    oContenedor.style.display = "block";
-                    oContenedor.style.padding = "0px";
-                    oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
-                    oContenedor.style.maxWidth = vMaxWidth;
-                    oContenedor.style.position = "absolute";
-                    oContenedor.style.left = vLeft;
-                    oContenedor.style.top = vTop;
-                    oContenedor.style.transform = "translate(-50%, -50%)";
-                    oContenedor.style.overflowWrap = "break-word";
-                    //oContenedor.style.width = "max-content";
-                    //oContenedor.style.height = "max-content";
-
-                    document.body.appendChild(oContenedor);
-
-                    fImagenSvg('idMenu', vRutaPrograma + "imagenes/MI3D-Menu.svg", pColores1, 'Menú', '30px');
-
-                    //console.log(vTop,vLeft);
-                    return "valor";
-                };
-                fBarraHerramienta("4L", vOpciones, vColores1, vColores2);
+                var vJsonBarra = '[' +
+                    '{ "id" : "00", "titulo" : "Opciones", "imagen" : "", "color1" : vColores1, "color2" : vColores1, "activo" : "1", "llamar" : "" },' +
+                    '{ "id" : "01", "titulo" : "Opciones", "imagen" : "", "color1" : vColores1, "color2" : vColores1, "activo" : "1", "llamar" : "" }' +
+                ']';
+                console.log(vJsonBarra);
+                //fBarraHerramientax(oModelViewer, 'idPrueba', 'L150px', 'T150px', '50px', '4', vRutaPrograma+"imagenes/MI3D-Close.svg" , true, vColores1);
+                //Probando imagen
             });
             //fTest();
+            fBarraHerramienta(oModelViewer, 'idBarraHerramienta', 'R5%', 'T50%', '40px', true, vColores2, vColores1);
+            //fImagenImg(oModelViewer, 'idImg03', 'R5%', 'T50%', '80px', 'translate(0%, -50%)', '1', vModelViewerRuta + 'ClienteLogo.png', true, '', '', '0', '');
         </script>
     </body>
 </html>
