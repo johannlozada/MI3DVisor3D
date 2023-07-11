@@ -137,6 +137,7 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
 .dimensionLineContainer{
   pointer-events: none;
   display: block;
+  position: absolute;
 }
 .dimensionLine{
   stroke: #919191;
@@ -167,20 +168,17 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   #idVariantesSelect {
     font-size: 5vw;
   }
-  #idVariantesSelect {
-    font-size: 5vw;
-  }
   .leyenda {
     width: 80%;
   }
-  .ClassClienteLogo {
+/*  .ClassClienteLogo {
     width: 60px;
     height: 60px;
   }
   .ClassObjetoCargar {
     width: 150px;
     height: 150px;
-  }
+  }*/
   #idFondoCliente {
     height: 100vh;
     left: -80%;

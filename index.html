@@ -29,25 +29,27 @@
                 autoplay
                 >
                 <!-- <img id="idFondoCliente" src=" "> -->
-                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
-                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
-                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
-                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Z" data-position="1 0 -1" data-normal="1 0 0"></button>
-                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X+Y-Z" data-position="1 1 -1" data-normal="0 1 0"></button>
-                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+Y-Z" data-position="0 -1 -1" data-normal="0 1 0"></button>
-                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X+Y-Z" data-position="-1 1 -1" data-normal="0 1 0"></button>
-                <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Z" data-position="-1 0 -1" data-normal="-1 0 0"></button>
-                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y-Z" data-position="-1 -1 -1" data-normal="-1 0 0"></button>
-                <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Y" data-position="-1 -1 0" data-normal="-1 0 0"></button>
-                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y+Z" data-position="-1 -1 1" data-normal="-1 0 0"></button>
+                
+                    <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
+                    <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
+                    <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
+                    <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Z" data-position="1 0 -1" data-normal="1 0 0"></button>
+                    <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X+Y-Z" data-position="1 1 -1" data-normal="0 1 0"></button>
+                    <button id="HotSpotDimension" class="dim" slot="hotspot-dim+Y-Z" data-position="0 -1 -1" data-normal="0 1 0"></button>
+                    <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X+Y-Z" data-position="-1 1 -1" data-normal="0 1 0"></button>
+                    <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Z" data-position="-1 0 -1" data-normal="-1 0 0"></button>
+                    <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y-Z" data-position="-1 -1 -1" data-normal="-1 0 0"></button>
+                    <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Y" data-position="-1 -1 0" data-normal="-1 0 0"></button>
+                    <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y+Z" data-position="-1 -1 1" data-normal="-1 0 0"></button>
 
-                <svg id="idDimLines" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="dimensionLineContainer">
-                    <line class="dimensionLine"></line>
-                    <line class="dimensionLine"></line>
-                    <line class="dimensionLine"></line>
-                    <line class="dimensionLine"></line>
-                    <line class="dimensionLine"></line>
-                </svg>
+                    <svg id="idDimLines" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="dimensionLineContainer">
+                        <line class="dimensionLine"></line>
+                        <line class="dimensionLine"></line>
+                        <line class="dimensionLine"></line>
+                        <line class="dimensionLine"></line>
+                        <line class="dimensionLine"></line>
+                    </svg>
+                
                 <!--Boton de Realidad Aumentada-->
                 <button slot='ar-button' id='idAr-button'>
                 <!--Activar AR-->
@@ -152,7 +154,8 @@
             oModelViewer.src = fObtenerLink1(vRutaGltf);
             vModelViewerRuta = fObtenerLink2(vRutaGltf);
             //Colocar logo de Marca cliente como fondo
-            fImagenImg(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.25', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1');
+            vCssidImgFondo = '{ height: 100vh; left: 10%; }; [1];';
+            fImagenImg(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.25', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssidImgFondo);
             //Imagen de Carga de Pagina
             fImagenCarga('idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
             const vresultado1 = document.getElementById("idAr-button");
@@ -179,11 +182,12 @@
                 }
             })
             //Colocar Logo de Marca Cliente
-            fImagenImg(oModelViewer, 'idImg1','L10px','T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', true, 'https://www.google.com', '_blank','0');
+            vCssidImg1 = '{ height: 40px; }; [1];';
+            fImagenImg(oModelViewer, 'idImg1','L10px','T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', true, 'https://www.google.com', '_blank','0', vCssidImg1);
             //Colocar Logo de Marca MI3D
-            fImagenImg(oModelViewer, 'idImg2','L10px','B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', true, 'https://www.google.com', '_blank','0');
+            fImagenImg(oModelViewer, 'idImg2','L10px','B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', true, 'https://www.google.com', '_blank','0', '');
             //Llamar imagen de ayuda
-            fImagenImg(oModelViewer, 'idAyuda','L50%','T50%', '35%', 'translate(-50%, -50%)', '0.7', vRutaPrograma + 'imagenes/MI3D-Leyenda01.png', true, '', '','0');
+            fImagenImg(oModelViewer, 'idAyuda','L50%','T50%', '35%', 'translate(-50%, -50%)', '0.7', vRutaPrograma + 'imagenes/MI3D-Leyenda01.png', true, '', '','0', '');
             //Colocar fondo con logo cliente
             //document.getElementById("idFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";
             oModelViewer.setAttribute("ar-placement", vPosicion);

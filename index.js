@@ -12,7 +12,7 @@ window.addEventListener('load', function() {
 });
 /* Colocar CSS inicial */
 const oStyle = document.createElement("style");
-var vEstiloCSS = '\
+oStyle.textContent = '\
   @keyframes girar {\
     0% {\
       transform: rotate(0deg);\
@@ -28,8 +28,10 @@ var vEstiloCSS = '\
     to {\
         opacity:0;\
     }\
-}';
-oStyle.textContent = vEstiloCSS;
+  };\
+  @media only screen and (max-width: 600px) {\
+    [1];\
+  }';
 document.head.appendChild(oStyle);
 /* Desactivar click derecho del mouse */
 /*
@@ -72,7 +74,7 @@ function fImagenCarga(pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer)
   });
 }
 /* Funcion para Colocar una imagen en cualquier lugar de la pantalla*/
-function fImagenImg(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransformacion, pOpacidad, pDirImagen, pEstado, pUrl, pPagina, pZindex) {
+function fImagenImg(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransformacion, pOpacidad, pDirImagen, pEstado, pUrl, pPagina, pZindex, pCssCodigo) {
   pPadre.addEventListener('load', function() {
     var oContenedor = document.createElement('a');
       if (pEstado) {
@@ -121,6 +123,11 @@ function fImagenImg(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransforma
         oImg.style.width = 'auto';
         oImg.style.height = pTamano;
         oImg.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
+        //oStyle.textContent = "#" + pIdIdentificador + pCssCodigo;
+        console.log("#" + pIdIdentificador + pCssCodigo);
+        if (pCssCodigo.length>0) {
+          oStyle.textContent = oStyle.textContent.replace('[1];', '#' + pIdIdentificador + pCssCodigo);
+        }
       oContenedor.appendChild(oImg);
     pPadre.appendChild(oContenedor);
     oImg.style.zIndex = pZindex;
