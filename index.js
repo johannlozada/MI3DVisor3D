@@ -348,8 +348,8 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
       oContenedor.style.position = 'absolute';
       oContenedor.style.borderRadius = '5px 5px 5px 5px';
       oContenedor.style.padding = "3px";
-      oContenedor.style.width = pTamano * pOpciones.length;
-      oContenedor.style.height = pTamano;
+      oContenedor.style.width = pTamano;
+      oContenedor.style.height = pTamano * pOpciones.length;
       oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
       //oContenedor.style.background = 'rgba(0, 0, 0, 0.5)';
       oContenedor.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.5)';

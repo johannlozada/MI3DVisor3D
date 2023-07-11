@@ -96,7 +96,7 @@
             vRutaPrograma = window.location.href;
             // SOLO CUANDO SE EJECUTE EN PC / ES TEMPORAL
             if (vRutaPrograma.includes("file")) {
-                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/fe30a8519630672847b27573e607bb082da90fcf/")
+                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/tree/dcce409305cd67be653dd2875f4d7eacac141630/")
             }
             // Si vPosicion es 0=Piso o 1=Pared GLTF
             vPosicion = "1";
@@ -495,7 +495,7 @@
                 '{ "id" : "12", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" }' +
             ']';
             const oJsonBarra = JSON.parse(vJsonBarra);
-            fBarraHerramienta(oModelViewer, 'idBarraHerramienta', 'R5%', 'T50%', '30px', true, vColores2, vColores1, oJsonBarra);
+            fBarraHerramienta(oModelViewer, 'idBarraHerramienta', 'R5%', 'T20%', '30px', true, vColores2, vColores1, oJsonBarra);
             //fImagenImg(oModelViewer, 'idImg03', 'R5%', 'T50%', '80px', 'translate(0%, -50%)', '1', vModelViewerRuta + 'ClienteLogo.png', true, '', '', '0', '');
         </script>
     </body>
