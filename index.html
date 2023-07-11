@@ -96,7 +96,7 @@
             vRutaPrograma = window.location.href;
             // SOLO CUANDO SE EJECUTE EN PC / ES TEMPORAL
             if (vRutaPrograma.includes("file")) {
-                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/65fcf16ce08f702d610088fa21904c27b85a1057/")
+                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/d0f0199881b843e494604fee39aa2c71a157e730/")
             }
             // Si vPosicion es 0=Piso o 1=Pared GLTF
             vPosicion = "1";
@@ -476,8 +476,18 @@
                 //fVentanaInformacion("Titulo Ventana", "Codigo Producto", vCombinacion, vRutaPrograma+"imagenes/MI3D-Close.svg", vColores1, vColores2);
                 //Inicio FUNCION Barra Herramientas
                 var vJsonBarra = '[' +
-                    '{ "id" : "00", "titulo" : "Opciones", "imagen" : "", "color1" : vColores1, "color2" : vColores1, "activo" : "1", "llamar" : "" },' +
-                    '{ "id" : "01", "titulo" : "Opciones", "imagen" : "", "color1" : vColores1, "color2" : vColores1, "activo" : "1", "llamar" : "" }' +
+                    '{ "id" : "00", "titulo" : "Opciones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
+                    '{ "id" : "01", "titulo" : "-", "imagen" : "", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
+                    '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimension.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
+                    '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
+                    '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
+                    '{ "id" : "05", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
+                    '{ "id" : "06", "titulo" : "-", "imagen" : "", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
+                    '{ "id" : "07", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
+                    '{ "id" : "08", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
+                    '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.svg" + '", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
+                    '{ "id" : "10", "titulo" : "-", "imagen" : "", "color1" : ' + vColores1 + ', "color2" : ' + vColores1 + ', "activo" : "1", "llamar" : "" },' +
+                    '{ "id" : "11", "titulo" : "Ayuda", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.svg" + '", "color1" : vColores1, "color2" : vColores1, "activo" : "1", "llamar" : "" }' +
                 ']';
                 console.log(vJsonBarra);
                 //fBarraHerramientax(oModelViewer, 'idPrueba', 'L150px', 'T150px', '50px', '4', vRutaPrograma+"imagenes/MI3D-Close.svg" , true, vColores1);
