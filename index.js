@@ -315,7 +315,7 @@ function fTest() {
   console.log(testValues, "=  ", testValues.replace(/\b[\w?*]+\.example/, "example"));
   console.log(testValuesx, "=  ", testValuesx.replace(/width="\b[\w?*.]+/, 'width="123'));
 }
-function fBarraHerramientax(pPadre, pId, pPosX, pPosY, pTamano, pDireccion, pDirImagen, pEstado, pColores1) {
+function fBarraHerramientaxxxxx(pPadre, pId, pPosX, pPosY, pTamano, pDireccion, pDirImagen, pEstado, pColores1) {
   oContenedor.style.display = "block";
   oContenedor.style.maxWidth = vMaxWidth;
   oContenedor.style.overflowWrap = "break-word";
@@ -323,11 +323,16 @@ function fBarraHerramientax(pPadre, pId, pPosX, pPosY, pTamano, pDireccion, pDir
   //oContenedor.style.height = "max-content";
   XfImagenSvg2('idMenu', vRutaPrograma + "imagenes/MI3D-Menu.svg", pColores1, 'Menú', '30px');
 };
-function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColores1, pColores2, pOpciones) {
+//
+//pDisposicion: L(R-L) P(T-B) = Landscape Right Left - Portrait Top Bottom / Ejemplos LR (Landscape hacia la Derecha)
+function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColores1, pColores2, pOpciones, pDisposicion) {
+  vPos01 = pDisposicion.slice(0,1);
+  vPos02 = pDisposicion.slice(2,3);
+  console.log(vPos01, vPos02);
   pPadre.addEventListener('load', function() {
     var oContenedor = document.createElement("div");
       if (pEstado) {
-        oContenedor.style.display = 'block';
+        oContenedor.style.display = 'flex';
       }
       else {
         oContenedor.style.display = 'none';
@@ -347,17 +352,41 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
       }
       oContenedor.style.position = 'absolute';
       oContenedor.style.borderRadius = '5px 5px 5px 5px';
-      oContenedor.style.padding = "5px";
-      oContenedor.style.width = pTamano;
-      oContenedor.style.height = pTamano * pOpciones.length;
-      oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
-      //oContenedor.style.background = 'rgba(0, 0, 0, 0.5)';
+      oContenedor.style.padding = '5px';
+      
+      if (vPos01 === 'L') {
+        oContenedor.style.flexFlow = 'row wrap';
+        if (vPos02 === 'R') {
+          oContenedor.style.flexDirection = 'row-reverse';
+        }
+        if (vPos02 === 'L') {
+          oContenedor.style.flexDirection = 'row';
+        }
+      }
+      if (vPos01 === 'P') {
+        oContenedor.style.flexFlow = 'column wrap';
+        if (vPos02 === 'T') {
+          oContenedor.style.flexDirection = 'column';
+        }
+        if (vPos02 === 'B') {
+          oContenedor.style.flexDirection = 'column-reverse';
+        }
+      }
+
+      //oContenedor.style.flexFlow = 'row wrap';
+      //oContenedor.style.flexDirection = 'row-reverse';
+
+      //oContenedor.style.flexFlow = 'column wrap';
+      //oContenedor.style.flexDirection = 'column-reverse';
+
+      oContenedor.style.filter = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))';
       oContenedor.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
       for (let i = 0; i < pOpciones.length; i++) {
         if (pOpciones[i].titulo != '-') {
           fImagenSVG(oContenedor, pTamano, pColores2, pOpciones[i].titulo, pOpciones[i].imagen);
         }
         else {
+          oContenedor.innerHTML = '<div></div>'
           console.log("SALTO DE LINEA");
         };
       };
@@ -366,18 +395,26 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
   });
 }
 function fImagenSVG (pPadre, pTamano, pColor, pInformacion, pArchivoSvg) {
+  vMargen = 3;
+  pTamano = parseInt(pTamano) - vMargen;
   fetch(pArchivoSvg)
     .then(response => response.text())
     .then(svgData => {
         // Modificar el contenido del SVG necesario
         var modifiedSVG = svgData.replace('svg xmlns=', 'svg id="' + pInformacion + '" xmlns=');
+          //modifiedSVG = modifiedSVG.replace(/viewBox ="\b[\w?*.]+/, 'viewBox = "0 0 ' + pTamano.toString() + 'px' + ' ' + pTamano.toString() + 'px"');
           modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
-          modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + pTamano);
-          modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + pTamano);
+          //modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + pTamano.toString());
+          //modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + pTamano.toString());
           modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + pInformacion + ':hover { transform: scale(1.05); }');
           modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
         pPadre.innerHTML =  modifiedSVG + pPadre.innerHTML;
         document.getElementById(pInformacion).style.cursor = 'pointer';
+        document.getElementById(pInformacion).style.width = pTamano.toString() + 'px';
+        document.getElementById(pInformacion).style.height = pTamano.toString() + 'px';
+        document.getElementById(pInformacion).style.margin = vMargen.toString() + 'px';
+        //document.getElementById(pInformacion).style.display = 'flex';
+        //document.getElementById(pInformacion).style.position = 'absolute';
       })
       .catch(error => {
         console.error('Error al cargar el archivo SVG:', error);
