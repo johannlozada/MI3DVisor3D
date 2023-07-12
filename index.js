@@ -357,38 +357,25 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
       if (vPos01 === 'L') {
         oContenedor.style.flexFlow = 'row wrap';
         if (vPos02 === 'R') {
-          oContenedor.style.flexDirection = 'row-reverse';
+          oContenedor.style.flexDirection = 'row';
         }
         if (vPos02 === 'L') {
-          oContenedor.style.flexDirection = 'row';
+          oContenedor.style.flexDirection = 'row-reverse';
         }
       }
       if (vPos01 === 'P') {
         oContenedor.style.flexFlow = 'column wrap';
         if (vPos02 === 'T') {
-          oContenedor.style.flexDirection = 'column';
-        }
-        if (vPos02 === 'B') {
           oContenedor.style.flexDirection = 'column-reverse';
         }
+        if (vPos02 === 'B') {
+          oContenedor.style.flexDirection = 'column';
+        }
       }
-
-      //oContenedor.style.flexFlow = 'row wrap';
-      //oContenedor.style.flexDirection = 'row-reverse';
-
-      //oContenedor.style.flexFlow = 'column wrap';
-      //oContenedor.style.flexDirection = 'column-reverse';
-
       oContenedor.style.filter = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))';
       oContenedor.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
       for (let i = 0; i < pOpciones.length; i++) {
-        if (pOpciones[i].titulo != '-') {
-          fImagenSVG(oContenedor, pTamano, pColores2, pOpciones[i].titulo, pOpciones[i].imagen);
-        }
-        else {
-          oContenedor.innerHTML = '<div></div>'
-          console.log("SALTO DE LINEA");
-        };
+        fImagenSVG(oContenedor, pTamano, pColores2, pOpciones[i].titulo, pOpciones[i].imagen);
       };
       // APILAR EN ORDEN LAS OPCIONES, COLOCAR SEPARADORES, ACTIVAR SI DOY CLICK SOBRE UNA Y CAMBIAR COLOR, ETC
     pPadre.appendChild(oContenedor);
@@ -396,27 +383,33 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
 }
 function fImagenSVG (pPadre, pTamano, pColor, pInformacion, pArchivoSvg) {
   vMargen = 3;
-  pTamano = parseInt(pTamano) - vMargen;
+  vTamano = 0;
+  vTamano = parseInt(pTamano) - vMargen;
   fetch(pArchivoSvg)
     .then(response => response.text())
     .then(svgData => {
         // Modificar el contenido del SVG necesario
         var modifiedSVG = svgData.replace('svg xmlns=', 'svg id="' + pInformacion + '" xmlns=');
-          //modifiedSVG = modifiedSVG.replace(/viewBox ="\b[\w?*.]+/, 'viewBox = "0 0 ' + pTamano.toString() + 'px' + ' ' + pTamano.toString() + 'px"');
+        if (pInformacion != '-') {
           modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
-          //modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + pTamano.toString());
-          //modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + pTamano.toString());
           modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + pInformacion + ':hover { transform: scale(1.05); }');
           modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
-        pPadre.innerHTML =  modifiedSVG + pPadre.innerHTML;
-        document.getElementById(pInformacion).style.cursor = 'pointer';
-        document.getElementById(pInformacion).style.width = pTamano.toString() + 'px';
-        document.getElementById(pInformacion).style.height = pTamano.toString() + 'px';
-        document.getElementById(pInformacion).style.margin = vMargen.toString() + 'px';
-        //document.getElementById(pInformacion).style.display = 'flex';
-        //document.getElementById(pInformacion).style.position = 'absolute';
+
+          //modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + vTamano.toString());
+          //modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + vTamano.toString());
+          pPadre.innerHTML =  pPadre.innerHTML + modifiedSVG;
+          document.getElementById(pInformacion).style.cursor = 'pointer';
+          document.getElementById(pInformacion).style.width = vTamano.toString() + 'px';
+          document.getElementById(pInformacion).style.height = vTamano.toString() + 'px';
+          document.getElementById(pInformacion).style.margin = vMargen.toString() + 'px';
+        }
+        else {
+          pPadre.innerHTML = pPadre.innerHTML + '<div id="separador" style="height: 10px"></div>';
+
+        }
       })
-      .catch(error => {
-        console.error('Error al cargar el archivo SVG:', error);
-      })
+    .catch(error => {
+      console.error('Error al cargar el archivo SVG:', error);
+    })
+    
 }
