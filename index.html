@@ -152,7 +152,7 @@
             vModelViewerRuta = fObtenerLink2(vRutaGltf);
             //Colocar logo de Marca cliente como fondo
             vCssidImgFondo = '{ height: 100vh; left: 10%; }; [1];';
-            fImagenImgLink(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.25', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssidImgFondo);
+            fImagenImgLink(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.15', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssidImgFondo);
             //Imagen de Carga de Pagina
             fImagenCarga('', 'idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
             const vresultado1 = document.getElementById("idAr-button");
@@ -167,7 +167,7 @@
                 //vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
             }            
             //Colocar color de fondo oModelViewer
-            document.getElementById("idContenedor").style.cssText = "background: radial-gradient(farthest-corner at -10vw 110vh," + `${vColores1}` + " 0%," + `${vColores2}` + " 100%);";
+            document.getElementById("idContenedor").style.cssText = "background: radial-gradient(farthest-corner at -30vw 120vh," + `${vColores1}` + " 10%," + `${vColores2}` + " 100%);";
             oModelViewer.addEventListener("ar-status", (event) => {
                 if (event.detail.status != "failed") {
                     document.getElementById("idFondoCliente").src = "";
@@ -478,18 +478,18 @@
             });
             //fTest();
             let vJsonBarra = '[' + 
-                '{ "id" : "00", "titulo" : "Opciones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "00", "titulo" : "Opciones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
                 '{ "id" : "01", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
-                '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimensiones.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "05", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimensiones.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "05", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
                 '{ "id" : "06", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
-                '{ "id" : "07", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "08", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "07", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "08", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
                 '{ "id" : "10", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
-                '{ "id" : "11", "titulo" : "Ayuda", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" }' +
+                '{ "id" : "11", "titulo" : "Ayuda", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" }' +
             ']';
             const oJsonBarra = JSON.parse(vJsonBarra);
             fBarraHerramienta(oModelViewer, 'idBarraHerramienta', 'R10px', 'T20%', '35px', true, vColores2, vColores1, oJsonBarra, 'P-B');

@@ -33,6 +33,8 @@ oStylePagina.textContent = '\
     [1];\
   }';
 document.head.appendChild(oStylePagina);
+let vGSombra = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.75))';
+
 /**** Desactivar click derecho del mouse */
 /*
 document.addEventListener("contextmenu", function(event) {
@@ -52,7 +54,7 @@ function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pObjetoMode
     oContenedor.style.top = '50%';
     oContenedor.style.left = '50%';
     oContenedor.style.transform = 'translate(-50%, -50%)';
-    oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
+    //oContenedor.style.filter = vGSombra;
       //Crear imagen
       var oImg = document.createElement('img');
         oImg.setAttribute('id', pIdIdentificador + 'N02');
@@ -91,6 +93,9 @@ function fImagenImgLink(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransf
       var oImg = document.createElement('img');
         oImg.setAttribute('id', pIdIdentificador);
         oImg.setAttribute('src', pDirImagen);
+        if (pUrl.length != 0 && pPagina.length != 0) {
+          oImg.style.filter = vGSombra;
+        }
         if (pPosX.includes('L',)) {
           oImg.style.left = pPosX.slice(1,pPosX.length);
         }
@@ -123,7 +128,6 @@ function fImagenImgLink(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransf
         oImg.style.transform = pTransformacion;
         oImg.style.width = 'auto';
         oImg.style.height = pTamano;
-        oImg.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
         //console.log("#" + pIdIdentificador + pCssCodigo); FALTA COMPLETAR ESTA INFORMACION EN EL HEAD PARA QUE AFECTE LA PAGINA
         if (pCssCodigo.length>0) {
           oStylePagina.textContent = oStylePagina.textContent.replace('[1];', '#' + pIdIdentificador + pCssCodigo);
@@ -237,7 +241,7 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
     oContenedor.style.filter = "blur(5px)";
     oContenedor.style.display = "block";
     oContenedor.style.padding = vMargenes;
-    oContenedor.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
+    oContenedor.style.filter = vGSombra;
     oContenedor.style.maxWidth = vMaxWidth;
     oContenedor.style.position = "absolute";
     oContenedor.style.left = vLeft;
@@ -330,55 +334,65 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
           oContenedor.style.flexDirection = 'column';
         }
       }
-      oContenedor.style.filter = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))';
-      oContenedor.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
+      oContenedor.style.filter = vGSombra;
+      oContenedor.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.5)';
       for (let i = 0; i < pOpciones.length; i++) {
-        fImagenImg(oContenedor, pTamano, pColores2, pOpciones[i].titulo, pOpciones[i].imagen, i);
+        fImagenImg(oContenedor, pTamano, pColores2, pOpciones[i].titulo, pOpciones[i].imagen, i, pOpciones);
       };
     pPadre.appendChild(oContenedor);
     // ACTIVAR SI DOY CLICK SOBRE UNA Y CAMBIAR COLOR, ETC
   });
 }
-function fImagenImg (pPadre, pTamano, pColores, pInformacion, pArchivoIMG, pOrden) {
-  xxx = pTamano;
+function fImagenImg(pPadre, pTamano, pColores, pInformacion, pArchivoIMG, pContador, pOpciones) {
+  vTamanoBKP = pTamano;
   pTamano = parseInt(pTamano) - parseInt(pPadre.style.padding);
   pTamano = pTamano.toString();
-  pTamano = pTamano + xxx.slice(pTamano.length,xxx.length);
-  console.log (pTamano);
+  pTamano = pTamano + vTamanoBKP.slice(pTamano.length,vTamanoBKP.length);
   pInformacion = pInformacion.replace(/ /g,'');
   var oDiv = document.createElement('div');
     var oImg = document.createElement('img');
-      oImg.setAttribute('id', pInformacion);
+      oImg.setAttribute('id', 'id' + pInformacion);
       oImg.setAttribute('src', pArchivoIMG);
+      oImg.setAttribute('activo', true);
+      oImg.setAttribute('class', 'classNivel00');
+      vImagen = oImg;
       oImg.style.width = pTamano;
       oImg.style.margin = '2px';
-      oImg.style.filter = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))';
+      oImg.style.filter = vGSombra;
+      oImg.style.opacity = '1';
       if (pInformacion != '-') {
-        oImg.setAttribute('onclick','f'+pInformacion+'()');
+        oImg.setAttribute('onclick','f'+pInformacion+'(' + 'id' + pInformacion + ')');
+        oImg.style.cursor = 'pointer';
         var oStyle = document.createElement('style');
           oStyle.setAttribute('type','text/css');
-          oStyle.innerHTML = '#' + pInformacion + ':hover { transform: scale(1.2); }';
-          //oImg.style.backgroundColor = pColores;
+          oStyle.innerHTML = '#' + 'id' + pInformacion + ':hover { transform: scale(1.2); }';
         oImg.appendChild(oStyle);
       };
     oDiv.appendChild(oImg);
   pPadre.appendChild(oDiv);
+  if (pContador>0) {
+    oDiv.style.display = 'none';
+    oDiv.setAttribute('class', 'classNivel01');
+  }
 }
-function fOpciones(pPadre, xxx) { //funcion de llamado cuando se da click
-/*  var oSVG = document.createElement('svg');
-    var oUse = document.createElement('Use');
-      //oUse.setAttribute('xlink:href', pInformacion);
-    oSVG.appendChild(oUse);  
-  pPadre.appendChild(oSVG);
-  */
-  console.log(" por aca FUNCION-------->>>", pPadre, xxx);
-  /*
-  vNuevoColor = oSVG.innerHTML;
-  console.log("Esta es la funcion 'Opciones'", vNuevoColor);
-  vNuevoColor = vNuevoColor.replace(/fill:#([a-fA-F0-9]{6})/, 'fill:black');
-  oSVG.innerHTML = vNuevoColor;
-  console.log("Esta es la funcion 'Opciones'", oSVG.innerHTML);
-  */
+function fOpciones(pPadre) { //funcion de llamado cuando se da click
+  var vActivo = pPadre.getAttribute('activo');
+  vActivo = vActivo === 'true';
+  vActivo = !vActivo;
+  pPadre.setAttribute('activo', vActivo);
+  vClassNivel = document.getElementsByClassName('classNivel01');
+  if (vActivo) {
+    pPadre.style.background = '';
+    for (let i = 0; i < vClassNivel.length; i++) {
+      vClassNivel[i].style.display = 'none';
+    }
+  }
+  else{
+    pPadre.style.background = 'red';
+    for (let i = 0; i < vClassNivel.length; i++) {
+      vClassNivel[i].style.display = 'flex';
+    }
+  }
 }
 // funcion PARA HACER PRUEBAS
 function fTest() {
