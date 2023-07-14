@@ -75,7 +75,7 @@ function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pObjetoMode
   });
 }
 /**** Funcion para Colocar una imagen en cualquier lugar de la pantalla*/
-function fImagenImg(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransformacion, pOpacidad, pDirImagen, pEstado, pUrl, pPagina, pZindex, pCssCodigo) {
+function fImagenImgLink(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransformacion, pOpacidad, pDirImagen, pEstado, pUrl, pPagina, pZindex, pCssCodigo) {
   pPadre.addEventListener('load', function() {
     var oContenedor = document.createElement('a');
       if (pEstado) {
@@ -265,7 +265,6 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
             return false;
         });
       oContenedor.appendChild(oCierre);
-
       // Crear el contenido título + codigo + combinacion
       var oTitulo = document.createElement("div");
         oTitulo.innerHTML = "<b><u>" + pTitulo + "</u></b><br><br>";
@@ -278,20 +277,12 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
       var oDescripcion = document.createElement("div");
         oDescripcion.innerHTML = pDescripcion;
       oContenedor.appendChild(oDescripcion);
-
     // Agregar el oContenedor al cuerpo de la página
   document.body.appendChild(oContenedor);
 
   // Colocar y Cambiar color SVG
   //console.log("JS: ", pSvg);
   fImagenSvg2('idSpan', pSvg, pColores1, 'Cerrar', vMargenes);
-}
-// funcion PARA HACER PRUEBAS
-function fTest() {
-  var testValues = "fg8uj.example";
-  var testValuesx = 'width="4.1516mm"';
-  console.log(testValues, "=  ", testValues.replace(/\b[\w?*]+\.example/, "example"));
-  console.log(testValuesx, "=  ", testValuesx.replace(/width="\b[\w?*.]+/, 'width="123'));
 }
 //pDisposicion: L(R-L) P(T-B) = Landscape Right Left - Portrait Top Bottom / Ejemplos LR (Landscape hacia la Derecha)
 function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColores1, pColores2, pOpciones, pDisposicion) {
@@ -342,11 +333,36 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
       oContenedor.style.filter = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))';
       oContenedor.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
       for (let i = 0; i < pOpciones.length; i++) {
-        fImagenSVG(oContenedor, pTamano, pColores2, pOpciones[i].titulo, pOpciones[i].imagen, i);
+        fImagenImg(oContenedor, pTamano, pColores2, pOpciones[i].titulo, pOpciones[i].imagen, i);
       };
     pPadre.appendChild(oContenedor);
     // ACTIVAR SI DOY CLICK SOBRE UNA Y CAMBIAR COLOR, ETC
   });
+}
+function fImagenImg (pPadre, pTamano, pColores, pInformacion, pArchivoIMG, pOrden) {
+  xxx = pTamano;
+  pTamano = parseInt(pTamano) - parseInt(pPadre.style.padding);
+  pTamano = pTamano.toString();
+  pTamano = pTamano + xxx.slice(pTamano.length,xxx.length);
+  console.log (pTamano);
+  pInformacion = pInformacion.replace(/ /g,'');
+  var oDiv = document.createElement('div');
+    var oImg = document.createElement('img');
+      oImg.setAttribute('id', pInformacion);
+      oImg.setAttribute('src', pArchivoIMG);
+      oImg.style.width = pTamano;
+      oImg.style.margin = '2px';
+      oImg.style.filter = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))';
+      if (pInformacion != '-') {
+        oImg.setAttribute('onclick','f'+pInformacion+'()');
+        var oStyle = document.createElement('style');
+          oStyle.setAttribute('type','text/css');
+          oStyle.innerHTML = '#' + pInformacion + ':hover { transform: scale(1.2); }';
+          //oImg.style.backgroundColor = pColores;
+        oImg.appendChild(oStyle);
+      };
+    oDiv.appendChild(oImg);
+  pPadre.appendChild(oDiv);
 }
 function fOpciones(pPadre, xxx) { //funcion de llamado cuando se da click
 /*  var oSVG = document.createElement('svg');
@@ -364,47 +380,10 @@ function fOpciones(pPadre, xxx) { //funcion de llamado cuando se da click
   console.log("Esta es la funcion 'Opciones'", oSVG.innerHTML);
   */
 }
-
-function fImagenSVG (pPadre, pTamano, pColor, pInformacion, pArchivoSvg, pOrden) {
-  vMargen = 3;
-  vTamano = 0;
-  vTamano = parseInt(pTamano) - vMargen;
-  fetch(pArchivoSvg)
-    .then(response => response.text())
-    .then(oSvgData => {
-        // Modificar el contenido del SVG necesario
-        vLlamarFuncion = 'f' + pInformacion.replace(/ /g,'');
-        //const xxx = fOpciones.toString();
-        //const xxx = pPadre;
-        //console.log(pPadre.innerHTML);
-        var modifiedSVG = oSvgData.replace('svg xmlns=', 'svg id="' + pInformacion + '" onclick="' + vLlamarFuncion + '(' + 100 + ',' + 500 + ')" xmlns=');
-        if (pInformacion != '-') {
-          modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
-          modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + pInformacion + ':hover { transform: scale(1.1); }');
-          modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
-          //modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + vTamano.toString());
-          //modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + vTamano.toString());
-          pPadre.innerHTML =  pPadre.innerHTML + modifiedSVG;
-          oContenedor = document.getElementById(pInformacion);
-          oContenedor.style.cursor = 'pointer';
-          oContenedor.style.width = vTamano.toString() + 'px';
-          oContenedor.style.height = vTamano.toString() + 'px';
-          oContenedor.style.margin = vMargen.toString() + 'px';
-          if (pOrden > 100) {
-            oContenedor.style.display = 'none';
-          }
-        }
-        else {
-          if (pOrden > 100) {
-            pPadre.innerHTML = pPadre.innerHTML + '<div class="separador" style="height: 10px; display: none;"></div>';
-          }
-          else {
-            pPadre.innerHTML = pPadre.innerHTML + '<div class="separador" style="height: 10px;"></div>';
-          }
-        }
-        return 'valor';
-      })
-    .catch(error => {
-      console.error('Error al cargar el archivo SVG:', error);
-    })
+// funcion PARA HACER PRUEBAS
+function fTest() {
+  var testValues = "fg8uj.example";
+  var testValuesx = 'width="4.1516mm"';
+  console.log(testValues, "=  ", testValues.replace(/\b[\w?*]+\.example/, "example"));
+  console.log(testValuesx, "=  ", testValuesx.replace(/width="\b[\w?*.]+/, 'width="123'));
 }

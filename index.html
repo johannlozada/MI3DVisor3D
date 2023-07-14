@@ -94,7 +94,7 @@
             vRutaPrograma = window.location.href;
             // SOLO CUANDO SE EJECUTE EN PC / ES TEMPORAL
             if (vRutaPrograma.includes("file")) {
-                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/tree/6c55cc2eaa11c67c88dfef54891e2771b740c944/");
+                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/tree/9d78a5d5aafaf42d93779a6886efbe79852c5640/");
             }
             // Si vPosicion es 0=Piso o 1=Pared GLTF
             vPosicion = "1";
@@ -152,7 +152,7 @@
             vModelViewerRuta = fObtenerLink2(vRutaGltf);
             //Colocar logo de Marca cliente como fondo
             vCssidImgFondo = '{ height: 100vh; left: 10%; }; [1];';
-            fImagenImg(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.25', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssidImgFondo);
+            fImagenImgLink(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.25', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssidImgFondo);
             //Imagen de Carga de Pagina
             fImagenCarga('', 'idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
             const vresultado1 = document.getElementById("idAr-button");
@@ -180,11 +180,11 @@
             })
             //Colocar Logo de Marca Cliente
             vCssidImg1 = '{ height: 40px; }; [1];';
-            fImagenImg(oModelViewer, 'idImg01', 'L10px', 'T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', true, 'https://www.google.com', '_blank','0', vCssidImg1);
+            fImagenImgLink(oModelViewer, 'idImg01', 'L10px', 'T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', true, 'https://www.google.com', '_blank','0', vCssidImg1);
             //Colocar Logo de Marca MI3D
-            fImagenImg(oModelViewer, 'idImg02', 'L10px', 'B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', true, 'https://www.google.com', '_blank','0', '');
+            fImagenImgLink(oModelViewer, 'idImg02', 'L10px', 'B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', true, 'https://www.google.com', '_blank','0', '');
             //Llamar imagen de ayuda
-            fImagenImg(oModelViewer, 'idAyuda', 'L50%', 'T50%', '35%', 'translate(-50%, -50%)', '0.7', vRutaPrograma + 'imagenes/MI3D-Leyenda01.png', true, '', '','100', '');
+            fImagenImgLink(oModelViewer, 'idAyuda', 'L50%', 'T50%', '35%', 'translate(-50%, -50%)', '0.7', vRutaPrograma + 'imagenes/MI3D-Leyenda01.png', true, '', '','100', '');
             oModelViewer.setAttribute("ar-placement", vPosicion);
             oModelViewer.addEventListener("load", () => {
                 //Determinar cuantos variantes tiene un mesh
@@ -478,22 +478,22 @@
             });
             //fTest();
             let vJsonBarra = '[' + 
-                '{ "id" : "00", "titulo" : "Opciones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "01", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.svg" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
-                '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimensiones.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "05", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "06", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.svg" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
-                '{ "id" : "07", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "08", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
-                '{ "id" : "10", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.svg" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
-                '{ "id" : "11", "titulo" : "Ayuda", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.svg" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" }' +
+                '{ "id" : "00", "titulo" : "Opciones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "01", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
+                '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimensiones.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "05", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "06", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
+                '{ "id" : "07", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "08", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" },' +
+                '{ "id" : "10", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
+                '{ "id" : "11", "titulo" : "Ayuda", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "llamar" : "" }' +
             ']';
             const oJsonBarra = JSON.parse(vJsonBarra);
             fBarraHerramienta(oModelViewer, 'idBarraHerramienta', 'R10px', 'T20%', '35px', true, vColores2, vColores1, oJsonBarra, 'P-B');
-            //fImagenImg(oModelViewer, 'idImg03', 'R50%', 'T50%', '80px', 'translate(0%, -50%)', '1', vModelViewerRuta + 'ClienteLogo.png', true, '', '', '0', '');
+            //fImagenImgLink(oModelViewer, 'idImg03', 'R50%', 'T50%', '80px', 'translate(0%, -50%)', '1', vModelViewerRuta + 'ClienteLogo.png', true, '', '', '0', '');
             //fImagenSVG(oModelViewer, '35px', vColores2, "Realidad Aumentada", vRutaPrograma+"imagenes/MI3D-AR.svg", 3);
         </script>
     </body>
