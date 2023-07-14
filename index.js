@@ -11,8 +11,8 @@ window.addEventListener('load', function() {
   }
 });
 /**** Colocar CSS inicial en HEAD */
-const oStyle = document.createElement("style");
-oStyle.textContent = '\
+const oStylePagina = document.createElement("style");
+oStylePagina.textContent = '\
   @keyframes girar {\
     0% {\
       transform: rotate(0deg);\
@@ -32,7 +32,7 @@ oStyle.textContent = '\
   @media only screen and (max-width: 600px) {\
     [1];\
   }';
-document.head.appendChild(oStyle);
+document.head.appendChild(oStylePagina);
 /**** Desactivar click derecho del mouse */
 /*
 document.addEventListener("contextmenu", function(event) {
@@ -126,7 +126,7 @@ function fImagenImg(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransforma
         oImg.style.filter = "drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))";
         //console.log("#" + pIdIdentificador + pCssCodigo); FALTA COMPLETAR ESTA INFORMACION EN EL HEAD PARA QUE AFECTE LA PAGINA
         if (pCssCodigo.length>0) {
-          oStyle.textContent = oStyle.textContent.replace('[1];', '#' + pIdIdentificador + pCssCodigo);
+          oStylePagina.textContent = oStylePagina.textContent.replace('[1];', '#' + pIdIdentificador + pCssCodigo);
         }
       oContenedor.appendChild(oImg);
     pPadre.appendChild(oContenedor);
@@ -286,28 +286,6 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
   //console.log("JS: ", pSvg);
   fImagenSvg2('idSpan', pSvg, pColores1, 'Cerrar', vMargenes);
 }
-function XfImagenSvg2(pIdObjeto, pArchivoSvg, pColor, pInformacion, pTamano) {
-  var oContenedor1 = document.getElementById(pIdObjeto);
-  vIdentificador = "idSvg"+pIdObjeto;
-  // Cargar el archivo SVG
-  fetch(pArchivoSvg)
-    .then(response => response.text())
-    .then(svgData => {
-        // Modificar el contenido del SVG necesario
-        var modifiedSVG = svgData.replace('svg xmlns=', 'svg id="' + vIdentificador + '" xmlns=');
-          modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
-          modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + pTamano);
-          modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + pTamano);
-          modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + vIdentificador + ':hover { transform: scale(1.2); }');
-          modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
-          //console.log(modifiedSVG);
-          // Insertar el SVG modificado dentro del span
-        oContenedor1.innerHTML = modifiedSVG;
-      })
-      .catch(error => {
-        console.error('Error al cargar el archivo SVG:', error);
-      })
-}
 // funcion PARA HACER PRUEBAS
 function fTest() {
   var testValues = "fg8uj.example";
@@ -315,20 +293,10 @@ function fTest() {
   console.log(testValues, "=  ", testValues.replace(/\b[\w?*]+\.example/, "example"));
   console.log(testValuesx, "=  ", testValuesx.replace(/width="\b[\w?*.]+/, 'width="123'));
 }
-function fBarraHerramientaxxxxx(pPadre, pId, pPosX, pPosY, pTamano, pDireccion, pDirImagen, pEstado, pColores1) {
-  oContenedor.style.display = "block";
-  oContenedor.style.maxWidth = vMaxWidth;
-  oContenedor.style.overflowWrap = "break-word";
-  //oContenedor.style.width = "max-content";
-  //oContenedor.style.height = "max-content";
-  XfImagenSvg2('idMenu', vRutaPrograma + "imagenes/MI3D-Menu.svg", pColores1, 'Menú', '30px');
-};
-//
 //pDisposicion: L(R-L) P(T-B) = Landscape Right Left - Portrait Top Bottom / Ejemplos LR (Landscape hacia la Derecha)
 function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColores1, pColores2, pOpciones, pDisposicion) {
   vPos01 = pDisposicion.slice(0,1);
   vPos02 = pDisposicion.slice(2,3);
-  console.log(vPos01, vPos02);
   pPadre.addEventListener('load', function() {
     var oContenedor = document.createElement("div");
       if (pEstado) {
@@ -353,7 +321,6 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
       oContenedor.style.position = 'absolute';
       oContenedor.style.borderRadius = '5px 5px 5px 5px';
       oContenedor.style.padding = '5px';
-      
       if (vPos01 === 'L') {
         oContenedor.style.flexFlow = 'row wrap';
         if (vPos02 === 'R') {
@@ -375,41 +342,69 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
       oContenedor.style.filter = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))';
       oContenedor.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
       for (let i = 0; i < pOpciones.length; i++) {
-        fImagenSVG(oContenedor, pTamano, pColores2, pOpciones[i].titulo, pOpciones[i].imagen);
+        fImagenSVG(oContenedor, pTamano, pColores2, pOpciones[i].titulo, pOpciones[i].imagen, i);
       };
-      // APILAR EN ORDEN LAS OPCIONES, COLOCAR SEPARADORES, ACTIVAR SI DOY CLICK SOBRE UNA Y CAMBIAR COLOR, ETC
     pPadre.appendChild(oContenedor);
+    // ACTIVAR SI DOY CLICK SOBRE UNA Y CAMBIAR COLOR, ETC
   });
 }
-function fImagenSVG (pPadre, pTamano, pColor, pInformacion, pArchivoSvg) {
+function fOpciones(pPadre, xxx) { //funcion de llamado cuando se da click
+/*  var oSVG = document.createElement('svg');
+    var oUse = document.createElement('Use');
+      //oUse.setAttribute('xlink:href', pInformacion);
+    oSVG.appendChild(oUse);  
+  pPadre.appendChild(oSVG);
+  */
+  console.log(" por aca FUNCION-------->>>", pPadre, xxx);
+  /*
+  vNuevoColor = oSVG.innerHTML;
+  console.log("Esta es la funcion 'Opciones'", vNuevoColor);
+  vNuevoColor = vNuevoColor.replace(/fill:#([a-fA-F0-9]{6})/, 'fill:black');
+  oSVG.innerHTML = vNuevoColor;
+  console.log("Esta es la funcion 'Opciones'", oSVG.innerHTML);
+  */
+}
+
+function fImagenSVG (pPadre, pTamano, pColor, pInformacion, pArchivoSvg, pOrden) {
   vMargen = 3;
   vTamano = 0;
   vTamano = parseInt(pTamano) - vMargen;
   fetch(pArchivoSvg)
     .then(response => response.text())
-    .then(svgData => {
+    .then(oSvgData => {
         // Modificar el contenido del SVG necesario
-        var modifiedSVG = svgData.replace('svg xmlns=', 'svg id="' + pInformacion + '" xmlns=');
+        vLlamarFuncion = 'f' + pInformacion.replace(/ /g,'');
+        //const xxx = fOpciones.toString();
+        //const xxx = pPadre;
+        //console.log(pPadre.innerHTML);
+        var modifiedSVG = oSvgData.replace('svg xmlns=', 'svg id="' + pInformacion + '" onclick="' + vLlamarFuncion + '(' + 100 + ',' + 500 + ')" xmlns=');
         if (pInformacion != '-') {
           modifiedSVG = modifiedSVG.replace('fill:black', 'fill:' + pColor);
-          modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + pInformacion + ':hover { transform: scale(1.05); }');
+          modifiedSVG = modifiedSVG.replace('<style type="text/css">', '<style type="text/css"> #' + pInformacion + ':hover { transform: scale(1.1); }');
           modifiedSVG = modifiedSVG.replace('</g>', '</g><title id="idTitulo">' + pInformacion + '</title>');
-
           //modifiedSVG = modifiedSVG.replace(/width="\b[\w?*.]+/, 'width="' + vTamano.toString());
           //modifiedSVG = modifiedSVG.replace(/height="\b[\w?*.]+/, 'height="' + vTamano.toString());
           pPadre.innerHTML =  pPadre.innerHTML + modifiedSVG;
-          document.getElementById(pInformacion).style.cursor = 'pointer';
-          document.getElementById(pInformacion).style.width = vTamano.toString() + 'px';
-          document.getElementById(pInformacion).style.height = vTamano.toString() + 'px';
-          document.getElementById(pInformacion).style.margin = vMargen.toString() + 'px';
+          oContenedor = document.getElementById(pInformacion);
+          oContenedor.style.cursor = 'pointer';
+          oContenedor.style.width = vTamano.toString() + 'px';
+          oContenedor.style.height = vTamano.toString() + 'px';
+          oContenedor.style.margin = vMargen.toString() + 'px';
+          if (pOrden > 100) {
+            oContenedor.style.display = 'none';
+          }
         }
         else {
-          pPadre.innerHTML = pPadre.innerHTML + '<div id="separador" style="height: 10px"></div>';
-
+          if (pOrden > 100) {
+            pPadre.innerHTML = pPadre.innerHTML + '<div class="separador" style="height: 10px; display: none;"></div>';
+          }
+          else {
+            pPadre.innerHTML = pPadre.innerHTML + '<div class="separador" style="height: 10px;"></div>';
+          }
         }
+        return 'valor';
       })
     .catch(error => {
       console.error('Error al cargar el archivo SVG:', error);
     })
-    
 }
