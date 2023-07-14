@@ -343,31 +343,32 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
     // ACTIVAR SI DOY CLICK SOBRE UNA Y CAMBIAR COLOR, ETC
   });
 }
-function fImagenImg(pPadre, pTamano, pColores, pInformacion, pArchivoIMG, pContador, pOpciones) {
+function fImagenImg(pPadre, pTamano, pColores, pTitulo, pArchivoIMG, pContador, pOpciones) {
   vTamanoBKP = pTamano;
   pTamano = parseInt(pTamano) - parseInt(pPadre.style.padding);
   pTamano = pTamano.toString();
   pTamano = pTamano + vTamanoBKP.slice(pTamano.length,vTamanoBKP.length);
-  pInformacion = pInformacion.replace(/ /g,'');
+  pTitulo = pTitulo.replace(/ /g,'');
   var oDiv = document.createElement('div');
     var oImg = document.createElement('img');
-      oImg.setAttribute('id', 'id' + pInformacion);
+      oImg.setAttribute('id', 'id' + pTitulo);
       oImg.setAttribute('src', pArchivoIMG);
       oImg.setAttribute('activo', true);
       oImg.setAttribute('class', 'classNivel00');
-      vImagen = oImg;
       oImg.style.width = pTamano;
       oImg.style.margin = '2px';
       oImg.style.filter = vGSombra;
       oImg.style.opacity = '1';
-      if (pInformacion != '-') {
-        oImg.setAttribute('onclick','f'+pInformacion+'(' + 'id' + pInformacion + ')');
+      oImg.style.justifyContent = 'center';
+      oImg.style.alignItems = 'center';
+      if (pTitulo != '-') {
+        oImg.setAttribute('onClick','f'+pTitulo+'(' + 'id' + pTitulo + ')');
         oImg.style.cursor = 'pointer';
         var oStyle = document.createElement('style');
           oStyle.setAttribute('type','text/css');
-          oStyle.innerHTML = '#' + 'id' + pInformacion + ':hover { transform: scale(1.2); }';
+          oStyle.innerHTML = '#' + 'id' + pTitulo + ':hover { transform: scale(1.2); }';
         oImg.appendChild(oStyle);
-      };
+      }
     oDiv.appendChild(oImg);
   pPadre.appendChild(oDiv);
   if (pContador>0) {
@@ -390,8 +391,21 @@ function fOpciones(pPadre) { //funcion de llamado cuando se da click
   else{
     pPadre.style.background = 'red';
     for (let i = 0; i < vClassNivel.length; i++) {
-      vClassNivel[i].style.display = 'flex';
+      vClassNivel[i].style.display = 'block';
     }
+  }
+}
+function fDimensiones(pPadre) {
+  var vActivo = pPadre.getAttribute('activo');
+  vActivo = vActivo === 'true';
+  vActivo = !vActivo;
+  pPadre.setAttribute('activo', vActivo);
+  vClassNivel = document.getElementsByClassName('classNivel01');
+  if (vActivo) {
+    pPadre.style.background = '';
+  }
+  else{
+    pPadre.style.background = 'red';
   }
 }
 // funcion PARA HACER PRUEBAS
