@@ -33,7 +33,8 @@ oStylePagina.textContent = '\
     [1];\
   }';
 document.head.appendChild(oStylePagina);
-let vGSombra = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.75))';
+let vSombraUp = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.75))';
+let vSombraDn = 'drop-shadow(-3px -3px 2px rgba(68, 68, 68, 0.75))';
 let vPadding = '5px';
 let vFondoBoton = 'rgba(255, 255, 255, 0.75)';
 /**** Desactivar click derecho del mouse */
@@ -55,7 +56,7 @@ function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pObjetoMode
     oContenedor.style.top = '50%';
     oContenedor.style.left = '50%';
     oContenedor.style.transform = 'translate(-50%, -50%)';
-    //oContenedor.style.filter = vGSombra;
+    //oContenedor.style.filter = vSombraUp;
       //Crear imagen
       var oImg = document.createElement('img');
         oImg.setAttribute('id', pIdIdentificador + 'N02');
@@ -95,7 +96,7 @@ function fImagenImgLink(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransf
         oImg.setAttribute('id', pIdIdentificador);
         oImg.setAttribute('src', pDirImagen);
         if (pUrl.length != 0 && pPagina.length != 0) {
-          oImg.style.filter = vGSombra;
+          oImg.style.filter = vSombraUp;
         }
         if (pPosX.includes('L',)) {
           oImg.style.left = pPosX.slice(1,pPosX.length);
@@ -242,7 +243,7 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
     oContenedor.style.filter = "blur(5px)";
     oContenedor.style.display = "block";
     oContenedor.style.padding = vMargenes;
-    oContenedor.style.filter = vGSombra;
+    oContenedor.style.filter = vSombraUp;
     oContenedor.style.maxWidth = vMaxWidth;
     oContenedor.style.position = "absolute";
     oContenedor.style.left = vLeft;
@@ -336,7 +337,7 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
         }
       }
       oContenedor.style.width = pTamano;
-      oContenedor.style.filter = vGSombra;
+      oContenedor.style.filter = vSombraUp;
       oContenedor.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.5)';
       for (let i = 0; i < pOpciones.length; i++) {
         fImagenImg(oContenedor, pTamano, pColores2, pOpciones[i].titulo, pOpciones[i].imagen, i, pOpciones);
@@ -359,7 +360,7 @@ function fImagenImg(pPadre, pTamano, pColores, pTitulo, pArchivoIMG, pContador, 
       oImg.setAttribute('class', 'classNivel00');
       oImg.style.width = pTamano;
       oImg.style.margin = '2.5px';
-      oImg.style.filter = vGSombra;
+      //oImg.style.filter = vSombraUp;
       oImg.style.display = 'flex';
       oImg.style.borderRadius = '2px 2px 2px 2px';
       oImg.style.opacity = '1';
@@ -384,37 +385,56 @@ function fImagenImg(pPadre, pTamano, pColores, pTitulo, pArchivoIMG, pContador, 
     oDiv.setAttribute('class', 'classNivel01');
   }
 }
-function fOpciones(pPadre, pDiv) { // funcion MENU
+function fBotonCambio(pPadre, pDiv) {
   var vActivo = pPadre.getAttribute('activo');
   vActivo = vActivo === 'true';
   vActivo = !vActivo;
   pPadre.setAttribute('activo', vActivo);
-  vClassNivel = document.getElementsByClassName('classNivel01');
   if (vActivo) {
     pDiv.style.background = '';
+  }
+  else{
+    pDiv.style.background = vFondoBoton;
+  }
+  return vActivo;
+}
+function fOpciones(pPadre, pDiv) { // funcion MENU
+  vActivo = fBotonCambio(pPadre, pDiv);
+  vClassNivel = document.getElementsByClassName('classNivel01');
+  if (vActivo) {
     for (let i = 0; i < vClassNivel.length; i++) {
       vClassNivel[i].style.display = 'none';
     }
   }
   else{
-    pDiv.style.background = vFondoBoton;
     for (let i = 0; i < vClassNivel.length; i++) {
       vClassNivel[i].style.display = 'block';
     }
   }
 }
 function fDimensiones(pPadre, pDiv) {
-  var vActivo = pPadre.getAttribute('activo');
-  vActivo = vActivo === 'true';
-  vActivo = !vActivo;
-  pPadre.setAttribute('activo', vActivo);
-  vClassNivel = document.getElementsByClassName('classNivel01');
-  if (vActivo) {
-    pDiv.style.background = '';
-  }
-  else{
-    pDiv.style.background = vFondoBoton;
-  }
+  vActivo = fBotonCambio(pPadre, pDiv);
+}
+function fVariantes(pPadre, pDiv) {
+  vActivo = fBotonCambio(pPadre, pDiv);
+}
+function fFullScreen(pPadre, pDiv) {
+  vActivo = fBotonCambio(pPadre, pDiv);
+}
+function fRealidadAumentada(pPadre, pDiv) {
+  vActivo = fBotonCambio(pPadre, pDiv);
+}
+function fCaptura(pPadre, pDiv) {
+  vActivo = fBotonCambio(pPadre, pDiv);
+}
+function fCompartir(pPadre, pDiv) {
+  vActivo = fBotonCambio(pPadre, pDiv);
+}
+function fGaleria (pPadre, pDiv) {
+  vActivo = fBotonCambio(pPadre, pDiv);
+}
+function fAyuda(pPadre, pDiv) {
+  vActivo = fBotonCambio(pPadre, pDiv);
 }
 // funcion PARA HACER PRUEBAS
 function fTest() {
