@@ -34,7 +34,8 @@ oStylePagina.textContent = '\
   }';
 document.head.appendChild(oStylePagina);
 let vGSombra = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.75))';
-
+let vPadding = '5px';
+let vFondoBoton = 'rgba(255, 255, 255, 0.75)';
 /**** Desactivar click derecho del mouse */
 /*
 document.addEventListener("contextmenu", function(event) {
@@ -315,7 +316,7 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
       }
       oContenedor.style.position = 'absolute';
       oContenedor.style.borderRadius = '5px 5px 5px 5px';
-      oContenedor.style.padding = '5px';
+      oContenedor.style.padding = vPadding;
       if (vPos01 === 'L') {
         oContenedor.style.flexFlow = 'row wrap';
         if (vPos02 === 'R') {
@@ -334,39 +335,46 @@ function fBarraHerramienta (pPadre, pId, pPosX, pPosY, pTamano, pEstado, pColore
           oContenedor.style.flexDirection = 'column';
         }
       }
+      oContenedor.style.width = pTamano;
       oContenedor.style.filter = vGSombra;
       oContenedor.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.5)';
       for (let i = 0; i < pOpciones.length; i++) {
         fImagenImg(oContenedor, pTamano, pColores2, pOpciones[i].titulo, pOpciones[i].imagen, i, pOpciones);
       };
     pPadre.appendChild(oContenedor);
-    // ACTIVAR SI DOY CLICK SOBRE UNA Y CAMBIAR COLOR, ETC
   });
 }
 function fImagenImg(pPadre, pTamano, pColores, pTitulo, pArchivoIMG, pContador, pOpciones) {
   vTamanoBKP = pTamano;
-  pTamano = parseInt(pTamano) - parseInt(pPadre.style.padding);
+  pTamano = parseInt(pTamano) - parseInt(vPadding);
   pTamano = pTamano.toString();
   pTamano = pTamano + vTamanoBKP.slice(pTamano.length,vTamanoBKP.length);
   pTitulo = pTitulo.replace(/ /g,'');
   var oDiv = document.createElement('div');
+    oDiv.style.borderRadius = '3px 3px 3px 3px';
     var oImg = document.createElement('img');
       oImg.setAttribute('id', 'id' + pTitulo);
       oImg.setAttribute('src', pArchivoIMG);
       oImg.setAttribute('activo', true);
       oImg.setAttribute('class', 'classNivel00');
       oImg.style.width = pTamano;
-      oImg.style.margin = '2px';
+      oImg.style.margin = '2.5px';
       oImg.style.filter = vGSombra;
+      oImg.style.display = 'flex';
+      oImg.style.borderRadius = '2px 2px 2px 2px';
       oImg.style.opacity = '1';
       oImg.style.justifyContent = 'center';
       oImg.style.alignItems = 'center';
       if (pTitulo != '-') {
-        oImg.setAttribute('onClick','f'+pTitulo+'(' + 'id' + pTitulo + ')');
+        //oDiv.style.height = pTamano;
         oImg.style.cursor = 'pointer';
+        oImg.addEventListener('click', function() {
+          var vfuncion = eval('f'+pTitulo);
+          vfuncion(document.querySelector('#' + 'id' + pTitulo), oDiv);
+        });
         var oStyle = document.createElement('style');
           oStyle.setAttribute('type','text/css');
-          oStyle.innerHTML = '#' + 'id' + pTitulo + ':hover { transform: scale(1.2); }';
+          oStyle.innerHTML = '#' + 'id' + pTitulo + ':hover { transform: scale(1.1); }';
         oImg.appendChild(oStyle);
       }
     oDiv.appendChild(oImg);
@@ -376,36 +384,36 @@ function fImagenImg(pPadre, pTamano, pColores, pTitulo, pArchivoIMG, pContador, 
     oDiv.setAttribute('class', 'classNivel01');
   }
 }
-function fOpciones(pPadre) { //funcion de llamado cuando se da click
+function fOpciones(pPadre, pDiv) { // funcion MENU
   var vActivo = pPadre.getAttribute('activo');
   vActivo = vActivo === 'true';
   vActivo = !vActivo;
   pPadre.setAttribute('activo', vActivo);
   vClassNivel = document.getElementsByClassName('classNivel01');
   if (vActivo) {
-    pPadre.style.background = '';
+    pDiv.style.background = '';
     for (let i = 0; i < vClassNivel.length; i++) {
       vClassNivel[i].style.display = 'none';
     }
   }
   else{
-    pPadre.style.background = 'red';
+    pDiv.style.background = vFondoBoton;
     for (let i = 0; i < vClassNivel.length; i++) {
       vClassNivel[i].style.display = 'block';
     }
   }
 }
-function fDimensiones(pPadre) {
+function fDimensiones(pPadre, pDiv) {
   var vActivo = pPadre.getAttribute('activo');
   vActivo = vActivo === 'true';
   vActivo = !vActivo;
   pPadre.setAttribute('activo', vActivo);
   vClassNivel = document.getElementsByClassName('classNivel01');
   if (vActivo) {
-    pPadre.style.background = '';
+    pDiv.style.background = '';
   }
   else{
-    pPadre.style.background = 'red';
+    pDiv.style.background = vFondoBoton;
   }
 }
 // funcion PARA HACER PRUEBAS
