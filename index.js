@@ -420,6 +420,7 @@ function fVariantes(pPadre, pDiv) {
 }
 function fFullScreen(pPadre, pDiv) {
   vActivo = fBotonCambio(pPadre, pDiv);
+  fToggleFullScreen();
 }
 function fRealidadAumentada(pPadre, pDiv) {
   vActivo = fBotonCambio(pPadre, pDiv);

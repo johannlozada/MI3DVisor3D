@@ -1,12 +1,500 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Cambiar valor true/false con clic del mouse</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv='cache-control' content='no-cache'> 
+        <meta http-equiv='expires' content='0'> 
+        <meta http-equiv='pragma' content='no-cache'>
+        <link rel="stylesheet" type="text/css" href="./index.css">
+        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
         <script src="./index.js"></script>
+        <title>MI3D - Visor 3D</title>
+        <link rel="shortcut icon" type="image/x-icon" href="imagenes/MI3D-favicon.ico">
     </head>
     <body>
-        <h1>Cambiar valor true/false con clic del mouse</h1>
-        <button id="toggleButton" data-activo="true" onclick="cambiarValor(this)">Cambiar Valor</button>
+        <!--Cuerpo 3D-->
+        <div id="idContenedor">
+            <model-viewer id='IdModelo3d'
+                src=''
+                alt='MI3D - Visor 3D'
+                shadow-intensity='1'
+                camera-controls
+                ar
+                ar-modes='webxr scene-viewer quick-look'
+                xr-enviroment
+                ar-scale='auto'
+                disable-tap
+                scale='1 1 1'
+                autoplay
+                >
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Z" data-position="1 0 -1" data-normal="1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X+Y-Z" data-position="1 1 -1" data-normal="0 1 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+Y-Z" data-position="0 -1 -1" data-normal="0 1 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X+Y-Z" data-position="-1 1 -1" data-normal="0 1 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Z" data-position="-1 0 -1" data-normal="-1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y-Z" data-position="-1 -1 -1" data-normal="-1 0 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Y" data-position="-1 -1 0" data-normal="-1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y+Z" data-position="-1 -1 1" data-normal="-1 0 0"></button>
 
+                <svg id="idDimLines" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="dimensionLineContainer">
+                    <line class="dimensionLine"></line>
+                    <line class="dimensionLine"></line>
+                    <line class="dimensionLine"></line>
+                    <line class="dimensionLine"></line>
+                    <line class="dimensionLine"></line>
+                </svg>
+                
+                <!--Boton de Realidad Aumentada-->
+                <button slot='ar-button' id='idAr-button'>
+                <!--Activar AR-->
+                </button>
+                <div id='ar-prompt'>
+                    <img src='imagenes/MI3D-AR02.png'>
+                </div>
+                <button id='ar-failure'>
+                    No se detecta AR
+                </button>
+                <!--Checkbox para activar si se muestran las medidas y/o las variantes-->
+                <div id="marcoleyenda" class="marcoleyenda">
+                    Opciones:
+                    <br>
+                    <input id="show-variantes" type="checkbox">
+                    <label for="show-variantes">  Variantes</label>
+                    <br>
+                    <input id="show-dimensions" type="checkbox">
+                    <label for="show-dimensions">  Medidas</label>
+                    <br>
+                    <input id="show-leyenda" type="checkbox">
+                    <label for="show-leyenda">  Ayuda</label>
+                    <br>
+                    <input id="show-informacion" type="checkbox">
+                    <label for="show-informacion">  Información</label>
+                    <br>
+                    <input id="show-pantalla" type="checkbox">
+                    <label for="show-pantalla">  Pantalla Completa</label>
+                </div>
+                <!-- Parámetros pasados en la URL: -->
+                <div id="parametros"></div>
+                <!-- Elemento select y contenedor para la lista de opciones -->
+                <select id='idVariantesSelect' style='display: none;'>
+                </select>
+                <div id='idVariantesContainer'>
+                </div>
+            </model-viewer>
+        </div>
+    
+        <script>
+            // Parametros iniciales que tendra q leer del googlesheet
+            // Ruta de archivo
+            vRutaGltf = "https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf";
+            vRutaPrograma = window.location.href;
+            // SOLO CUANDO SE EJECUTE EN PC / ES TEMPORAL
+            if (vRutaPrograma.includes("file")) {
+                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/c86e2701aa071d9d89633b57ef9179fb03f91f31/");
+            }
+            // Si vPosicion es 0=Piso o 1=Pared GLTF
+            vPosicion = "1";
+            if (vPosicion === "0") {
+                vPosicion = "wall";
+            }
+            else {
+                vPosicion = "floor";
+            }
+            vColores1 = "#c8e1ff";
+            vColores2 = "#3b91f7";
+            //Angulos de vision V y H
+            //vCamaraorbitar="-45deg 75deg 100%"; // camera-orbit = movimiento de la camara sobre el objeto $Theta $Phi $Radio
+            //vCamaraDestino="5m 2m 0m";"" // camera-target = a donde va la camara sobre el objeto $X $Y $Z
+            //vMaxCamaraOrbita="22.5deg 90deg auto"; // $Theta $Phi $Radio Maximo
+            //vMinCamaraOrbita="-22.5deg 45deg auto"; // $Theta $Phi $Radio Minimo
+            //INICIO de obtener parametros
+            //los parametros despues del Link inician con ?CONST=VALOR ejemplo ...?const01=valor01&const02=valor02&...
+            //Leyenda:
+            //para01=ubicacion archivo Gltf
+            //para02=posicion en ar del Gltf
+            //la idea seria conectar con googlesheets, pasar parametros como codigo=CLI001
+            //Hacer un script que busque este codigo en la googlesheets y retorne el link con la direccion del GLTF
+            var vClickActivo;
+            function getURLParameters() {
+                var vUrlParams = {};
+                var vMatch,
+                vPl = /\+/g,  // Regex para reemplazar los caracteres especiales codificados en la URL
+                vBuscar = /([^&=]+)=?([^&]*)/g,
+                fDecode = function (s) {
+                    return decodeURIComponent(s.replace(vPl, " "));
+                },
+                vQuery = window.location.search.substring(1);
+                while ((vMatch = vBuscar.exec(vQuery))) {
+                    var vParam = fDecode(vMatch[1]);
+                    var vValor = fDecode(vMatch[2]);
+                    vUrlParams[vParam] = vValor;
+                }
+                return vUrlParams;
+            }
+            // Obtener los parámetros de la URL y mostrarlos en consola
+            function fMostrarParametros() {
+                var vParametros = getURLParameters();
+                // Mostrar los parámetros en la página
+                for (var vParametro in vParametros) {
+                    console.log(vParametro, vParametros[vParametro]);
+                }
+            }
+            // Llamar a la función para mostrar los parámetros cuando la página se cargue
+            window.onload = fMostrarParametros();
+            // Declara Objeto ModelViewer del GLTF
+            const oModelViewer = document.querySelector("model-viewer#IdModelo3d");
+            //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
+            oModelViewer.src = fObtenerLink1(vRutaGltf);
+            vModelViewerRuta = fObtenerLink2(vRutaGltf);
+            //Colocar logo de Marca cliente como fondo
+            vCssidImgFondo = '{ height: 100vh; left: 10%; }; [1];';
+            fImagenImgLink(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.15', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssidImgFondo);
+            //Imagen de Carga de Pagina
+            fImagenCarga('', 'idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
+            const vresultado1 = document.getElementById("idAr-button");
+            //Determinar qué tipo de dispositivo se está usando
+            vtipopantalla = fTipoPantalla();
+            console.log(vtipopantalla);
+            if (vtipopantalla.includes("movil")) {
+                vresultado1.innerHTML = "Activar AR";
+            }
+            else {
+                //vresultado1.innerHTML = "";
+                //vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
+            }            
+            //Colocar color de fondo oModelViewer
+            document.getElementById("idContenedor").style.cssText = "background: radial-gradient(farthest-corner at -30vw 120vh," + `${vColores1}` + " 10%," + `${vColores2}` + " 100%);";
+            oModelViewer.addEventListener("ar-status", (event) => {
+                if (event.detail.status != "failed") {
+                    document.getElementById("idFondoCliente").src = "";
+                }
+            })
+            oModelViewer.addEventListener("ar-status", (event) => {
+                if (event.detail.status == "not-presenting") {
+                    document.getElementById("idFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";;
+                }
+            })
+            //Colocar Logo de Marca Cliente
+            vCssidImg1 = '{ height: 40px; }; [1];';
+            fImagenImgLink(oModelViewer, 'idImg01', 'L10px', 'T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', true, 'https://www.google.com', '_blank','0', vCssidImg1);
+            //Colocar Logo de Marca MI3D
+            fImagenImgLink(oModelViewer, 'idImg02', 'L10px', 'B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', true, 'https://www.google.com', '_blank','0', '');
+            //Llamar imagen de ayuda
+            fImagenImgLink(oModelViewer, 'idAyuda', 'L50%', 'T50%', '35%', 'translate(-50%, -50%)', '0.7', vRutaPrograma + 'imagenes/MI3D-Leyenda01.png', true, '', '','100', '');
+            oModelViewer.setAttribute("ar-placement", vPosicion);
+            oModelViewer.addEventListener("load", () => {
+                //Determinar cuantos variantes tiene un mesh
+                const oVariantesSelect = document.getElementById("idVariantesSelect");
+                const oVariantesContainer = document.getElementById("idVariantesContainer");
+                function fGenerarListaVariantes(pX, pY, pMaterial, pMaterialDefecto) {
+                    const vVariante = oModelViewer.availableVariants;
+                    oVariantesSelect.innerHTML = "";
+                    oVariantesSelect.style.display = "block";
+                    oVariantesContainer.style.display = "none";
+                    oVariantesSelect.style.left = pX + "px";
+                    oVariantesSelect.style.top = pY + "px";
+                    for (let i = 0; i < vVariante.length; i++) {
+                        vVarianteCompara = vVariante[i].slice(vVariante[i].search('_')+1,vVariante[i].legth);
+                        //Comparar si pertenecen al Material
+                        if (vVarianteCompara == pMaterial) {
+                            vVariante[i] = vVariante[i].slice(0, vVariante[i].search('_'));
+                            const oOpcion = document.createElement("option");
+                            oOpcion.value = vVariante[i];
+                            oOpcion.appendChild(document.createTextNode(vVariante[i]));
+                            oVariantesSelect.appendChild(oOpcion);
+                            document.getElementById("idVariantesSelect").value = pMaterialDefecto;
+                        }
+                    }
+                    // Permite cambiar la variante en el gltf
+                    oVariantesSelect.addEventListener('input', (event) => {
+                        oModelViewer.variantName = event.target.value + '_' + pMaterial;
+                        oVariantesSelect.style.display = 'none';
+                    });
+                }
+                function fMostrarListavariantes(pEvent) {
+                    if (!vClickActivo) {
+                        const oMaterialClick = oModelViewer.materialFromPoint(pEvent.clientX, pEvent.clientY);
+                        if (oMaterialClick != null) {
+                            const vRect = oModelViewer.getBoundingClientRect();
+                            const pX = pEvent.clientX - vRect.left;
+                            const pY = pEvent.clientY - vRect.top;
+                            oVariantesContainer.style.display = "block";
+                            oVariantesSelect.style.display = "none";
+                            oVariantesContainer.innerHTML = "";
+                            const vVarianteName = document.createElement("span");
+                            if (oMaterialClick.name.search('_') > 0) {
+                                vVarianteName.textContent = oMaterialClick.name;
+                                oVariantesContainer.appendChild(vVarianteName);
+                                const vMaterial = oMaterialClick.name.slice(oMaterialClick.name.search('_')+1,oMaterialClick.name.length); // Determinar el Material
+                                const vMaterialDefecto = oMaterialClick.name.slice(0, oMaterialClick.name.search('_')); // Determinar el Material x defecto
+                                //console.log("material = " + oMaterialClick.name, " Codigo = [" + vMaterial + "]", "MDefecto = " + vMaterialDefecto);
+                                fGenerarListaVariantes(pX, pY, vMaterial, vMaterialDefecto);
+                            }
+                        }
+                        else {
+                            const target = pEvent.target;
+                            if (target !== oVariantesSelect) {
+                                oVariantesSelect.style.display = 'none';
+                            }
+                        }
+                    }
+                }
+                //Obtener los checkbox
+                const oCheckboxVariantes = oModelViewer.querySelector('#show-variantes');
+                const oCheckboxMedidas = oModelViewer.querySelector('#show-dimensions');
+                const oCheckboxAyuda = oModelViewer.querySelector('#show-leyenda');
+                const oCheckboxInformacion = oModelViewer.querySelector('#show-informacion');
+                const oCheckboxPantalla = oModelViewer.querySelector('#show-pantalla');
+                const oIdLeyenda = document.getElementById('idAyuda');
+                //Cuando haces click genera la OptionList - Determinar a qué variantes se les da click
+                oModelViewer.addEventListener("click", fMostrarListavariantes);
+                //Ocultar el selector de variantes cuando se selecciona una opción
+                oVariantesSelect.addEventListener('change', () => {
+                    oVariantesSelect.style.display = 'none';
+                });
+                //Detecta cuando se da click en cualquier lado
+                document.getElementById("idVariantesContainer").addEventListener("mousedown", function(e){
+                    oVariantesSelect.style.display = 'none';
+                });
+                //checkbox variante Oculto/Visible
+                function fVariableVisible(pElemento) {
+                    if (oCheckboxVariantes.checked) {
+                        pElemento.classList.remove('hide');
+                    } else {
+                        pElemento.classList.add('hide');
+                    }
+                }
+                //checkbox dimension Oculto/Visible
+                function fMedidasVisible(pElemento) {
+                    if (oCheckboxMedidas.checked) {
+                        pElemento.classList.remove('hide');
+                    } else {
+                        pElemento.classList.add('hide');
+                    }
+                }
+                //checkbox variante Pasar el valor cuando carga
+/*                oModelViewer.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
+                    fVariableVisible(hotspot);
+                });*/
+                //checkbox dimension Pasar el valor cuando carga
+                fMedidasVisible(oModelViewer.querySelector('#idDimLines'));
+                oModelViewer.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
+                    vClickActivo = !oCheckboxVariantes.checked;
+                    fMedidasVisible(hotspot);
+                });
+                // Revision de checkbox leyenda cuando inicia
+                if (oCheckboxAyuda.checked) {
+                    oIdLeyenda.style.display = "flex";
+                }
+                else {
+                    oIdLeyenda.style.display = "none";
+                }
+                // Revision de checkbox leyenda cuando cambia
+                oCheckboxAyuda.addEventListener('change',() => {
+                    if (oCheckboxAyuda.checked) {
+                        oIdLeyenda.style.display = "flex";
+                    }
+                    else {
+                        oIdLeyenda.style.display = "none";
+                    }
+                });
+                // Revision de checkbox pantalla cuando inicia
+                if (oCheckboxPantalla.checked) {
+                    oCheckboxPantalla.checked = false;
+                }
+                // Revision de checkbox pantalla cuando cambia
+                oCheckboxPantalla.addEventListener('change',() => {
+                    fToggleFullScreen();
+                });
+                document.addEventListener("fullscreenchange", function(event) {
+                    if (!document.fullscreenElement) {
+                        // El usuario ha salido del modo de pantalla completa
+                        console.log("Tecla ESC capturada o salio del modo de pantalla completa");
+                        oCheckboxPantalla.checked = false;
+                    }
+                });
+                //checkbox variante Pasar el valor
+                oCheckboxVariantes.addEventListener('change', () => {
+                    vClickActivo = !oCheckboxVariantes.checked;
+                    oModelViewer.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
+                        fVariableVisible(hotspot);
+                    });
+                });
+                //checkbox dimension Pasar el valor
+                oCheckboxMedidas.addEventListener('change', () => {
+                    fMedidasVisible(oModelViewer.querySelector('#idDimLines'));
+                    oModelViewer.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
+                        fMedidasVisible(hotspot);
+                    });
+                });
+                // update svg - inicio dibujo de Lineas Dimensiones
+                //console.log(oCheckboxVariantes.checked);
+                function fDibujarLinea(pSvgLine, pDotHotspot1, pDotHotspot2, pDimensionHotspot) {
+                    if (pDotHotspot1 && pDotHotspot2) {
+                        pSvgLine.setAttribute('x1', pDotHotspot1.canvasPosition.x);
+                        pSvgLine.setAttribute('y1', pDotHotspot1.canvasPosition.y);
+                        pSvgLine.setAttribute('x2', pDotHotspot2.canvasPosition.x);
+                        pSvgLine.setAttribute('y2', pDotHotspot2.canvasPosition.y);
+                        // use provided optional hotspot to tie visibility of this svg line to
+                        if (pDimensionHotspot && !pDimensionHotspot.facingCamera) {
+                            pSvgLine.classList.add('hide');
+                        }
+                        else {
+                            pSvgLine.classList.remove('hide');
+                        }
+                    }
+                }
+                const oDimLines = oModelViewer.querySelectorAll('line');
+                const fRenderSVG = () => {
+                    fDibujarLinea(oDimLines[0], oModelViewer.queryHotspot('hotspot-dot+X-Y+Z'), oModelViewer.queryHotspot('hotspot-dot+X-Y-Z'), oModelViewer.queryHotspot('hotspot-dim+X-Y'));
+                    fDibujarLinea(oDimLines[1], oModelViewer.queryHotspot('hotspot-dot+X-Y-Z'), oModelViewer.queryHotspot('hotspot-dot+X+Y-Z'), oModelViewer.queryHotspot('hotspot-dim+X-Z'));
+                    fDibujarLinea(oDimLines[2], oModelViewer.queryHotspot('hotspot-dot+X+Y-Z'), oModelViewer.queryHotspot('hotspot-dot-X+Y-Z')); // always visible
+                    fDibujarLinea(oDimLines[3], oModelViewer.queryHotspot('hotspot-dot-X+Y-Z'), oModelViewer.queryHotspot('hotspot-dot-X-Y-Z'), oModelViewer.queryHotspot('hotspot-dim-X-Z'));
+                    fDibujarLinea(oDimLines[4], oModelViewer.queryHotspot('hotspot-dot-X-Y-Z'), oModelViewer.queryHotspot('hotspot-dot-X-Y+Z'), oModelViewer.queryHotspot('hotspot-dim-X-Y'));
+                };
+                oModelViewer.addEventListener('camera-change', fRenderSVG);
+                const oCenter = oModelViewer.getBoundingBoxCenter();
+                const oSize = oModelViewer.getDimensions();
+                const vX2 = oSize.x / 2;
+                const vY2 = oSize.y / 2;
+                const vZ2 = oSize.z / 2;
+                vDecimal = 1;
+                vUndMedida = "m";
+                //console.log(oSize.x, oSize.y, oSize.z);console.log(oCenter.x, oCenter.y, oCenter.z);
+                oModelViewer.updateHotspot({
+                    name: 'hotspot-dot+X-Y+Z',
+                    position: `${oCenter.x + vX2} ${oCenter.y - vY2} ${oCenter.z + vZ2}`
+                });
+                oModelViewer.updateHotspot({
+                    name: 'hotspot-dim+X-Y',
+                    position: `${oCenter.x + vX2 * 1} ${oCenter.y - vY2 * 1} ${oCenter.z}`
+                });
+                oModelViewer.querySelector('button[slot="hotspot-dim+X-Y"]').textContent =
+                    `${(oSize.z * vDecimal).toFixed(0)} `+ vUndMedida;
+                oModelViewer.updateHotspot({
+                    name: 'hotspot-dot+X-Y-Z',
+                    position: `${oCenter.x + vX2} ${oCenter.y - vY2} ${oCenter.z - vZ2}`
+                });
+                oModelViewer.updateHotspot({
+                    name: 'hotspot-dim+X-Z',
+                    position: `${oCenter.x + vX2 * 1} ${oCenter.y} ${oCenter.z - vZ2 * 1}`
+                });
+                oModelViewer.querySelector('button[slot="hotspot-dim+X-Z"]').textContent =
+                    `${(oSize.y * vDecimal).toFixed(0)} `+ vUndMedida;
+                oModelViewer.updateHotspot({
+                    name: 'hotspot-dot+X+Y-Z',
+                    position: `${oCenter.x + vX2} ${oCenter.y + vY2} ${oCenter.z - vZ2}`
+                });
+                oModelViewer.updateHotspot({
+                    name: 'hotspot-dim+Y-Z',
+                    position: `${oCenter.x} ${oCenter.y + vY2 * 1} ${oCenter.z - vZ2 * 1}`
+                });
+                oModelViewer.querySelector('button[slot="hotspot-dim+Y-Z"]').textContent =
+                    `${(oSize.x * vDecimal).toFixed(0)} `+ vUndMedida;
+            
+                oModelViewer.updateHotspot({
+                    name: 'hotspot-dot-X+Y-Z',
+                    position: `${oCenter.x - vX2} ${oCenter.y + vY2} ${oCenter.z - vZ2}`
+                });
+                oModelViewer.updateHotspot({
+                    name: 'hotspot-dim-X-Z',
+                    position: `${oCenter.x - vX2 * 1} ${oCenter.y} ${oCenter.z - vZ2 * 1}`
+                });
+                oModelViewer.querySelector('button[slot="hotspot-dim-X-Z"]').textContent =
+                    `${(oSize.y * vDecimal).toFixed(0)} `+ vUndMedida;
+            
+                oModelViewer.updateHotspot({
+                    name: 'hotspot-dot-X-Y-Z',
+                    position: `${oCenter.x - vX2} ${oCenter.y - vY2} ${oCenter.z - vZ2}`
+                });
+                oModelViewer.updateHotspot({
+                    name: 'hotspot-dim-X-Y',
+                    position: `${oCenter.x - vX2 * 1} ${oCenter.y - vY2 * 1} ${oCenter.z}`
+                });
+                oModelViewer.querySelector('button[slot="hotspot-dim-X-Y"]').textContent =
+                    `${(oSize.z * vDecimal).toFixed(0)} `+ vUndMedida;
+                oModelViewer.updateHotspot({
+                    name: 'hotspot-dot-X-Y+Z',
+                    position: `${oCenter.x - vX2} ${oCenter.y - vY2} ${oCenter.z + vZ2}`
+                });
+                fRenderSVG();
+                //crear los hotsspot indicando q tiene variables
+                function fHotspotVariante() {
+                    //Colocar hostspot en mesh si este tiene variantes
+                    //Leer archivo Json = GLTF
+                    var vC1 = 0;
+                    //var vTextoButton = [];
+                    fetch(oModelViewer.src)
+                        .then(res => res.json())
+                        .then(data =>   {
+                            for (let i = 0; i < data.nodes.length; i++) {
+                                if (typeof data.materials[i].extensions !== 'undefined'){
+                                    //console.log("Meshes:", data.nodes.length, 
+                                    //    "Nombre:", data.nodes[i].name,
+                                    //    "x:", data.nodes[i].translation[0],
+                                    //    "z:", data.nodes[i].translation[1],
+                                    //    "y:", data.nodes[i].translation[2],
+                                    //    "Boton N:", vC1);
+                                    vHPx = data.nodes[i].translation[0] / vDecimal;
+                                    vHPz = data.nodes[i].translation[1] / vDecimal;
+                                    vHPy = data.nodes[i].translation[2] / vDecimal;
+                                    var oBoton = document.createElement("button");
+                                    oBoton.id = "HotSpotVariante";
+                                    if (oCheckboxVariantes.checked) {
+                                        oBoton.className = "hotspot";
+                                    } else {
+                                        oBoton.className = "hotspot hide";
+                                    }
+                                    oBoton.setAttribute("slot","hotspot" + `${vC1}`);
+                                    oBoton.setAttribute("data-position",`${vHPx} ${vHPz} ${vHPy}`);
+                                    oBoton.setAttribute("data-normal", "0 0 0");
+
+                                    var oDetalle = document.createElement("div");
+                                    oDetalle.className = "annotation";
+                                    oDetalle.innerHTML = data.nodes[i].name;
+                                    oDetalle.style.color = "rgb(0, 0, 0)";
+                                    oBoton.appendChild(oDetalle);
+
+                                    oModelViewer.appendChild(oBoton);
+                                    vC1++;
+                                }
+                            }
+                        }) 
+                        .catch(error => {
+                            console.error('Error al obtener el archivo JSON:', error);
+                        });
+                };
+                fHotspotVariante();
+                vCombinacion = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo " + "<br>" +
+                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo";
+                //fVentanaInformacion("Titulo Ventana", "Codigo Producto", vCombinacion, vRutaPrograma+"imagenes/MI3D-Close.svg", vColores1, vColores2);
+                //Inicio FUNCION Barra Herramientas
+                //fBarraHerramientax(oModelViewer, 'idPrueba', 'L150px', 'T150px', '50px', '4', vRutaPrograma+"imagenes/MI3D-Close.svg" , true, vColores1);
+                //Probando imagen
+            });
+            //fTest();
+            let vJsonBarra = '[' + 
+                '{ "id" : "00", "titulo" : "Opciones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "01", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
+                '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimensiones.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "05", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "06", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
+                '{ "id" : "07", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "08", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
+                '{ "id" : "10", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
+                '{ "id" : "11", "titulo" : "Ayuda", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" }' +
+            ']';
+            const oJsonBarra = JSON.parse(vJsonBarra);
+            fBarraHerramienta(oModelViewer, 'idBarraHerramienta', 'R10px', 'T20%', '40px', true, vColores2, vColores1, oJsonBarra, 'P-B');
+            //fImagenImgLink(oModelViewer, 'idImg03', 'R50%', 'T50%', '80px', 'translate(0%, -50%)', '1', vModelViewerRuta + 'ClienteLogo.png', true, '', '', '0', '');
+            //fImagenSVG(oModelViewer, '35px', vColores2, "Realidad Aumentada", vRutaPrograma+"imagenes/MI3D-AR.svg", 3);
+        </script>
     </body>
 </html>

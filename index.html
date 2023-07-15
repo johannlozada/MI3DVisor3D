@@ -248,7 +248,6 @@
                 const oCheckboxMedidas = oModelViewer.querySelector('#show-dimensions');
                 const oCheckboxAyuda = oModelViewer.querySelector('#show-leyenda');
                 const oCheckboxInformacion = oModelViewer.querySelector('#show-informacion');
-                const oCheckboxPantalla = oModelViewer.querySelector('#show-pantalla');
                 const oIdLeyenda = document.getElementById('idAyuda');
                 //Cuando haces click genera la OptionList - Determinar a qué variantes se les da click
                 oModelViewer.addEventListener("click", fMostrarListavariantes);
@@ -300,21 +299,6 @@
                     }
                     else {
                         oIdLeyenda.style.display = "none";
-                    }
-                });
-                // Revision de checkbox pantalla cuando inicia
-                if (oCheckboxPantalla.checked) {
-                    oCheckboxPantalla.checked = false;
-                }
-                // Revision de checkbox pantalla cuando cambia
-                oCheckboxPantalla.addEventListener('change',() => {
-                    fToggleFullScreen();
-                });
-                document.addEventListener("fullscreenchange", function(event) {
-                    if (!document.fullscreenElement) {
-                        // El usuario ha salido del modo de pantalla completa
-                        console.log("Tecla ESC capturada o salio del modo de pantalla completa");
-                        oCheckboxPantalla.checked = false;
                     }
                 });
                 //checkbox variante Pasar el valor
@@ -492,7 +476,7 @@
                 '{ "id" : "11", "titulo" : "Ayuda", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" }' +
             ']';
             const oJsonBarra = JSON.parse(vJsonBarra);
-            fBarraHerramienta(oModelViewer, 'idBarraHerramienta', 'R10px', 'T20%', '40px', true, vColores2, vColores1, oJsonBarra, 'P-B');
+            fBarraHerramienta(oModelViewer, 'idBarraHerramienta', 'R10px', 'T5px', '40px', true, vColores2, vColores1, oJsonBarra, 'P-B');
             //fImagenImgLink(oModelViewer, 'idImg03', 'R50%', 'T50%', '80px', 'translate(0%, -50%)', '1', vModelViewerRuta + 'ClienteLogo.png', true, '', '', '0', '');
             //fImagenSVG(oModelViewer, '35px', vColores2, "Realidad Aumentada", vRutaPrograma+"imagenes/MI3D-AR.svg", 3);
         </script>
