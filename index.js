@@ -37,7 +37,9 @@ let vSombraUp = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.75))';
 let vSombraDn = 'drop-shadow(-3px -3px 2px rgba(68, 68, 68, 0.75))';
 let vPadding = '2px';
 let vBordeRadio = '5px';
-let vFondoBoton = 'rgba(255, 255, 255, 0.75)';
+let vBotonFondoPulsado = 'rgba(255, 255, 255, 0.45)';
+let vBlurFondo = 'blur(4px)';
+let vBlurBorde = '1px solid rgba(255, 255, 255, 0.18)';
 /**** Desactivar click derecho del mouse */
 /*
 document.addEventListener("contextmenu", function(event) {
@@ -241,7 +243,7 @@ function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pC
   // Crear el elemento oContenedor del rectángulo de información
   var oContenedor = document.createElement("div");
     oContenedor.style.background = "rgba(" + parseInt(pColores2[1]+pColores2[2],16) +", " + parseInt(pColores2[3]+pColores2[4],16) + ", " + parseInt(pColores2[5]+pColores2[6],16) + ", 0.5)";
-    oContenedor.style.filter = "blur(5px)";
+    oContenedor.style.filter = "blur(5px)";// <------- ACA!!!!
     oContenedor.style.display = "block";
     oContenedor.style.padding = vMargenes;
     oContenedor.style.filter = vSombraUp;
@@ -313,8 +315,8 @@ function fBarraHerramientas(pContenedor, pId, pPosX, pPosY, pTamano, pColores1, 
         oBarra.style.borderRadius = vBordeRadio;
         oBarra.style.padding = vPadding;
         oBarra.style.filter = vSombraUp;
-        //oBarra.style.justifyContent = 'center';
-        //oBarra.style.alignItems = 'center';
+        oBarra.style.backdropFilter = vBlurFondo;
+        oBarra.style.border = vBlurBorde;
         oBarra.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
         for (i=0; i < pBotones.length; i++) {
             pBotones[i].tamano = pTamano;
@@ -357,9 +359,7 @@ function fImagenImg(pContenedor, pColores, pTitulo, pArchivoIMG, pIndice, pBoton
       let oImg = document.createElement('img');
           oImg.setAttribute('id', 'idImg' + pTitulo);
           oImg.style.borderRadius = `${parseInt(vBordeRadio)- parseInt(vPadding)}px`;
-          //oImg.style.background = 'blue';
           if (pTitulo != '-') {
-              //oBoton.style.background = 'white';
               oImg.setAttribute('title', pTitulo);
               oImg.setAttribute('src', pArchivoIMG);
               oImg.style.margin = '2px';
@@ -376,6 +376,7 @@ function fImagenImg(pContenedor, pColores, pTitulo, pArchivoIMG, pIndice, pBoton
                   if (pBotones[pIndice].activo === '0') {
                     oStyle.innerHTML = '#' + 'idImg' + pTitulo;
                     oImg.style.cursor = '';
+                    oImg.style.filter = 'invert(50%)';
                   }
               oImg.appendChild(oStyle);
           }
@@ -463,11 +464,12 @@ function fAnalisisBoton(pPadre, pDiv) {
   pPadre.setAttribute('pulsado', vPulsado);
   if (vPulsado) {
     if (vActivo==='1') {
-      pDiv.style.background = vFondoBoton;
+      pDiv.style.background = vBotonFondoPulsado;
     }
   } 
   else {
     pDiv.style.background = '';
+    pDiv.style.border = '';
   }
   vPulsado = !vPulsado;
   return vPulsado;
