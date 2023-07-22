@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./index.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id='idContenedor'>
+    </div>
+    <script>
+        vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/44c8185d1ec1c451efbf647668d744e1c0fc2203/");
+        vColores1 = '#c8e1ff';
+        vColores2 = '#3b91f7';
+        vPadding = '2px';
+        vBordeRadio = '5px';
+        fCrearMarco(document.getElementById('idContenedor'), 'idMarco', '10%', '10%', '80%', '80%', '#ffffff', '#43b2ff');
+        let vJsonBarra = '[' + 
+            '{ "id" : "00", "titulo" : "Menu Principal", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
+            '{ "id" : "01", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "tamano" : "" },' +
+            '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimensiones.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
+            '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
+            '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
+            '{ "id" : "05", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "tamano" : "" },' +
+            '{ "id" : "06", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
+            '{ "id" : "07", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
+            '{ "id" : "08", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "tamano" : "" },' +
+            '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
+            '{ "id" : "10", "titulo" : "Detalles", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Detalles.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
+            '{ "id" : "11", "titulo" : "Informacion", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" }' +
+        ']';
+        const oJsonBarra = JSON.parse(vJsonBarra);
+        fBarraHerramienta2(document.getElementById('idMarco'), 'idBarra', 'R10px', 'T10px', '50px', '#43b2ff', '#ffffff', true, 'P',oJsonBarra);
+
+/******************/
+//pContenedor, Dnd se creara
+//pX, pY, Posicion X y Y
+//pTamano, Tamaño de la barra de herramienta
+//pColor, Color principal
+//pColorFondo, Color de Fondo
+//pEstado, Estado extendido o plegado
+//pDisposicion, Si sera horizonta o Vertical H=L, V=P
+//pBotones, son las opciones de los botones
+
+        function fBarraHerramienta2(pContenedor, pId, pPosX, pPosY, pTamano, pColores1, pColores2, pEstado, pDisposicion, pBotones) {
+            //ANALIZAR DISTRIBUCION DE LA BARRA DE HERRAMIENTRAS DENTRO DE LA PANALLA, DE ACUERDO A DIPOSICION Y UBICACION
+//            pContenedor.addEventListener('load', function() {
+                console.log(pPosX, pPosY, pTamano, pDisposicion);
+                let oBarra = document.createElement('div');
+                    if (pPosX.includes('L')) {
+                        oBarra.style.left = pPosX.slice(1,pPosX.length);
+                    }
+                    if (pPosX.includes('R')) {
+                        oBarra.style.right = pPosX.slice(1,pPosX.length);
+                    }
+                    if (pPosY.includes('T')) {
+                        oBarra.style.top = pPosY.slice(1,pPosY.length);
+                    }
+                    if (pPosY.includes('B')) {
+                        oBarra.style.bottom = pPosY.slice(1,pPosY.length);
+                    }
+                    oBarra.setAttribute('id', pId);
+                    oBarra.style.position = 'absolute';
+                    oBarra.style.margin = '0px';
+                    oBarra.style.borderRadius = vBordeRadio;
+                    oBarra.style.padding = vPadding;
+                    oBarra.style.filter = vSombraUp;
+                    //oBarra.style.justifyContent = 'center';
+                    //oBarra.style.alignItems = 'center';
+                    oBarra.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
+                    for (i=0; i < pBotones.length; i++) {
+                        pBotones[i].tamano = pTamano;
+                        fImagenImg2(oBarra, pColores2, pBotones[i].titulo, pBotones[i].imagen, i, pBotones);
+                    }
+                pContenedor.appendChild(oBarra);
+                oBarra.style.display = 'flex';
+                let vClave = pDisposicion+pPosX.slice(0,1)+pPosY.slice(0,1);
+                let vMedidaBarra = oBarra.clientWidth > oBarra.clientHeight ? oBarra.clientWidth : oBarra.clientHeight;
+                console.log('Clave : ', vClave, 
+                  'Barra: ', vMedidaBarra,
+                  'Alto P:', pContenedor.clientHeight, 
+                  'Ancho P:', pContenedor.clientWidth,
+                  'Forma :', pDisposicion, 
+                  'pos X: ', pPosX.slice(0,1),
+                  'pos Y: ', pPosY.slice(0,1));
+
+                fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
+                let vOrientacion = window.matchMedia("(orientation: portrait)");
+                vOrientacion.addEventListener("change", function(e) {
+                    if(e.matches) {// Portrait mode
+                        fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
+                    } else { // Landscape mode
+                        fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
+                    }
+                })
+            }
+
+        function fImagenImg2(pContenedor, pColores, pTitulo, pArchivoIMG, pIndice, pBotones) {
+            pTitulo = pTitulo.replace(/ /g,'');
+            let oBoton = document.createElement('div');
+                oBoton.setAttribute('id', 'idDiv' + pTitulo);
+                oBoton.style.borderRadius = `${parseInt(vBordeRadio)- parseInt(vPadding)}px`;
+                oBoton.style.margin = '1px';
+                oBoton.style.height = `${parseInt(pBotones[pIndice].tamano) - parseInt(vPadding) * 2}px`;
+                oBoton.style.width = `${parseInt(pBotones[pIndice].tamano) - parseInt(vPadding) * 2}px`;
+                oBoton.setAttribute('class', 'classPadre');
+                let oImg = document.createElement('img');
+                    oImg.setAttribute('id', 'idImg' + pTitulo);
+                    oImg.style.borderRadius = `${parseInt(vBordeRadio)- parseInt(vPadding)}px`;
+                    //oImg.style.background = 'blue';
+                    if (pTitulo != '-') {
+                        oBoton.style.background = 'white';
+                        oImg.setAttribute('title', pTitulo);
+                        oImg.setAttribute('pulsado', false);
+                        oImg.setAttribute('src', pArchivoIMG);
+                        oImg.style.margin = '2px';
+                        oImg.style.cursor = 'pointer';
+                        oImg.style.height = `${parseInt(pBotones[pIndice].tamano) - (parseInt(vPadding) * 4)}px`;
+                        oImg.style.width = `${parseInt(pBotones[pIndice].tamano) - (parseInt(vPadding) * 4)}px`;
+                        oImg.addEventListener('click', function() {
+                            let vfuncion = eval('f'+pTitulo);
+                            vfuncion(document.querySelector('#' + 'id' + pTitulo), oBoton);
+                        });
+                        let oStyle = document.createElement('style');
+                            oStyle.setAttribute('type','text/css');
+                            oStyle.innerHTML = '#' + 'idImg' + pTitulo + ':hover { transform: scale(1.2); } ';
+                        oImg.appendChild(oStyle);
+                    }
+                    else {
+                        oBoton.style.height = '6px';
+                        oBoton.style.width = '6px';
+
+                    }
+                oBoton.appendChild(oImg);
+            pContenedor.appendChild(oBoton);
+            if (pIndice > 0) {
+                //oBoton.style.display = 'none';
+                oBoton.setAttribute('class', 'classHijo');
+            }
+        }
+        function fAnalsisOrientacion(pClave, pMedidaBarra, pContenedor, pBarra) {
+            //PLT colum
+            //PRT colum
+            //PLB colum reverse
+            //PRB colum reverse
+            if (pClave === 'PLT') {
+                if (pMedidaBarra < pContenedor.clientHeight) {
+                    pBarra.style.flexDirection = 'column';
+                } else {
+                    pBarra.style.flexDirection = 'row';
+                }
+            }
+            if (pClave === 'PRT') {
+                if (pMedidaBarra < pContenedor.clientHeight) {
+                    pBarra.style.flexDirection = 'column';
+                } else {
+                    pBarra.style.flexDirection = 'row-reverse';
+                }
+            }
+            if (pClave === 'PLB') {
+                if (pMedidaBarra < pContenedor.clientHeight) {
+                    pBarra.style.flexDirection = 'column-reverse';
+                } else {
+                    pBarra.style.flexDirection = 'row';
+                }
+            }
+            if (pClave === 'PRB') {
+                if (pMedidaBarra < pContenedor.clientHeight) {
+                    pBarra.style.flexDirection = 'column-reverse';
+                } else {
+                    pBarra.style.flexDirection = 'row-reverse';
+                }
+            }
+            //LLT row wrap
+            //LRT row reverse wrap
+            //LLB row reverse wrap
+            //LRB row wrap
+            if (pClave === 'LLT') {
+                if (pMedidaBarra < pContenedor.clientWidth) {
+                    pBarra.style.flexDirection = 'row';
+                } else {
+                    pBarra.style.flexDirection = 'column';
+                }
+            }
+            if (pClave === 'LRT') {
+                if (pMedidaBarra < pContenedor.clientWidth) {
+                    pBarra.style.flexDirection = 'row-reverse';
+                } else {
+                    pBarra.style.flexDirection = 'column';
+                }
+            }
+            if (pClave === 'LLB') {
+                if (pMedidaBarra < pContenedor.clientWidth) {
+                    pBarra.style.flexDirection = 'row';
+                } else {
+                    pBarra.style.flexDirection = 'column-reverse';
+                }
+            }
+            if (pClave === 'LRB') {
+                if (pMedidaBarra < pContenedor.clientWidth) {
+                    pBarra.style.flexDirection = 'row-reverse';
+                } else {
+                    pBarra.style.flexDirection = 'column-reverse';
+                }
+            }
+        }
+        function fCrearMarco(pContenedor, pTitulo, pX, pY, pAlto, pAncho, pColor, pColorFondo) {
+            let oMarco = document.createElement('div');
+                oMarco.setAttribute('id', pTitulo);
+                oMarco.style.position = 'absolute';
+                oMarco.style.margin = '0px';
+                oMarco.style.background = pColorFondo;
+                oMarco.style.top = pY;
+                oMarco.style.left = pX;
+                oMarco.style.height = pAlto;
+                oMarco.style.width = pAncho;
+            pContenedor.appendChild(oMarco);
+        }
+    </script>
+</body>
+</html>

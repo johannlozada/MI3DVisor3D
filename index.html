@@ -47,13 +47,10 @@
                     <line class="dimensionLine"></line>
                     <line class="dimensionLine"></line>
                 </svg>
-                
-                <!--Boton de Realidad Aumentada-->
                 <button slot='ar-button' id='idAr-button'>
-                <!--Activar AR-->
                 </button>
                 <div id='ar-prompt'>
-                    <img src='imagenes/MI3D-AR02.png'>
+                    <img src='imagenes/MI3D-AR.png'>
                 </div>
                 <button id='ar-failure'>
                     No se detecta AR
@@ -94,7 +91,7 @@
             vRutaPrograma = window.location.href;
             // SOLO CUANDO SE EJECUTE EN PC / ES TEMPORAL
             if (vRutaPrograma.includes("file")) {
-                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/c86e2701aa071d9d89633b57ef9179fb03f91f31/");
+                vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/44c8185d1ec1c451efbf647668d744e1c0fc2203/");
             }
             // Si vPosicion es 0=Piso o 1=Pared GLTF
             vPosicion = "1";
@@ -155,8 +152,9 @@
             fImagenImgLink(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.15', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssidImgFondo);
             //Imagen de Carga de Pagina
             fImagenCarga('', 'idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
-            const vresultado1 = document.getElementById("idAr-button");
             //Determinar qué tipo de dispositivo se está usando
+
+/*            const vresultado1 = document.getElementById("idAr-button");
             vtipopantalla = fTipoPantalla();
             console.log(vtipopantalla);
             if (vtipopantalla.includes("movil")) {
@@ -164,8 +162,10 @@
             }
             else {
                 //vresultado1.innerHTML = "";
-                //vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR01.png); background-color: rgba(254, 254, 254, 0);";
-            }            
+                //vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR.png); background-color: rgba(254, 254, 254, 0);";
+            }
+*/
+
             //Colocar color de fondo oModelViewer
             document.getElementById("idContenedor").style.cssText = "background: radial-gradient(farthest-corner at -30vw 120vh," + `${vColores1}` + " 10%," + `${vColores2}` + " 100%);";
             oModelViewer.addEventListener("ar-status", (event) => {
@@ -462,21 +462,21 @@
             });
             //fTest();
             let vJsonBarra = '[' + 
-                '{ "id" : "00", "titulo" : "Opciones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
-                '{ "id" : "01", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
-                '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimensiones.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
-                '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
-                '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
-                '{ "id" : "05", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
-                '{ "id" : "06", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
-                '{ "id" : "07", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
-                '{ "id" : "08", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
-                '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" },' +
-                '{ "id" : "10", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "llamar" : "" },' +
-                '{ "id" : "11", "titulo" : "Ayuda", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "llamar" : "" }' +
-            ']';
-            const oJsonBarra = JSON.parse(vJsonBarra);
-            fBarraHerramienta(oModelViewer, 'idBarraHerramienta', 'R10px', 'T5px', '40px', true, vColores2, vColores1, oJsonBarra, 'P-B');
+            '{ "id" : "00", "titulo" : "Menu Principal", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "tamano" : "" },' +
+            '{ "id" : "01", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "tamano" : "" },' +
+            '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimensiones.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "tamano" : "" },' +
+            '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "tamano" : "" },' +
+            '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "tamano" : "" },' +
+            '{ "id" : "05", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "tamano" : "" },' +
+            '{ "id" : "06", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "0", "tamano" : "" },' +
+            '{ "id" : "07", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "tamano" : "" },' +
+            '{ "id" : "08", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "tamano" : "" },' +
+            '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "tamano" : "" },' +
+            '{ "id" : "10", "titulo" : "Detalles", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Detalles.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "tamano" : "" },' +
+            '{ "id" : "11", "titulo" : "Informacion", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "1", "tamano" : "" }' +
+        ']';
+        const oJsonBarra = JSON.parse(vJsonBarra);
+        fBarraHerramientas(oModelViewer, 'idBarra', 'R10px', 'T10px', '50px', '#43b2ff', '#ffffff', true, 'P',oJsonBarra);
             //fImagenImgLink(oModelViewer, 'idImg03', 'R50%', 'T50%', '80px', 'translate(0%, -50%)', '1', vModelViewerRuta + 'ClienteLogo.png', true, '', '', '0', '');
             //fImagenSVG(oModelViewer, '35px', vColores2, "Realidad Aumentada", vRutaPrograma+"imagenes/MI3D-AR.svg", 3);
         </script>
