@@ -1,222 +1,374 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./index.js"></script>
-    <title>Document</title>
-</head>
-<body>
-    <div id='idContenedor'>
-    </div>
-    <script>
-        vRutaPrograma = fObtenerLink2("https://github.com/johannlozada/MI3DVisor3D/blob/44c8185d1ec1c451efbf647668d744e1c0fc2203/");
-        vColores1 = '#c8e1ff';
-        vColores2 = '#3b91f7';
-        vPadding = '2px';
-        vBordeRadio = '5px';
-        fCrearMarco(document.getElementById('idContenedor'), 'idMarco', '10%', '10%', '80%', '80%', '#ffffff', '#43b2ff');
-        let vJsonBarra = '[' + 
-            '{ "id" : "00", "titulo" : "Menu Principal", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
-            '{ "id" : "01", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "tamano" : "" },' +
-            '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimensiones.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
-            '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
-            '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
-            '{ "id" : "05", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "tamano" : "" },' +
-            '{ "id" : "06", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
-            '{ "id" : "07", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
-            '{ "id" : "08", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "color1" : "", "color2" : "", "activo" : "0", "tamano" : "" },' +
-            '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
-            '{ "id" : "10", "titulo" : "Detalles", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Detalles.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" },' +
-            '{ "id" : "11", "titulo" : "Informacion", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.png" + '", "color1" : "' + vColores1 + '", "color2" : "' + vColores2 + '", "activo" : "' + true + '", "tamano" : "" }' +
-        ']';
-        const oJsonBarra = JSON.parse(vJsonBarra);
-        fBarraHerramienta2(document.getElementById('idMarco'), 'idBarra', 'R10px', 'T10px', '50px', '#43b2ff', '#ffffff', true, 'P',oJsonBarra);
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv='cache-control' content='no-cache'> 
+        <meta http-equiv='expires' content='0'> 
+        <meta http-equiv='pragma' content='no-cache'>
+        <link rel="stylesheet" type="text/css" href="./index.css">
+        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+        <script src="./index.js"></script>
+        <title>MI3D - Visor 3D</title>
+        <link rel="shortcut icon" type="image/x-icon" href="imagenes/MI3D-favicon.ico">
+    </head>
+    <body>
+        <!--Cuerpo 3D-->
+        <div id="idContenedor">
+            <model-viewer id='IdModelo3d'
+                src=''
+                alt='MI3D - Visor 3D'
+                shadow-intensity='1'
+                camera-controls
+                ar
+                ar-modes='webxr scene-viewer quick-look'
+                xr-enviroment
+                ar-scale='auto'
+                disable-tap
+                scale='1 1 1'
+                autoplay
+                >
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Z" data-position="1 0 -1" data-normal="1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X+Y-Z" data-position="1 1 -1" data-normal="0 1 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+Y-Z" data-position="0 -1 -1" data-normal="0 1 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X+Y-Z" data-position="-1 1 -1" data-normal="0 1 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Z" data-position="-1 0 -1" data-normal="-1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y-Z" data-position="-1 -1 -1" data-normal="-1 0 0"></button>
+                <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Y" data-position="-1 -1 0" data-normal="-1 0 0"></button>
+                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y+Z" data-position="-1 -1 1" data-normal="-1 0 0"></button>
 
-/******************/
-//pContenedor, Dnd se creara
-//pX, pY, Posicion X y Y
-//pTamano, Tamaño de la barra de herramienta
-//pColor, Color principal
-//pColorFondo, Color de Fondo
-//pEstado, Estado extendido o plegado
-//pDisposicion, Si sera horizonta o Vertical H=L, V=P
-//pBotones, son las opciones de los botones
-
-        function fBarraHerramienta2(pContenedor, pId, pPosX, pPosY, pTamano, pColores1, pColores2, pEstado, pDisposicion, pBotones) {
-            //ANALIZAR DISTRIBUCION DE LA BARRA DE HERRAMIENTRAS DENTRO DE LA PANALLA, DE ACUERDO A DIPOSICION Y UBICACION
-//            pContenedor.addEventListener('load', function() {
-                console.log(pPosX, pPosY, pTamano, pDisposicion);
-                let oBarra = document.createElement('div');
-                    if (pPosX.includes('L')) {
-                        oBarra.style.left = pPosX.slice(1,pPosX.length);
-                    }
-                    if (pPosX.includes('R')) {
-                        oBarra.style.right = pPosX.slice(1,pPosX.length);
-                    }
-                    if (pPosY.includes('T')) {
-                        oBarra.style.top = pPosY.slice(1,pPosY.length);
-                    }
-                    if (pPosY.includes('B')) {
-                        oBarra.style.bottom = pPosY.slice(1,pPosY.length);
-                    }
-                    oBarra.setAttribute('id', pId);
-                    oBarra.style.position = 'absolute';
-                    oBarra.style.margin = '0px';
-                    oBarra.style.borderRadius = vBordeRadio;
-                    oBarra.style.padding = vPadding;
-                    oBarra.style.filter = vSombraUp;
-                    //oBarra.style.justifyContent = 'center';
-                    //oBarra.style.alignItems = 'center';
-                    oBarra.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
-                    for (i=0; i < pBotones.length; i++) {
-                        pBotones[i].tamano = pTamano;
-                        fImagenImg2(oBarra, pColores2, pBotones[i].titulo, pBotones[i].imagen, i, pBotones);
-                    }
-                pContenedor.appendChild(oBarra);
-                oBarra.style.display = 'flex';
-                let vClave = pDisposicion+pPosX.slice(0,1)+pPosY.slice(0,1);
-                let vMedidaBarra = oBarra.clientWidth > oBarra.clientHeight ? oBarra.clientWidth : oBarra.clientHeight;
-                console.log('Clave : ', vClave, 
-                  'Barra: ', vMedidaBarra,
-                  'Alto P:', pContenedor.clientHeight, 
-                  'Ancho P:', pContenedor.clientWidth,
-                  'Forma :', pDisposicion, 
-                  'pos X: ', pPosX.slice(0,1),
-                  'pos Y: ', pPosY.slice(0,1));
-
-                fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
-                let vOrientacion = window.matchMedia("(orientation: portrait)");
-                vOrientacion.addEventListener("change", function(e) {
-                    if(e.matches) {// Portrait mode
-                        fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
-                    } else { // Landscape mode
-                        fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
-                    }
-                })
+                <svg id="idDimLines" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="dimensionLineContainer">
+                    <line class="dimensionLine"></line>
+                    <line class="dimensionLine"></line>
+                    <line class="dimensionLine"></line>
+                    <line class="dimensionLine"></line>
+                    <line class="dimensionLine"></line>
+                </svg>
+<!--
+                <button slot='ar-button' id='idAr-button'>
+                </button>
+                <div id='ar-prompt'>
+                    <img src='imagenes/MI3D-AR.png'>
+                </div>
+                <button id='ar-failure'>
+                    No se detecta AR
+                </button>
+-->
+                <!-- Parámetros pasados en la URL: -->
+                <div id="parametros"></div>
+                <!-- Elemento select y contenedor para la lista de opciones -->
+                <select id='idVariantesSelect' style='display: none;'>
+                </select>
+                <div id='idVariantesContainer'>
+                </div>
+            </model-viewer>
+        </div>
+    
+        <script>
+            // Parametros iniciales que tendra q leer del googlesheet
+            // Ruta de archivo
+            vRutaGltf = 'https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf';
+            vRutaPrograma = window.location.href;
+            // SOLO CUANDO SE EJECUTE EN PC / ES TEMPORAL
+            if (vRutaPrograma.includes('file')) {
+                vRutaPrograma = fObtenerLink('https://github.com/johannlozada/MI3DVisor3D/blob/bfae50783939ee82e79a73412689672ebcea6248/','D');
+            } else {
+                if (vRutaPrograma.includes('http')) {
+                    vRutaPrograma = '/';
+                }
             }
+            // Si vPosicion es 0=Piso o 1=Pared GLTF fObtenerLink2
+            vPosicion = '1';
+            vPosicion = vPosicion === '0' ? 'wall' : 'floor';
+/*            
+            if (vPosicion === '0') {
+                vPosicion = 'wall';
+            }
+            else {
+                vPosicion = 'floor';
+            }
+*/
+            vColores1 = '#c8e1ff';
+            vColores2 = '#3b91f7';
+            // Declara Objeto ModelViewer del GLTF
+            //const oModelViewer = document.querySelector('#IdModelo3d');
+            const oModelViewer = document.getElementById('IdModelo3d');
+            fARBoton(oModelViewer, vRutaPrograma + 'imagenes/MI3D-AR.png');
+            //Listado opciones con check
+            let vOpcionesMarco = '[' + 
+                '{ "id" : "00", "identificador" : "show-variantes", "texto" : "Variantes" }' +
+                ']';
+            const oOpcionesMarco = JSON.parse(vOpcionesMarco);
+            fMarcoOpciones(oModelViewer, oOpcionesMarco, vColores1, vColores2, 'R20%', 'T5px');
 
-        function fImagenImg2(pContenedor, pColores, pTitulo, pArchivoIMG, pIndice, pBotones) {
-            pTitulo = pTitulo.replace(/ /g,'');
-            let oBoton = document.createElement('div');
-                oBoton.setAttribute('id', 'idDiv' + pTitulo);
-                oBoton.style.borderRadius = `${parseInt(vBordeRadio)- parseInt(vPadding)}px`;
-                oBoton.style.margin = '1px';
-                oBoton.style.height = `${parseInt(pBotones[pIndice].tamano) - parseInt(vPadding) * 2}px`;
-                oBoton.style.width = `${parseInt(pBotones[pIndice].tamano) - parseInt(vPadding) * 2}px`;
-                oBoton.setAttribute('class', 'classPadre');
-                let oImg = document.createElement('img');
-                    oImg.setAttribute('id', 'idImg' + pTitulo);
-                    oImg.style.borderRadius = `${parseInt(vBordeRadio)- parseInt(vPadding)}px`;
-                    //oImg.style.background = 'blue';
-                    if (pTitulo != '-') {
-                        //oBoton.style.background = 'white';
-                        oImg.setAttribute('title', pTitulo);
-                        oImg.setAttribute('pulsado', false);
-                        oImg.setAttribute('src', pArchivoIMG);
-                        oImg.style.margin = '2px';
-                        oImg.style.cursor = 'pointer';
-                        oImg.style.height = `${parseInt(pBotones[pIndice].tamano) - (parseInt(vPadding) * 4)}px`;
-                        oImg.style.width = `${parseInt(pBotones[pIndice].tamano) - (parseInt(vPadding) * 4)}px`;
-                        oImg.addEventListener('click', function() {
-                            let vfuncion = eval('f'+pTitulo);
-                            vfuncion(document.querySelector('#' + 'id' + pTitulo), oBoton);
+            //Angulos de vision V y H
+            //vCamaraorbitar="-45deg 75deg 100%"; // camera-orbit = movimiento de la camara sobre el objeto $Theta $Phi $Radio
+            //vCamaraDestino="5m 2m 0m";"" // camera-target = a donde va la camara sobre el objeto $X $Y $Z
+            //vMaxCamaraOrbita="22.5deg 90deg auto"; // $Theta $Phi $Radio Maximo
+            //vMinCamaraOrbita="-22.5deg 45deg auto"; // $Theta $Phi $Radio Minimo
+            //INICIO de obtener parametros
+            //los parametros despues del Link inician con ?CONST=VALOR ejemplo ...?const01=valor01&const02=valor02&...
+            //Leyenda:
+            //para01=ubicacion archivo Gltf
+            //para02=posicion en ar del Gltf
+            //la idea seria conectar con googlesheets, pasar parametros como codigo=CLI001
+            //Hacer un script que busque este codigo en la googlesheets y retorne el link con la direccion del GLTF
+            let vClickActivo = true;
+            // Llamar a la función para mostrar los parámetros cuando la página se cargue
+            window.onload = fMostrarParametros();
+            //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
+            oModelViewer.src = fObtenerLink(vRutaGltf,'F');
+            vModelViewerRuta = fObtenerLink(vRutaGltf, 'D');
+            //Colocar logo de Marca cliente como fondo
+            vCssidImgFondo = '{ height: 100vh; left: 10%; }; [1];';
+            fImagenImgLink(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.15', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssidImgFondo);
+            //Imagen de Carga de Pagina
+            fImagenCarga('', 'idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
+            //Determinar qué tipo de dispositivo se está usando
+/*            const vresultado1 = document.getElementById("idAr-button");
+            vtipopantalla = fTipoPantalla();
+            console.log(vtipopantalla);
+            if (vtipopantalla.includes("movil")) {
+                vresultado1.innerHTML = "Activar AR";
+            }
+            else {
+                //vresultado1.innerHTML = "";
+                //vresultado1.style.cssText = "background-image: url(imagenes/MI3D-AR.png); background-color: rgba(254, 254, 254, 0);";
+            }
+*/
+
+            //Colocar color de fondo oModelViewer
+            document.getElementById("idContenedor").style.cssText = "background: radial-gradient(farthest-corner at -30vw 120vh," + `${vColores1}` + " 10%," + `${vColores2}` + " 100%);";
+            oModelViewer.addEventListener("ar-status", (event) => {
+                if (event.detail.status != "failed") {
+                    document.getElementById("idFondoCliente").src = "";
+                }
+            })
+            oModelViewer.addEventListener("ar-status", (event) => {
+                if (event.detail.status == "not-presenting") {
+                    document.getElementById("idFondoCliente").src = `${vModelViewerRuta}` + "ClienteFondo.png";;
+                }
+            })
+            //Colocar Logo de Marca Cliente
+            vCssidImg1 = '{ height: 40px; }; [1];';
+            fImagenImgLink(oModelViewer, 'idImgCliente', 'L10px', 'T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', true, 'https://www.google.com', '_blank','0', vCssidImg1);
+            //Colocar Logo de Marca MI3D
+            fImagenImgLink(oModelViewer, 'idImgMI3D', 'L10px', 'B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', true, 'https://www.google.com', '_blank','0', '');
+            oModelViewer.setAttribute("ar-placement", vPosicion);
+            oModelViewer.addEventListener("load", () => {
+                //Determinar cuantos variantes tiene un mesh
+                const oVariantesSelect = document.getElementById("idVariantesSelect");
+                const oVariantesContainer = document.getElementById("idVariantesContainer");
+                function fGenerarListaVariantes(pX, pY, pMaterial, pMaterialDefecto) {
+                    const vVariante = oModelViewer.availableVariants;
+                    oVariantesSelect.innerHTML = "";
+                    oVariantesSelect.style.display = "block";
+                    oVariantesContainer.style.display = "none";
+                    oVariantesSelect.style.left = pX + "px";
+                    oVariantesSelect.style.top = pY + "px";
+                    for (let i = 0; i < vVariante.length; i++) {
+                        vVarianteCompara = vVariante[i].slice(vVariante[i].search('_')+1,vVariante[i].legth);
+                        //Comparar si pertenecen al Material
+                        if (vVarianteCompara == pMaterial) {
+                            vVariante[i] = vVariante[i].slice(0, vVariante[i].search('_'));
+                            const oOpcion = document.createElement("option");
+                            oOpcion.value = vVariante[i];
+                            oOpcion.appendChild(document.createTextNode(vVariante[i]));
+                            oVariantesSelect.appendChild(oOpcion);
+                            document.getElementById("idVariantesSelect").value = pMaterialDefecto;
+                        }
+                    }
+                    // Permite cambiar la variante en el gltf
+                    oVariantesSelect.addEventListener('input', (event) => {
+                        oModelViewer.variantName = event.target.value + '_' + pMaterial;
+                        oVariantesSelect.style.display = 'none';
+                    });
+                }
+                function fMostrarListavariantes(pEvent) {
+                    if (!vClickActivo) {
+                        const oMaterialClick = oModelViewer.materialFromPoint(pEvent.clientX, pEvent.clientY);
+                        if (oMaterialClick != null) {
+                            const vRect = oModelViewer.getBoundingClientRect();
+                            const pX = pEvent.clientX - vRect.left;
+                            const pY = pEvent.clientY - vRect.top;
+                            oVariantesContainer.style.display = "block";
+                            oVariantesSelect.style.display = "none";
+                            oVariantesContainer.innerHTML = "";
+                            const vVarianteName = document.createElement("span");
+                            if (oMaterialClick.name.search('_') > 0) {
+                                vVarianteName.textContent = oMaterialClick.name;
+                                oVariantesContainer.appendChild(vVarianteName);
+                                const vMaterial = oMaterialClick.name.slice(oMaterialClick.name.search('_')+1,oMaterialClick.name.length); // Determinar el Material
+                                const vMaterialDefecto = oMaterialClick.name.slice(0, oMaterialClick.name.search('_')); // Determinar el Material x defecto
+                                //console.log("material = " + oMaterialClick.name, " Codigo = [" + vMaterial + "]", "MDefecto = " + vMaterialDefecto);
+                                fGenerarListaVariantes(pX, pY, vMaterial, vMaterialDefecto);
+                            }
+                        } else {
+                            const target = pEvent.target;
+                            if (target !== oVariantesSelect) {
+                                oVariantesSelect.style.display = 'none';
+                            }
+                        }
+                    }
+                }
+                //Cuando haces click genera la OptionList - Determinar a qué variantes se les da click
+                console.log(vClickActivo);
+                oModelViewer.addEventListener("click", fMostrarListavariantes);
+                //Ocultar el selector de variantes cuando se selecciona una opción
+                oVariantesSelect.addEventListener('change', () => {
+                    oVariantesSelect.style.display = 'none';
+                });
+                //Detecta cuando se da click en cualquier lado
+                document.getElementById("idVariantesContainer").addEventListener("mousedown", function(e){
+                    oVariantesSelect.style.display = 'none';
+                });
+
+                const oCheckboxVariantes = oModelViewer.querySelector('#show-variantes');
+                //checkbox variante Oculto/Visible
+                function fVariableVisible(pElemento) {
+                    if (oCheckboxVariantes.checked) {
+                        pElemento.classList.remove('hide');
+                    } else {
+                        pElemento.classList.add('hide');
+                    }
+                }
+                //checkbox variante Pasar el valor cuando carga
+                oModelViewer.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
+                    fVariableVisible(hotspot);
+                });
+                //checkbox variante Pasar el valor
+                oCheckboxVariantes.addEventListener('change', () => {
+                    vClickActivo = !oCheckboxVariantes.checked;
+                    oModelViewer.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
+                        fVariableVisible(hotspot);
+                    });
+                });
+                //Oculta las Medidas y las lineas
+                fClassListVisibilidad(oModelViewer.querySelector('#idDimLines'), false);
+                oModelViewer.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
+                    fClassListVisibilidad(hotspot, false);
+                });
+
+                // update svg - inicio dibujo de Lineas Dimensiones
+                function fDibujarLinea(pSvgLine, pDotHotspot1, pDotHotspot2, pDimensionHotspot) {
+                    if (pDotHotspot1 && pDotHotspot2) {
+                        pSvgLine.setAttribute('x1', pDotHotspot1.canvasPosition.x);
+                        pSvgLine.setAttribute('y1', pDotHotspot1.canvasPosition.y);
+                        pSvgLine.setAttribute('x2', pDotHotspot2.canvasPosition.x);
+                        pSvgLine.setAttribute('y2', pDotHotspot2.canvasPosition.y);
+                        // use provided optional hotspot to tie visibility of this svg line to
+                        if (pDimensionHotspot && !pDimensionHotspot.facingCamera) {
+                            pSvgLine.classList.add('hide');
+                        } else {
+                            pSvgLine.classList.remove('hide');
+                        }
+                    }
+                }
+                const oDimLines = oModelViewer.querySelectorAll('line');
+                const fRenderSVG = () => {
+                    fDibujarLinea(oDimLines[0], oModelViewer.queryHotspot('hotspot-dot+X-Y+Z'), oModelViewer.queryHotspot('hotspot-dot+X-Y-Z'), oModelViewer.queryHotspot('hotspot-dim+X-Y'));
+                    fDibujarLinea(oDimLines[1], oModelViewer.queryHotspot('hotspot-dot+X-Y-Z'), oModelViewer.queryHotspot('hotspot-dot+X+Y-Z'), oModelViewer.queryHotspot('hotspot-dim+X-Z'));
+                    fDibujarLinea(oDimLines[2], oModelViewer.queryHotspot('hotspot-dot+X+Y-Z'), oModelViewer.queryHotspot('hotspot-dot-X+Y-Z')); // always visible
+                    fDibujarLinea(oDimLines[3], oModelViewer.queryHotspot('hotspot-dot-X+Y-Z'), oModelViewer.queryHotspot('hotspot-dot-X-Y-Z'), oModelViewer.queryHotspot('hotspot-dim-X-Z'));
+                    fDibujarLinea(oDimLines[4], oModelViewer.queryHotspot('hotspot-dot-X-Y-Z'), oModelViewer.queryHotspot('hotspot-dot-X-Y+Z'), oModelViewer.queryHotspot('hotspot-dim-X-Y'));
+                };
+                oModelViewer.addEventListener('camera-change', fRenderSVG);
+                const oCenter = oModelViewer.getBoundingBoxCenter();
+                const oSize = oModelViewer.getDimensions();
+                const vX2 = oSize.x / 2;
+                const vY2 = oSize.y / 2;
+                const vZ2 = oSize.z / 2;
+                vDecimal = 1;
+                vUndMedida = "m";
+                //console.log(oSize.x, oSize.y, oSize.z);console.log(oCenter.x, oCenter.y, oCenter.z);
+                oModelViewer.updateHotspot({name: 'hotspot-dot+X-Y+Z', position: `${oCenter.x + vX2} ${oCenter.y - vY2} ${oCenter.z + vZ2}`});
+                oModelViewer.updateHotspot({name: 'hotspot-dim+X-Y', position: `${oCenter.x + vX2 * 1} ${oCenter.y - vY2 * 1} ${oCenter.z}`});
+                oModelViewer.querySelector('button[slot="hotspot-dim+X-Y"]').textContent = `${(oSize.z * vDecimal).toFixed(0)} `+ vUndMedida;
+                oModelViewer.updateHotspot({name: 'hotspot-dot+X-Y-Z', position: `${oCenter.x + vX2} ${oCenter.y - vY2} ${oCenter.z - vZ2}`});
+                oModelViewer.updateHotspot({name: 'hotspot-dim+X-Z', position: `${oCenter.x + vX2 * 1} ${oCenter.y} ${oCenter.z - vZ2 * 1}`});
+                oModelViewer.querySelector('button[slot="hotspot-dim+X-Z"]').textContent = `${(oSize.y * vDecimal).toFixed(0)} `+ vUndMedida;
+                oModelViewer.updateHotspot({name: 'hotspot-dot+X+Y-Z', position: `${oCenter.x + vX2} ${oCenter.y + vY2} ${oCenter.z - vZ2}`});
+                oModelViewer.updateHotspot({name: 'hotspot-dim+Y-Z', position: `${oCenter.x} ${oCenter.y + vY2 * 1} ${oCenter.z - vZ2 * 1}`});
+                oModelViewer.querySelector('button[slot="hotspot-dim+Y-Z"]').textContent = `${(oSize.x * vDecimal).toFixed(0)} `+ vUndMedida;
+                oModelViewer.updateHotspot({name: 'hotspot-dot-X+Y-Z', position: `${oCenter.x - vX2} ${oCenter.y + vY2} ${oCenter.z - vZ2}`});
+                oModelViewer.updateHotspot({name: 'hotspot-dim-X-Z', position: `${oCenter.x - vX2 * 1} ${oCenter.y} ${oCenter.z - vZ2 * 1}`});
+                oModelViewer.querySelector('button[slot="hotspot-dim-X-Z"]').textContent = `${(oSize.y * vDecimal).toFixed(0)} `+ vUndMedida;
+                oModelViewer.updateHotspot({name: 'hotspot-dot-X-Y-Z', position: `${oCenter.x - vX2} ${oCenter.y - vY2} ${oCenter.z - vZ2}`});
+                oModelViewer.updateHotspot({name: 'hotspot-dim-X-Y', position: `${oCenter.x - vX2 * 1} ${oCenter.y - vY2 * 1} ${oCenter.z}`});
+                oModelViewer.querySelector('button[slot="hotspot-dim-X-Y"]').textContent = `${(oSize.z * vDecimal).toFixed(0)} `+ vUndMedida;
+                oModelViewer.updateHotspot({name: 'hotspot-dot-X-Y+Z', position: `${oCenter.x - vX2} ${oCenter.y - vY2} ${oCenter.z + vZ2}`});
+                fRenderSVG();
+                //crear los hotsspot indicando q tiene variables
+                function fHotspotVariante() {
+                    //Colocar hostspot en mesh si este tiene variantes
+                    //Leer archivo Json = GLTF
+                    var vC1 = 0;
+                    //var vTextoButton = [];
+                    fetch(oModelViewer.src)
+                        .then(res => res.json())
+                        .then(data =>   {
+                            for (let i = 0; i < data.nodes.length; i++) {
+                                if (typeof data.materials[i].extensions !== 'undefined') {
+                                    //console.log("Meshes:", data.nodes.length, 
+                                    //    "Nombre:", data.nodes[i].name,
+                                    //    "x:", data.nodes[i].translation[0],
+                                    //    "z:", data.nodes[i].translation[1],
+                                    //    "y:", data.nodes[i].translation[2],
+                                    //    "Boton N:", vC1);
+                                    vHPx = data.nodes[i].translation[0] / vDecimal;
+                                    vHPz = data.nodes[i].translation[1] / vDecimal;
+                                    vHPy = data.nodes[i].translation[2] / vDecimal;
+                                    var oBoton = document.createElement("button");
+                                    oBoton.id = "HotSpotVariante";
+                                    if (oCheckboxVariantes.checked) {
+                                        oBoton.className = "hotspot";
+                                    } else {
+                                        oBoton.className = "hotspot hide";
+                                    }
+                                    oBoton.setAttribute("slot","hotspot" + `${vC1}`);
+                                    oBoton.setAttribute("data-position",`${vHPx} ${vHPz} ${vHPy}`);
+                                    oBoton.setAttribute("data-normal", "0 0 0");
+
+                                    var oDetalle = document.createElement("div");
+                                    oDetalle.className = "annotation";
+                                    oDetalle.innerHTML = data.nodes[i].name;
+                                    oDetalle.style.color = "rgb(0, 0, 0)";
+                                    oBoton.appendChild(oDetalle);
+
+                                    oModelViewer.appendChild(oBoton);
+                                    vC1++;
+                                }
+                            }
+                        }) 
+                        .catch(error => {
+                            console.error('Error al obtener el archivo JSON:', error);
                         });
-                        let oStyle = document.createElement('style');
-                            oStyle.setAttribute('type','text/css');
-                            oStyle.innerHTML = '#' + 'idImg' + pTitulo + ':hover { transform: scale(1.2); } ';
-                        oImg.appendChild(oStyle);
-                    }
-                    else {
-                        oBoton.style.height = '6px';
-                        oBoton.style.width = '6px';
-
-                    }
-                oBoton.appendChild(oImg);
-            pContenedor.appendChild(oBoton);
-            if (pIndice > 0) {
-                //oBoton.style.display = 'none';
-                oBoton.setAttribute('class', 'classHijo');
-            }
-        }
-        function fAnalsisOrientacion(pClave, pMedidaBarra, pContenedor, pBarra) {
-            //PLT colum
-            //PRT colum
-            //PLB colum reverse
-            //PRB colum reverse
-            if (pClave === 'PLT') {
-                if (pMedidaBarra < pContenedor.clientHeight) {
-                    pBarra.style.flexDirection = 'column';
-                } else {
-                    pBarra.style.flexDirection = 'row';
-                }
-            }
-            if (pClave === 'PRT') {
-                if (pMedidaBarra < pContenedor.clientHeight) {
-                    pBarra.style.flexDirection = 'column';
-                } else {
-                    pBarra.style.flexDirection = 'row-reverse';
-                }
-            }
-            if (pClave === 'PLB') {
-                if (pMedidaBarra < pContenedor.clientHeight) {
-                    pBarra.style.flexDirection = 'column-reverse';
-                } else {
-                    pBarra.style.flexDirection = 'row';
-                }
-            }
-            if (pClave === 'PRB') {
-                if (pMedidaBarra < pContenedor.clientHeight) {
-                    pBarra.style.flexDirection = 'column-reverse';
-                } else {
-                    pBarra.style.flexDirection = 'row-reverse';
-                }
-            }
-            //LLT row wrap
-            //LRT row reverse wrap
-            //LLB row reverse wrap
-            //LRB row wrap
-            if (pClave === 'LLT') {
-                if (pMedidaBarra < pContenedor.clientWidth) {
-                    pBarra.style.flexDirection = 'row';
-                } else {
-                    pBarra.style.flexDirection = 'column';
-                }
-            }
-            if (pClave === 'LRT') {
-                if (pMedidaBarra < pContenedor.clientWidth) {
-                    pBarra.style.flexDirection = 'row-reverse';
-                } else {
-                    pBarra.style.flexDirection = 'column';
-                }
-            }
-            if (pClave === 'LLB') {
-                if (pMedidaBarra < pContenedor.clientWidth) {
-                    pBarra.style.flexDirection = 'row';
-                } else {
-                    pBarra.style.flexDirection = 'column-reverse';
-                }
-            }
-            if (pClave === 'LRB') {
-                if (pMedidaBarra < pContenedor.clientWidth) {
-                    pBarra.style.flexDirection = 'row-reverse';
-                } else {
-                    pBarra.style.flexDirection = 'column-reverse';
-                }
-            }
-        }
-        function fCrearMarco(pContenedor, pTitulo, pX, pY, pAlto, pAncho, pColor, pColorFondo) {
-            let oMarco = document.createElement('div');
-                oMarco.setAttribute('id', pTitulo);
-                oMarco.style.position = 'absolute';
-                oMarco.style.margin = '0px';
-                oMarco.style.background = pColorFondo;
-                oMarco.style.top = pY;
-                oMarco.style.left = pX;
-                oMarco.style.height = pAlto;
-                oMarco.style.width = pAncho;
-            pContenedor.appendChild(oMarco);
-        }
-    </script>
-</body>
+                };
+                fHotspotVariante();
+                vTexto = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo " + "<br>" +
+                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo";
+                fVentanaInformacion(vTexto);
+            });
+            let vJsonBarra = '[' + 
+            '{ "id" : "00", "titulo" : "Menu Principal", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.png" + '", "visible" : "1", "disponible" : "1", "pulsado" : "0" },' +
+            '{ "id" : "01", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" },' +
+            '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimensiones.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+            '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+            '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+            '{ "id" : "05", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" },' +
+            '{ "id" : "06", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" },' +
+            '{ "id" : "07", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+            '{ "id" : "08", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" },' +
+            '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+            '{ "id" : "10", "titulo" : "Detalles", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Detalles.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+            '{ "id" : "11", "titulo" : "Informacion", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" }' +
+            ']';
+            const oJsonBarra = JSON.parse(vJsonBarra);
+            fBarraHerramientas(oModelViewer, 'idBarra', 'R10px', 'T10px', '50px', '#43b2ff', '#ffffff', true, 'P',oJsonBarra);
+/***/
+        </script>
+    </body>
 </html>

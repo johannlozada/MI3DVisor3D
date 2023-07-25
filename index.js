@@ -13,6 +13,9 @@ window.addEventListener('load', function() {
 /**** Colocar CSS inicial en HEAD */
 const oStylePagina = document.createElement("style");
 oStylePagina.textContent = '\
+  .dot{\
+    display: none;\
+  }\
   @keyframes girar {\
     0% {\
       transform: rotate(0deg);\
@@ -33,6 +36,7 @@ oStylePagina.textContent = '\
     [1];\
   }';
 document.head.appendChild(oStylePagina);
+/**** Colocar Variables Iniciales */
 let vSombraUp = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.75))';
 let vSombraDn = 'drop-shadow(-3px -3px 2px rgba(68, 68, 68, 0.75))';
 let vPadding = '2px';
@@ -47,6 +51,30 @@ document.addEventListener("contextmenu", function(event) {
 });
 */
 /**** Imagen al cargar la pagina */
+function getURLParameters() {
+  var vUrlParams = {};
+  var vMatch,
+  vPl = /\+/g,  // Regex para reemplazar los caracteres especiales codificados en la URL
+  vBuscar = /([^&=]+)=?([^&]*)/g,
+  fDecode = function (s) {
+      return decodeURIComponent(s.replace(vPl, ' '));
+  },
+  vQuery = window.location.search.substring(1);
+  while ((vMatch = vBuscar.exec(vQuery))) {
+      var vParam = fDecode(vMatch[1]);
+      var vValor = fDecode(vMatch[2]);
+      vUrlParams[vParam] = vValor;
+  }
+  return vUrlParams;
+}
+// Obtener los parámetros de la URL y mostrarlos en consola
+function fMostrarParametros() {
+  var vParametros = getURLParameters();
+  // Mostrar los parámetros en la página
+  for (var vParametro in vParametros) {
+      console.log(vParametro, vParametros[vParametro]);
+  }
+}
 function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer) {
   //Crear div
   var oContenedor = document.createElement('div');
@@ -81,7 +109,7 @@ function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pObjetoMode
     }
   });
 }
-/**** Funcion para Colocar una imagen en cualquier lugar de la pantalla*/
+/**** Funcion para Colocar una imagen en cualquier lugar de la pantalla, con opcion de ir a Pagina Link*/
 function fImagenImgLink(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransformacion, pOpacidad, pDirImagen, pEstado, pUrl, pPagina, pZindex, pCssCodigo) {
   pPadre.addEventListener('load', function() {
     var oContenedor = document.createElement('a');
@@ -133,7 +161,6 @@ function fImagenImgLink(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransf
         oImg.style.transform = pTransformacion;
         oImg.style.width = 'auto';
         oImg.style.height = pTamano;
-        //console.log("#" + pIdIdentificador + pCssCodigo); FALTA COMPLETAR ESTA INFORMACION EN EL HEAD PARA QUE AFECTE LA PAGINA
         if (pCssCodigo.length>0) {
           oStylePagina.textContent = oStylePagina.textContent.replace('[1];', '#' + pIdIdentificador + pCssCodigo);
         }
@@ -176,220 +203,122 @@ function fTipoPantalla() {
   vTipoPantalla = vTipoPantalla + "|" + vOrientacion;
   return vTipoPantalla;
 }
-/* Obtener la ruta del archivo GLTF en github*/
-function fObtenerLink1(pLink){ //Obtener la ruta completa archivo GLTF
+/* Obtener la ruta del archivo GLTF en github
+function fObtenerLink1(pUrl){ //Obtener la ruta completa archivo GLTF
   var vContar = 0;
   var vInicio = 0;
-  vNuevaCadena = pLink;
-  vNuevoLink = 'https://raw.githubusercontent.com/';
-  while ((vInicio = pLink.indexOf("/", vInicio) + 1) > 0) {
-      vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/')+1);
+  vNuevaCadena = pUrl;
+  vNuevoUrl = 'https://raw.githubusercontent.com/';
+  while ((vInicio = pUrl.indexOf("/", vInicio) + 1) > 0) {
+      vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/') + 1);
       //console.log(vCadena);
       vNuevaCadena = vNuevaCadena.slice(vCadena.length, vNuevaCadena.length);
       //console.log(vNuevaCadena);
       if (vContar == 3 || vContar == 4 || vContar > 5){
-          vNuevoLink = vNuevoLink + vCadena;
+          vNuevoUrl = vNuevoUrl + vCadena;
       }
       vContar++;
   }
-  vNuevoLink = vNuevoLink + vNuevaCadena;
-  return vNuevoLink;
+  vNuevoUrl = vNuevoUrl + vNuevaCadena;
+  return vNuevoUrl;
 }
-/* Obtener solo la ruta de cualquier archivo en github*/
-function fObtenerLink2(pLink){ //Obtener la ruta de la "carpeta" donde se encuentra el GLTF
+function fObtenerLink2(pUrl){ //Obtener la ruta de la "carpeta" donde se encuentra el GLTF
   var vContar = 0;
   var vInicio = 0;
-  vNuevaCadena = pLink;
-  vNuevoLink = 'https://raw.githubusercontent.com/';
-  while ((vInicio = pLink.indexOf("/", vInicio) + 1) > 0) {
-      vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/')+1);
+  vNuevaCadena = pUrl;
+  vNuevoUrl = 'https://raw.githubusercontent.com/';
+  while ((vInicio = pUrl.indexOf("/", vInicio) + 1) > 0) {
+      vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/') + 1);
       //console.log(vCadena);
       vNuevaCadena = vNuevaCadena.slice(vCadena.length, vNuevaCadena.length);
       //console.log(vNuevaCadena);
       if (vContar == 3 || vContar == 4 || vContar == 6 || vContar == 7){
-          vNuevoLink = vNuevoLink + vCadena;
+          vNuevoUrl = vNuevoUrl + vCadena;
       }
       vContar++;
   }
-  return vNuevoLink;
-}
-/* VentanaInformacion (
-    pTitulo = Titulo de la ventana
-    pCodigo = Codigo del producto exhibido
-    pDescripcion = Descripcion del producto
-    pSVG = imagen SVG
-    pColores1 = Colores1
-    PColores2 = Colores2) */
-    //COLOCAR UBICACION Y CORREGIR PROBLEMA DE CAMBIO DE TAMAÑO DE PANTALLA COMO SE HIZO CON LOS LOGOS
-function fVentanaInformacion(pTitulo, pCodigo, pDescripcion, pSvg, pColores1, pColores2) {
-  // Posicion y Medidas de acuerdo a pantalla y orientacion
-  vOrientacion = fTipoPantalla();
-  if (vOrientacion.includes("movil") && vOrientacion.includes("vertical")) {
-    vTop = "75%";
-    vLeft = "50%";
-    vMaxWidth = "60%";
+  return vNuevoUrl;
+}*/
+function fObtenerLink(pUrl, pTipo){ //Obtener la ruta de la "D = carpeta F = Archivo" donde se encuentra el GLTF
+  var vContar = 0;
+  var vInicio = 0;
+  vNuevaCadena = pUrl;
+  vNuevoUrl = 'https://raw.githubusercontent.com/';
+  while ((vInicio = pUrl.indexOf("/", vInicio) + 1) > 0) {
+      vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/') + 1);
+      vNuevaCadena = vNuevaCadena.slice(vCadena.length, vNuevaCadena.length);
+      if (vContar == 3 || vContar == 4 || vContar > 5){
+          vNuevoUrl = vNuevoUrl + vCadena;
+      }
+      vContar++;
   }
-  if (vOrientacion.includes("movil") && vOrientacion.includes("horizontal")) {
-    vTop = "50%";
-    vLeft = "75%";
-    vMaxWidth = "20%";
+  if (pTipo === 'F' && (vContar == 3 || vContar == 4 || vContar > 5)){
+    vNuevoUrl = vNuevoUrl + vNuevaCadena;
   }
-  if (vOrientacion.includes("computadora") && vOrientacion.includes("horizontal")) {
-    vTop = "50%";
-    vLeft = "75%";
-    vMaxWidth = "20%";
-  }
-  vMargenes = "20px";
-  // Crear el elemento oContenedor del rectángulo de información
-  var oContenedor = document.createElement("div");
-    oContenedor.style.background = "rgba(" + parseInt(pColores2[1]+pColores2[2],16) +", " + parseInt(pColores2[3]+pColores2[4],16) + ", " + parseInt(pColores2[5]+pColores2[6],16) + ", 0.5)";
-    oContenedor.style.filter = "blur(5px)";// <------- ACA!!!!
-    oContenedor.style.display = "block";
-    oContenedor.style.padding = vMargenes;
-    oContenedor.style.filter = vSombraUp;
-    oContenedor.style.maxWidth = vMaxWidth;
-    oContenedor.style.position = "absolute";
-    oContenedor.style.left = vLeft;
-    oContenedor.style.top = vTop;
-    oContenedor.style.transform = "translate(-50%, -50%)";
-    oContenedor.style.overflowWrap = "break-word";
-    oContenedor.style.width = "max-content";
-    oContenedor.style.height = "max-content";
-    oContenedor.style.color = "rgb(" + parseInt(pColores1[1]+pColores1[2],16) +", " + parseInt(pColores1[3]+pColores1[4],16) + ", " + parseInt(pColores1[5]+pColores1[6],16) + ")";
-
-      // Crear la ubicacion para el boton Cerrar X
-      var oCierre = document.createElement("span");
-        oCierre.setAttribute("id","idSpan");
-        oCierre.style.right = "0px";
-        oCierre.style.top = "0px";
-        oCierre.style.width = vMargenes;
-        oCierre.style.height = vMargenes;
-        oCierre.style.position = "absolute";
-        oCierre.style.display = "flex";
-        oCierre.style.justifyContent = "center";
-        oCierre.style.alignItems = "center";
-        oCierre.style.cursor = "pointer";
-        oCierre.addEventListener("click", function() {
-            oContenedor.parentNode.removeChild(oContenedor);
-            return false;
-        });
-      oContenedor.appendChild(oCierre);
-      // Crear el contenido título + codigo + combinacion
-      var oTitulo = document.createElement("div");
-        oTitulo.innerHTML = "<b><u>" + pTitulo + "</u></b><br><br>";
-      oContenedor.appendChild(oTitulo);
-
-      var oCodigo = document.createElement("div");
-        oCodigo.innerHTML = "<b>" + pCodigo + "</b><br><br>";
-      oContenedor.appendChild(oCodigo);
-
-      var oDescripcion = document.createElement("div");
-        oDescripcion.innerHTML = pDescripcion;
-      oContenedor.appendChild(oDescripcion);
-    // Agregar el oContenedor al cuerpo de la página
-  document.body.appendChild(oContenedor);
-
-  // Colocar y Cambiar color SVG
-  //console.log("JS: ", pSvg);
-  fImagenSvg2('idSpan', pSvg, pColores1, 'Cerrar', vMargenes);
+  return vNuevoUrl;
 }
-
-function fBarraHerramientas(pContenedor, pId, pPosX, pPosY, pTamano, pColores1, pColores2, pEstado, pDisposicion, pBotones) {
-  pContenedor.addEventListener('load', function() {
-    let oBarra = document.createElement('div');
-        if (pPosX.includes('L')) {
-            oBarra.style.left = pPosX.slice(1,pPosX.length);
-        }
-        if (pPosX.includes('R')) {
-            oBarra.style.right = pPosX.slice(1,pPosX.length);
-        }
-        if (pPosY.includes('T')) {
-            oBarra.style.top = pPosY.slice(1,pPosY.length);
-        }
-        if (pPosY.includes('B')) {
-            oBarra.style.bottom = pPosY.slice(1,pPosY.length);
-        }
-        oBarra.setAttribute('id', pId);
-        oBarra.style.position = 'absolute';
-        oBarra.style.margin = '0px';
-        oBarra.style.borderRadius = vBordeRadio;
-        oBarra.style.padding = vPadding;
-        oBarra.style.filter = vSombraUp;
-        oBarra.style.backdropFilter = vBlurFondo;
-        oBarra.style.border = vBlurBorde;
-        oBarra.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
-        for (i=0; i < pBotones.length; i++) {
-            pBotones[i].tamano = pTamano;
-            fImagenImg(oBarra, pColores2, pBotones[i].titulo, pBotones[i].imagen, i, pBotones);
-        }
-    pContenedor.appendChild(oBarra);
-    oBarra.style.display = 'flex';
-    let vClave = pDisposicion+pPosX.slice(0,1)+pPosY.slice(0,1);
-    let vMedidaBarra = oBarra.clientWidth > oBarra.clientHeight ? oBarra.clientWidth : oBarra.clientHeight;
-/*    console.log('Clave : ', vClave, 
-      'Barra: ', vMedidaBarra,
-      'Alto P:', pContenedor.clientHeight, 
-      'Ancho P:', pContenedor.clientWidth,
-      'Forma :', pDisposicion, 
-      'pos X: ', pPosX.slice(0,1),
-      'pos Y: ', pPosY.slice(0,1));*/
-    fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
-    let vOrientacion = window.matchMedia("(orientation: portrait)");
-    vOrientacion.addEventListener("change", function(e) {
-        if(e.matches) {// Portrait mode
-            fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
-        } else { // Landscape mode
-            fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
-        }
-    })
-  })
-}
-
-function fImagenImg(pContenedor, pColores, pTitulo, pArchivoIMG, pIndice, pBotones) {
-  pTitulo = pTitulo.replace(/ /g,'');
-  let oBoton = document.createElement('div');
-      oBoton.setAttribute('id', 'idDiv' + pTitulo);
-      oBoton.style.borderRadius = `${parseInt(vBordeRadio)- parseInt(vPadding)}px`;
-      oBoton.style.margin = '1px';
-      oBoton.style.height = `${parseInt(pBotones[pIndice].tamano) - parseInt(vPadding) * 2}px`;
-      oBoton.style.width = `${parseInt(pBotones[pIndice].tamano) - parseInt(vPadding) * 2}px`;
-      oBoton.setAttribute('class', 'classPadre');
-      oBoton.setAttribute('pulsado', false);
-      oBoton.setAttribute('activo', pBotones[pIndice].activo);
+function fARBoton(pContenedor, pRutaImagen) {
+  let oBotonAr = document.createElement('button');
+      oBotonAr.setAttribute('slot', 'ar-button');
+      oBotonAr.setAttribute('id', 'idAr-button');
+  pContenedor.appendChild(oBotonAr);
+  let oDiv = document.createElement('div');
+      oDiv.setAttribute('id', 'ar-prompt');
       let oImg = document.createElement('img');
-          oImg.setAttribute('id', 'idImg' + pTitulo);
-          oImg.style.borderRadius = `${parseInt(vBordeRadio)- parseInt(vPadding)}px`;
-          if (pTitulo != '-') {
-              oImg.setAttribute('title', pTitulo);
-              oImg.setAttribute('src', pArchivoIMG);
-              oImg.style.margin = '2px';
-              oImg.style.height = `${parseInt(pBotones[pIndice].tamano) - (parseInt(vPadding) * 4)}px`;
-              oImg.style.width = `${parseInt(pBotones[pIndice].tamano) - (parseInt(vPadding) * 4)}px`;
-              oImg.addEventListener('click', function() {
-                  let vfuncion = eval('f'+pTitulo);
-                  vfuncion(document.querySelector('#' + 'idDiv' + pTitulo), oBoton);
-              });
-              let oStyle = document.createElement('style');
-                  oStyle.setAttribute('type','text/css');
-                  oStyle.innerHTML = '#' + 'idImg' + pTitulo + ':hover { transform: scale(1.2); } ';
-                  oImg.style.cursor = 'pointer';
-                  if (pBotones[pIndice].activo === '0') {
-                    oStyle.innerHTML = '#' + 'idImg' + pTitulo;
-                    oImg.style.cursor = '';
-                    oImg.style.filter = 'invert(50%)';
-                  }
-              oImg.appendChild(oStyle);
+          oImg.setAttribute('src', pRutaImagen);
+      oDiv.appendChild(oImg);
+  pContenedor.appendChild(oDiv);
+  let oBotonFail = document.createElement('button');
+      oBotonFail.setAttribute('id', 'ar-failure');
+      oBotonFail.innerHTML = 'No se detecta AR';
+  pContenedor.appendChild(oBotonFail);
+}
+function fMarcoOpciones(pContenedor, pOpciones, pColor1, pColor2, pPosX, pPosY) {
+  pContenedor.addEventListener('load', function() {
+      let oMarco = document.createElement('div');
+          if (pPosX.includes('L',)) {
+              oMarco.style.left = pPosX.slice(1,pPosX.length);
           }
-          else {
-              oBoton.style.height = '6px';
-              oBoton.style.width = '6px';
+          if (pPosX.includes('R',)) {
+              oMarco.style.right = pPosX.slice(1,pPosX.length);
           }
-      oBoton.appendChild(oImg);
-  pContenedor.appendChild(oBoton);
-  if (pIndice > 0) {
-      oBoton.style.display = 'none';
-      oBoton.setAttribute('class', 'classHijo');
-  }
+          if (pPosY.includes('T',)) {
+              oMarco.style.top = pPosY.slice(1,pPosY.length);
+          }
+          if (pPosY.includes('B',)) {
+              oMarco.style.bottom = pPosY.slice(1,pPosY.length);
+          }
+          oMarco.setAttribute('id', 'idMarcoleyenda');
+          oMarco.setAttribute('class', 'classMarcoLeyenda');
+          oMarco.innerHTML = 'Opciones: <br>';
+          oMarco.style.background = pColor1;
+          oMarco.style.borderRadius = '4px';
+          oMarco.style.border = 'none';
+          oMarco.style.boxSizing = 'border-box';
+          oMarco.style.color = pColor2;
+          oMarco.style.display = 'block';
+          oMarco.style.padding = '10px';
+          oMarco.style.filter = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.5))';
+          oMarco.style.maxWidth = '200px';
+          oMarco.style.position = 'absolute';
+          oMarco.style.overflowWrap = 'break-word';
+          oMarco.style.width = 'max-content';
+          oMarco.style.height = 'max-content';
+          for (i=0; i < pOpciones.length; i++) {
+              let oInput = document.createElement('input');
+                  oInput.setAttribute('id', pOpciones[i].identificador);
+                  oInput.setAttribute('type', 'checkbox');
+              oMarco.appendChild(oInput);
+              let oLabel = document.createElement('label');
+                  oLabel.setAttribute('for', pOpciones[i].identificador);
+                  oLabel.innerHTML = pOpciones[i].texto + '<br>';
+              oMarco.appendChild(oLabel);
+          }
+      pContenedor.appendChild(oMarco);
+  });
+}
+function fVentanaInformacion(pTexto) {
+
 }
 function fAnalsisOrientacion(pClave, pMedidaBarra, pContenedor, pBarra) {
   //PLT colum
@@ -457,67 +386,179 @@ function fAnalsisOrientacion(pClave, pMedidaBarra, pContenedor, pBarra) {
       }
   }
 }
-function fAnalisisBoton(pPadre, pDiv) {
-  var vPulsado = pPadre.getAttribute('pulsado');
-  var vActivo = pPadre.getAttribute('activo');
+
+function fBarraHerramientas(pContenedor, pId, pPosX, pPosY, pTamano, pColores1, pColores2, pEstado, pDisposicion, pBotones) {
+  pContenedor.addEventListener('load', function() {
+    let oBarra = document.createElement('div');
+        if (pPosX.includes('L')) {
+            oBarra.style.left = pPosX.slice(1,pPosX.length);
+        }
+        if (pPosX.includes('R')) {
+            oBarra.style.right = pPosX.slice(1,pPosX.length);
+        }
+        if (pPosY.includes('T')) {
+            oBarra.style.top = pPosY.slice(1,pPosY.length);
+        }
+        if (pPosY.includes('B')) {
+            oBarra.style.bottom = pPosY.slice(1,pPosY.length);
+        }
+        oBarra.setAttribute('id', pId);
+        oBarra.style.position = 'absolute';
+        oBarra.style.margin = '0px';
+        oBarra.style.borderRadius = vBordeRadio;
+        oBarra.style.padding = vPadding;
+        oBarra.style.filter = vSombraUp;
+        oBarra.style.backdropFilter = vBlurFondo;
+        oBarra.style.border = vBlurBorde;
+        oBarra.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
+        for (i=0; i < pBotones.length; i++) {
+            pBotones[i].tamano = pTamano;
+            fImagenImg(oBarra, pColores2, pBotones[i].titulo, pBotones[i].imagen, i, pBotones, pContenedor);
+        }
+    pContenedor.appendChild(oBarra);
+    oBarra.style.display = 'flex';
+    let vClave = pDisposicion+pPosX.slice(0,1)+pPosY.slice(0,1);
+    let vMedidaBarra = oBarra.clientWidth > oBarra.clientHeight ? oBarra.clientWidth : oBarra.clientHeight;
+/*    console.log('Clave : ', vClave, 
+      'Barra: ', vMedidaBarra,
+      'Alto P:', pContenedor.clientHeight, 
+      'Ancho P:', pContenedor.clientWidth,
+      'Forma :', pDisposicion, 
+      'pos X: ', pPosX.slice(0,1),
+      'pos Y: ', pPosY.slice(0,1));*/
+    fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
+    let vOrientacion = window.matchMedia("(orientation: portrait)");
+    vOrientacion.addEventListener("change", function(e) {
+        if(e.matches) {// Portrait mode
+            fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
+        } else { // Landscape mode
+            fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
+        }
+    })
+  })
+}
+
+function fImagenImg(pBarra, pColores, pTitulo, pArchivoIMG, pIndice, pBotones, pContenedor) {
+  pTitulo = pTitulo.replace(/ /g,'');
+  let oBoton = document.createElement('div');
+    oBoton.setAttribute('id', 'idDiv' + pTitulo);
+    oBoton.style.borderRadius = `${parseInt(vBordeRadio)- parseInt(vPadding)}px`;
+    oBoton.style.margin = '1px';
+    oBoton.style.height = `${parseInt(pBotones[pIndice].tamano) - parseInt(vPadding) * 2}px`;
+    oBoton.style.width = `${parseInt(pBotones[pIndice].tamano) - parseInt(vPadding) * 2}px`;
+    oBoton.setAttribute('class', 'classPadre');
+    oBoton.setAttribute('visible', pBotones[pIndice].visible);
+    oBoton.setAttribute('disponible', pBotones[pIndice].disponible);
+    oBoton.setAttribute('pulsado', pBotones[pIndice].pulsado === '0' ? false : true);
+    let oImg = document.createElement('img');
+      oImg.setAttribute('id', 'idImg' + pTitulo);
+      oImg.style.borderRadius = `${parseInt(vBordeRadio)- parseInt(vPadding)}px`;
+      if (pTitulo != '-') {
+        oImg.setAttribute('title', pTitulo);
+        oImg.setAttribute('src', pArchivoIMG);
+        oImg.style.margin = '2px';
+        oImg.style.height = `${parseInt(pBotones[pIndice].tamano) - (parseInt(vPadding) * 4)}px`;
+        oImg.style.width = `${parseInt(pBotones[pIndice].tamano) - (parseInt(vPadding) * 4)}px`;
+        oImg.addEventListener('click', function() {
+          let vLlamarFuncion = eval('f'+pTitulo);
+          vLlamarFuncion(oBoton, pBotones, pContenedor);
+        });
+        let oStyle = document.createElement('style');
+          oStyle.setAttribute('type','text/css');
+          oStyle.innerHTML = '#' + 'idImg' + pTitulo + ':hover { transform: scale(1.2); } ';
+          oImg.style.cursor = 'pointer';
+          if (pBotones[pIndice].disponible === '0') {
+            oStyle.innerHTML = '#' + 'idImg' + pTitulo;
+            oImg.style.cursor = '';
+            oImg.style.filter = 'invert(50%)';
+          }
+        oImg.appendChild(oStyle);
+      }
+      else {
+        oBoton.style.height = '6px';
+        oBoton.style.width = '6px';
+      }
+    oBoton.appendChild(oImg);
+  pBarra.appendChild(oBoton);
+  if (pBotones[pIndice].visible === '0') {
+    oBoton.style.display = 'none';
+    oBoton.setAttribute('class', 'classHijo');
+  }
+}
+function fAnalisisBoton(oBoton) {
+  var vPulsado = oBoton.getAttribute('pulsado');
+  var vActivo = oBoton.getAttribute('disponible');
   vPulsado = vPulsado === 'false';
-  pPadre.setAttribute('pulsado', vPulsado);
+  oBoton.setAttribute('pulsado', vPulsado);
   if (vPulsado) {
-    if (vActivo==='1') {
-      pDiv.style.background = vBotonFondoPulsado;
+    if (vActivo === '1') {
+      oBoton.style.background = vBotonFondoPulsado;
     }
   } 
   else {
-    pDiv.style.background = '';
-    pDiv.style.border = '';
+    oBoton.style.background = '';
   }
-  vPulsado = !vPulsado;
   return vPulsado;
 }
-function fMenuPrincipal(pPadre, pDiv) { // funcion MENU
-  vPulsado = fAnalisisBoton(pPadre, pDiv);
-  vClassNivel = document.getElementsByClassName('classHijo');
-  for (let i = 0; i < vClassNivel.length; i++) {
+function fMenuPrincipal(oBoton, pBotones, pContenedor) { // funcion MENU
+  vPulsado = fAnalisisBoton(oBoton);
+  oClassNivel = document.getElementsByClassName('classHijo');
+  for (let i = 0; i < oClassNivel.length; i++) {
     if (vPulsado) {
-      vClassNivel[i].style.display = 'none';
+      oClassNivel[i].style.display = 'block';
+      oClassNivel[i].setAttribute('visible', '1');
     }
     else{
-      vClassNivel[i].style.display = 'block';
+      oClassNivel[i].style.display = 'none';
+      oClassNivel[i].setAttribute('visible', '0');
     }
   }
 }
-function fDimensiones(pPadre, pDiv) {
-  vActivo = fAnalisisBoton(pPadre, pDiv);
+function fDimensiones(pPadre, oBoton, pContenedor) {
+  vActivo = fAnalisisBoton(pPadre, oBoton);
+  oLine = pContenedor.querySelector('#idDimLines');
+  if (vActivo) {
+    oLine.classList.remove('hide');
+  } else {
+    oLine.classList.add('hide');
+  }
+  pContenedor.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
+    if (vActivo) {
+      hotspot.classList.remove('hide');
+    } else {
+      hotspot.classList.add('hide');
+    }
+  });
 }
-function fVariantes(pPadre, pDiv) {
-  vActivo = fAnalisisBoton(pPadre, pDiv);
+
+function fVariantes(pPadre, oBoton) {
+  vActivo = fAnalisisBoton(pPadre, oBoton);
 }
-function fFullScreen(pPadre, pDiv) {
-  vActivo = fAnalisisBoton(pPadre, pDiv);
+function fFullScreen(pPadre, oBoton) {
+  vActivo = fAnalisisBoton(pPadre, oBoton);
   fToggleFullScreen();
 }
-function fRealidadAumentada(pPadre, pDiv) {
-  vActivo = fAnalisisBoton(pPadre, pDiv);
-  //fInsertarARBoton();
+function fRealidadAumentada(pPadre, oBoton) {
+  vActivo = fAnalisisBoton(pPadre, oBoton);
   //Preguntar si esta en PC o Movil
   // Si esta en PC desactivarlo
   //Sino Llamar a AR
   //Ver si se mantiene activa la barra de herramientas
 }
-function fCaptura(pPadre, pDiv) {
-  vActivo = fAnalisisBoton(pPadre, pDiv);
+function fCaptura(pPadre, oBoton) {
+  vActivo = fAnalisisBoton(pPadre, oBoton);
 }
-function fCompartir(pPadre, pDiv) {
-  vActivo = fAnalisisBoton(pPadre, pDiv);
+function fCompartir(pPadre, oBoton) {
+  vActivo = fAnalisisBoton(pPadre, oBoton);
 }
-function fGaleria(pPadre, pDiv) {
-  vActivo = fAnalisisBoton(pPadre, pDiv);
+function fGaleria(pPadre, oBoton) {
+  vActivo = fAnalisisBoton(pPadre, oBoton);
 }
-function fDetalles(pPadre, pDiv) {
-  vActivo = fAnalisisBoton(pPadre, pDiv);
+function fDetalles(pPadre, oBoton) {
+  vActivo = fAnalisisBoton(pPadre, oBoton);
 }
-function fInformacion(pPadre, pDiv) {
-  vActivo = fAnalisisBoton(pPadre, pDiv);
+function fInformacion(pPadre, oBoton) {
+  vActivo = fAnalisisBoton(pPadre, oBoton);
 }
 // funcion PARA HACER PRUEBAS
 function fTest() {
@@ -526,8 +567,10 @@ function fTest() {
   console.log(testValues, "=  ", testValues.replace(/\b[\w?*]+\.example/, "example"));
   console.log(testValuesx, "=  ", testValuesx.replace(/width="\b[\w?*.]+/, 'width="123'));
 }
-function fInsertarARBoton() {
-  var idRealidadAumentada = document.getElementById('idRealidadAumentada');
-  idRealidadAumentada.setAttribute('slot','ar-button');
-  console.log(idRealidadAumentada);
+function fClassListVisibilidad(pElemento, pEstado) { //pasa dimension de Oculto/Visible
+  if (pEstado) {
+      pElemento.classList.remove('hide');
+  } else {
+      pElemento.classList.add('hide');
+  }
 }
