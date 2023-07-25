@@ -2,7 +2,7 @@
 /*
 window.addEventListener('load', function() {
   const loadingScreen = document.querySelector('.ClassObjetoCargar');
-  for (var i = 1; i <= 8; i++) {
+  for (let i = 1; i <= 8; i++) {
     setTimeout(function() {
       if (i === 9) {
         loadingScreen.style.display = 'none';
@@ -52,8 +52,8 @@ document.addEventListener("contextmenu", function(event) {
 */
 /**** Imagen al cargar la pagina */
 function getURLParameters() {
-  var vUrlParams = {};
-  var vMatch,
+  let vUrlParams = {};
+  let vMatch,
   vPl = /\+/g,  // Regex para reemplazar los caracteres especiales codificados en la URL
   vBuscar = /([^&=]+)=?([^&]*)/g,
   fDecode = function (s) {
@@ -61,23 +61,23 @@ function getURLParameters() {
   },
   vQuery = window.location.search.substring(1);
   while ((vMatch = vBuscar.exec(vQuery))) {
-      var vParam = fDecode(vMatch[1]);
-      var vValor = fDecode(vMatch[2]);
-      vUrlParams[vParam] = vValor;
+    let vParam = fDecode(vMatch[1]);
+    let vValor = fDecode(vMatch[2]);
+    vUrlParams[vParam] = vValor;
   }
   return vUrlParams;
 }
 // Obtener los parámetros de la URL y mostrarlos en consola
 function fMostrarParametros() {
-  var vParametros = getURLParameters();
+  let vParametros = getURLParameters();
   // Mostrar los parámetros en la página
-  for (var vParametro in vParametros) {
+  for (let vParametro in vParametros) {
       console.log(vParametro, vParametros[vParametro]);
   }
 }
-function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer) {
+function fImagenCarga(pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer) {
   //Crear div
-  var oContenedor = document.createElement('div');
+  let oContenedor = document.createElement('div');
     oContenedor.setAttribute('id', pIdIdentificador + 'N01');
     oContenedor.style.display = 'flex';
     oContenedor.style.justifyContent = 'center';
@@ -89,7 +89,7 @@ function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pObjetoMode
     oContenedor.style.transform = 'translate(-50%, -50%)';
     //oContenedor.style.filter = vSombraUp;
       //Crear imagen
-      var oImg = document.createElement('img');
+      let oImg = document.createElement('img');
         oImg.setAttribute('id', pIdIdentificador + 'N02');
         oImg.setAttribute('src', pDirImagen);
         oImg.setAttribute('class', 'ClassObjetoCargar');
@@ -112,7 +112,7 @@ function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pObjetoMode
 /**** Funcion para Colocar una imagen en cualquier lugar de la pantalla, con opcion de ir a Pagina Link*/
 function fImagenImgLink(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransformacion, pOpacidad, pDirImagen, pEstado, pUrl, pPagina, pZindex, pCssCodigo) {
   pPadre.addEventListener('load', function() {
-    var oContenedor = document.createElement('a');
+    let oContenedor = document.createElement('a');
       if (pEstado) {
         oContenedor.style.display = 'flex';
       }
@@ -123,7 +123,7 @@ function fImagenImgLink(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransf
         oContenedor.setAttribute('href',pUrl);
         oContenedor.setAttribute('target',pPagina);
       }
-      var oImg = document.createElement('img');
+      let oImg = document.createElement('img');
         oImg.setAttribute('id', pIdIdentificador);
         oImg.setAttribute('src', pDirImagen);
         if (pUrl.length != 0 && pPagina.length != 0) {
@@ -205,8 +205,8 @@ function fTipoPantalla() {
 }
 /* Obtener la ruta del archivo GLTF en github
 function fObtenerLink1(pUrl){ //Obtener la ruta completa archivo GLTF
-  var vContar = 0;
-  var vInicio = 0;
+  let vContar = 0;
+  let vInicio = 0;
   vNuevaCadena = pUrl;
   vNuevoUrl = 'https://raw.githubusercontent.com/';
   while ((vInicio = pUrl.indexOf("/", vInicio) + 1) > 0) {
@@ -223,8 +223,8 @@ function fObtenerLink1(pUrl){ //Obtener la ruta completa archivo GLTF
   return vNuevoUrl;
 }
 function fObtenerLink2(pUrl){ //Obtener la ruta de la "carpeta" donde se encuentra el GLTF
-  var vContar = 0;
-  var vInicio = 0;
+  let vContar = 0;
+  let vInicio = 0;
   vNuevaCadena = pUrl;
   vNuevoUrl = 'https://raw.githubusercontent.com/';
   while ((vInicio = pUrl.indexOf("/", vInicio) + 1) > 0) {
@@ -240,8 +240,8 @@ function fObtenerLink2(pUrl){ //Obtener la ruta de la "carpeta" donde se encuent
   return vNuevoUrl;
 }*/
 function fObtenerLink(pUrl, pTipo){ //Obtener la ruta de la "D = carpeta F = Archivo" donde se encuentra el GLTF
-  var vContar = 0;
-  var vInicio = 0;
+  let vContar = 0;
+  let vInicio = 0;
   vNuevaCadena = pUrl;
   vNuevoUrl = 'https://raw.githubusercontent.com/';
   while ((vInicio = pUrl.indexOf("/", vInicio) + 1) > 0) {
@@ -486,8 +486,8 @@ function fImagenImg(pBarra, pColores, pTitulo, pArchivoIMG, pIndice, pBotones, p
   }
 }
 function fAnalisisBoton(oBoton) {
-  var vPulsado = oBoton.getAttribute('pulsado');
-  var vActivo = oBoton.getAttribute('disponible');
+  let vPulsado = oBoton.getAttribute('pulsado');
+  let vActivo = oBoton.getAttribute('disponible');
   vPulsado = vPulsado === 'false';
   oBoton.setAttribute('pulsado', vPulsado);
   if (vPulsado) {
@@ -562,8 +562,8 @@ function fInformacion(pPadre, oBoton) {
 }
 // funcion PARA HACER PRUEBAS
 function fTest() {
-  var testValues = "fg8uj.example";
-  var testValuesx = 'width="4.1516mm"';
+  let testValues = "fg8uj.example";
+  let testValuesx = 'width="4.1516mm"';
   console.log(testValues, "=  ", testValues.replace(/\b[\w?*]+\.example/, "example"));
   console.log(testValuesx, "=  ", testValuesx.replace(/width="\b[\w?*.]+/, 'width="123'));
 }
