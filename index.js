@@ -540,10 +540,8 @@ function fFullScreen(pPadre, oBoton) {
 }
 function fRealidadAumentada(pPadre, oBoton) {
   vActivo = fAnalisisBoton(pPadre, oBoton);
-  //Preguntar si esta en PC o Movil
-  // Si esta en PC desactivarlo
-  //Sino Llamar a AR
-  //Ver si se mantiene activa la barra de herramientas
+  pPadre.setAttribute('slot', 'ar-button');
+  console.log(pPadre, oBoton);
 }
 function fCaptura(pPadre, oBoton) {
   vActivo = fAnalisisBoton(pPadre, oBoton);
