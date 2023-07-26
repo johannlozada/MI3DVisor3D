@@ -75,10 +75,11 @@ function fMostrarParametros() {
       console.log(vParametro, vParametros[vParametro]);
   }
 }
-function fImagenCarga(pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer) {
+function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pContenedor) {
   //Crear div
+  console.log(pDirImagen);
   let oContenedor = document.createElement('div');
-    oContenedor.setAttribute('id', pIdIdentificador + 'N01');
+    oContenedor.setAttribute('id', pIdIdentificador + 'Div');
     oContenedor.style.display = 'flex';
     oContenedor.style.justifyContent = 'center';
     oContenedor.style.alignItems = 'center';
@@ -90,7 +91,7 @@ function fImagenCarga(pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer)
     //oContenedor.style.filter = vSombraUp;
       //Crear imagen
       let oImg = document.createElement('img');
-        oImg.setAttribute('id', pIdIdentificador + 'N02');
+        oImg.setAttribute('id', pIdIdentificador + 'Img');
         oImg.setAttribute('src', pDirImagen);
         oImg.setAttribute('class', 'ClassObjetoCargar');
         oImg.style.width = pTamano;
@@ -99,8 +100,8 @@ function fImagenCarga(pIdIdentificador, pDirImagen, pTamano, pObjetoModelViewer)
       oContenedor.appendChild(oImg);
   document.body.appendChild(oContenedor);
   //Ocultar despues de la carga el GLTF
-  pObjetoModelViewer.addEventListener('load', function() {
-    if (pObjetoModelViewer.loaded) {
+  pContenedor.addEventListener('load', function() {
+    if (pContenedor.loaded) {
       vtiempo = '0.25';
       oContenedor.style.animation = 'fadein ' + vtiempo + 's';
       setTimeout(() => {

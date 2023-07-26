@@ -79,10 +79,8 @@
                     vRutaPrograma = '/';
                 }
             }
-            console.log(vRutaPrograma);
-            // Si vPosicion es 0=Piso o 1=Pared GLTF fObtenerLink2
             let vPosicion = '1';
-            vPosicion = vPosicion === '0' ? 'wall' : 'floor';
+            vPosicion = vPosicion === '0' ? 'wall' : 'floor'; // Si vPosicion es 0=Piso o 1=Pared GLTF fObtenerLink2
             let vColores1 = '#c8e1ff';
             let vColores2 = '#3b91f7';
             let vClickActivo = true;
@@ -117,8 +115,7 @@
             vCssidImgFondo = '{ height: 100vh; left: 10%; }; [1];';
             fImagenImgLink(oModelViewer, 'idImgFondo','C0%','C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.15', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssidImgFondo);
             //Imagen de Carga de Pagina
-            console.log(vRutaPrograma + 'imagenes/MI3D-Isotipo.png');
-            fImagenCarga('idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
+            fImagenCarga('', 'idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
             //Determinar qué tipo de dispositivo se está usando
 /*            const vresultado1 = document.getElementById("idAr-button");
             vtipopantalla = fTipoPantalla();
