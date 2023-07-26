@@ -87,6 +87,7 @@
             // Declara Objeto ModelViewer del GLTF
             const oModelViewer = document.getElementById('IdModelo3d');
             fARBoton(oModelViewer, vRutaPrograma + 'imagenes/MI3D-AR.png');
+/*
             //Listado opciones con check
             let vOpcionesMarco = '[' + 
                 '{ "id" : "00", "identificador" : "show-variantes", "texto" : "Variantes" },' +
@@ -96,7 +97,7 @@
                 ']';
             const oOpcionesMarco = JSON.parse(vOpcionesMarco);
             fMarcoOpciones(oModelViewer, oOpcionesMarco, vColores1, vColores2, 'R20%', 'T5px');
-
+*/
             //Angulos de vision V y H
             //vCamaraorbitar='-45deg 75deg 100%'; // camera-orbit = movimiento de la camara sobre el objeto $Theta $Phi $Radio
             //vCamaraDestino='5m 2m 0m'; // camera-target = a donde va la camara sobre el objeto $X $Y $Z
@@ -217,7 +218,7 @@
                     oVariantesSelect.style.display = 'none';
                 });
                 //Detecta cuando se da click en cualquier lado
-                document.getElementById('idVariantesContainer').addEventListener('mousedown', function(e){
+                oVariantesContainer.addEventListener('mousedown', function(e){
                     oVariantesSelect.style.display = 'none';
                 });
                 //Oculta variantes al iniciar
@@ -287,6 +288,12 @@
                     fetch(oModelViewer.src)
                     .then(res => res.json())
                     .then(data =>   {
+/*
+                        console.log(data);
+                        console.log('Imagenes:', data.images);
+                        console.log('variantes: ', data.extensions.KHR_materials_variants.variants);
+                        console.log('Meshes: ', data.nodes);
+*/                        
                         for (let i = 0; i < data.nodes.length; i++) {
                             if (typeof data.materials[i].extensions !== 'undefined') {
                                 //console.log('Meshes:', data.nodes.length, 
