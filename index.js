@@ -77,7 +77,6 @@ function fMostrarParametros() {
 }
 function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pContenedor) {
   //Crear div
-  console.log(pDirImagen);
   let oContenedor = document.createElement('div');
     oContenedor.setAttribute('id', pIdIdentificador + 'Div');
     oContenedor.style.display = 'flex';
