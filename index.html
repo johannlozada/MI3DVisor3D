@@ -134,9 +134,14 @@
             oModelViewer.addEventListener('ar-status', (event) => {
                 if (event.detail.status != 'failed') {
                     document.getElementById('idImgFondo').src = '';
+                    document.getElementById('idImgMI3D').src = '';
+                    document.getElementById('idDivFullScreen').style.background = vBotonFondoPulsado;
+                    
                 }
                 if (event.detail.status == 'not-presenting') {
                     document.getElementById('idImgFondo').src = vModelViewerRuta + 'ClienteFondo.png';
+                    document.getElementById('idImgMI3D').src = vRutaPrograma + 'imagenes/MI3D-Isotipo.png';
+                    document.getElementById('idDivFullScreen').style.background = '';
                 }
             })
             //Colocar Logo de Marca Cliente
