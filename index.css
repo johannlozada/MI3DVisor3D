@@ -140,7 +140,7 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   .leyenda {
     width: 80%;
   }
-  #idFondoCliente {
+  #idImgFondo {
     height: 100vh;
     left: -80%;
     transform: rotate(-25deg);

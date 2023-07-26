@@ -13,28 +13,28 @@ window.addEventListener('load', function() {
 /**** Colocar CSS inicial en HEAD */
 const oStylePagina = document.createElement("style");
 oStylePagina.textContent = '\
-  .dot{\
-    display: none;\
+.dot{\
+  display: none;\
+}\
+@keyframes girar {\
+  0% {\
+    transform: rotate(0deg);\
   }\
-  @keyframes girar {\
-    0% {\
-      transform: rotate(0deg);\
-    }\
-    100% {\
-      transform: rotate(360deg);\
-    }\
+  100% {\
+    transform: rotate(360deg);\
   }\
-  @keyframes fadein {\
-    from {\
-        opacity:1;\
-    }\
-    to {\
-        opacity:0;\
-    }\
-  };\
-  @media only screen and (max-width: 600px) {\
-    [1];\
-  }';
+}\
+@keyframes fadein {\
+  from {\
+    opacity:1;\
+  }\
+  to {\
+    opacity:0;\
+  }\
+}\
+@media only screen and (max-width: 600px) {\
+  [1];\
+}';
 document.head.appendChild(oStylePagina);
 /**** Colocar Variables Iniciales */
 let vSombraUp = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.75))';

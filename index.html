@@ -113,7 +113,7 @@
             oModelViewer.src = fObtenerLink(vRutaGltf,'F');
             vModelViewerRuta = fObtenerLink(vRutaGltf, 'D');
             //Colocar logo de Marca cliente como fondo
-            vCssidImgFondo = '{ height: 100vh; left: 10%; }; [1];';
+            vCssidImgFondo = '{height: 100vh; left: -80%; transform: rotate(-25deg)} [1];';
             fImagenImgLink(oModelViewer, 'idImgFondo', 'C0%', 'C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.15', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssidImgFondo);
             //Imagen de Carga de Pagina
             fImagenCarga('', 'idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
@@ -139,20 +139,8 @@
                     document.getElementById('idImgFondo').src = vModelViewerRuta + 'ClienteFondo.png';
                 }
             })
-/*
-            oModelViewer.addEventListener('ar-status', (event) => {
-                if (event.detail.status != 'failed') {
-                    document.getElementById('idFondoCliente').src = '';
-                }
-            })
-            oModelViewer.addEventListener('ar-status', (event) => {
-                if (event.detail.status == 'not-presenting') {
-                    document.getElementById('idFondoCliente').src = `${vModelViewerRuta}` + 'ClienteFondo.png';
-                }
-            })
-*/
             //Colocar Logo de Marca Cliente
-            vCssidImg1 = '{ height: 40px; }; [1];';
+            vCssidImg1 = '{height: 40px;}; [1];';
             fImagenImgLink(oModelViewer, 'idImgCliente', 'L10px', 'T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', true, 'https://www.google.com', '_blank','0', vCssidImg1);
             //Colocar Logo de Marca MI3D
             fImagenImgLink(oModelViewer, 'idImgMI3D', 'L10px', 'B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', true, 'https://www.google.com', '_blank','0', '');
