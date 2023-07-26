@@ -28,7 +28,6 @@
                 scale='1 1 1'
                 autoplay
                 >
-                <img id="idFondoCliente" src="">
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
                 <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
@@ -84,13 +83,16 @@
             vPosicion = vPosicion === '0' ? 'wall' : 'floor'; // Si vPosicion es 0=Piso o 1=Pared GLTF fObtenerLink2
             let vColores1 = '#c8e1ff';
             let vColores2 = '#3b91f7';
-            let vClickActivo = true;
+            let vVariantesPulsado = false;
             // Declara Objeto ModelViewer del GLTF
             const oModelViewer = document.getElementById('IdModelo3d');
             fARBoton(oModelViewer, vRutaPrograma + 'imagenes/MI3D-AR.png');
             //Listado opciones con check
             let vOpcionesMarco = '[' + 
-                '{ "id" : "00", "identificador" : "show-variantes", "texto" : "Variantes" }' +
+                '{ "id" : "00", "identificador" : "show-variantes", "texto" : "Variantes" },' +
+                '{ "id" : "01", "identificador" : "show-variantes", "texto" : "Variantes" },' +
+                '{ "id" : "02", "identificador" : "show-variantes", "texto" : "Variantes" },' +
+                '{ "id" : "03", "identificador" : "show-variantes", "texto" : "Variantes" }' +
                 ']';
             const oOpcionesMarco = JSON.parse(vOpcionesMarco);
             fMarcoOpciones(oModelViewer, oOpcionesMarco, vColores1, vColores2, 'R20%', 'T5px');
@@ -131,14 +133,13 @@
 */
             //Colocar color de fondo oModelViewer
             document.getElementById('idContenedor').style.cssText = 'background: radial-gradient(farthest-corner at -30vw 120vh,' + `${vColores1}` + ' 10%,' + `${vColores2}` + ' 100%);';
-            oModelViewer.addEventListener('ar-status', (event) => {
-                if (event.detail.status != 'failed') {
+            oModelViewer.addEventListener('ar-status', (event) => { //Escucha el evento AR
+                if (event.detail.status != 'failed') { // Si se activa el modo AR
                     document.getElementById('idImgFondo').src = '';
                     document.getElementById('idImgMI3D').src = '';
                     document.getElementById('idDivFullScreen').style.background = vBotonFondoPulsado;
-                    
                 }
-                if (event.detail.status == 'not-presenting') {
+                if (event.detail.status == 'not-presenting') { // Si se desactiva el modo AR
                     document.getElementById('idImgFondo').src = vModelViewerRuta + 'ClienteFondo.png';
                     document.getElementById('idImgMI3D').src = vRutaPrograma + 'imagenes/MI3D-Isotipo.png';
                     document.getElementById('idDivFullScreen').style.background = '';
@@ -180,7 +181,10 @@
                     });
                 }
                 function fMostrarListavariantes(pEvent) {
-                    if (!vClickActivo) {
+                    vVariantesPulsado = document.getElementById('idDivVariantes');
+                    vVariantesPulsado = vVariantesPulsado.getAttribute('pulsado');
+                    vVariantesPulsado = vVariantesPulsado === 'false' ? false : true;
+                    if (vVariantesPulsado) {
                         const oMaterialClick = oModelViewer.materialFromPoint(pEvent.clientX, pEvent.clientY);
                         if (oMaterialClick != null) {
                             const vRect = oModelViewer.getBoundingClientRect();
@@ -216,27 +220,11 @@
                 document.getElementById('idVariantesContainer').addEventListener('mousedown', function(e){
                     oVariantesSelect.style.display = 'none';
                 });
-                const oCheckboxVariantes = oModelViewer.querySelector('#show-variantes');
-                //checkbox variante Oculto/Visible
-                function fVariableVisible(pElemento) {
-                    if (oCheckboxVariantes.checked) {
-                        pElemento.classList.remove('hide');
-                    } else {
-                        pElemento.classList.add('hide');
-                    }
-                }
-                //checkbox variante Pasar el valor cuando carga
+                //Oculta variantes al iniciar
                 oModelViewer.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
-                    fVariableVisible(hotspot);
+                    fClassListVisibilidad(hotspot,false);
                 });
-                //checkbox variante Pasar el valor
-                oCheckboxVariantes.addEventListener('change', () => {
-                    vClickActivo = !oCheckboxVariantes.checked;
-                    oModelViewer.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
-                        fVariableVisible(hotspot);
-                    });
-                });
-                //Oculta las Medidas y las lineas
+                //Oculta las Medidas y las lineas al iniciar
                 fClassListVisibilidad(oModelViewer.querySelector('#idDimLines'), false);
                 oModelViewer.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
                     fClassListVisibilidad(hotspot, false);
@@ -297,43 +285,43 @@
                     let vC1 = 0;
                     //let vTextoButton = [];
                     fetch(oModelViewer.src)
-                        .then(res => res.json())
-                        .then(data =>   {
-                            for (let i = 0; i < data.nodes.length; i++) {
-                                if (typeof data.materials[i].extensions !== 'undefined') {
-                                    //console.log('Meshes:', data.nodes.length, 
-                                    //    'Nombre:', data.nodes[i].name,
-                                    //    'x:', data.nodes[i].translation[0],
-                                    //    'z:', data.nodes[i].translation[1],
-                                    //    'y:', data.nodes[i].translation[2],
-                                    //    'Boton N:', vC1);
-                                    vHPx = data.nodes[i].translation[0] / vDecimal;
-                                    vHPz = data.nodes[i].translation[1] / vDecimal;
-                                    vHPy = data.nodes[i].translation[2] / vDecimal;
-                                    let oBoton = document.createElement('button');
-                                    oBoton.id = 'HotSpotVariante';
-                                    if (oCheckboxVariantes.checked) {
-                                        oBoton.className = 'hotspot';
-                                    } else {
-                                        oBoton.className = 'hotspot hide';
-                                    }
-                                    oBoton.setAttribute('slot','hotspot' + `${vC1}`);
-                                    oBoton.setAttribute('data-position',`${vHPx} ${vHPz} ${vHPy}`);
-                                    oBoton.setAttribute('data-normal', '0 0 0');
-                                    let oDetalle = document.createElement('div');
-                                    oDetalle.className = 'annotation';
-                                    oDetalle.innerHTML = data.nodes[i].name;
-                                    oDetalle.style.color = 'rgb(0, 0, 0)';
-                                    oBoton.appendChild(oDetalle);
-
-                                    oModelViewer.appendChild(oBoton);
-                                    vC1++;
+                    .then(res => res.json())
+                    .then(data =>   {
+                        for (let i = 0; i < data.nodes.length; i++) {
+                            if (typeof data.materials[i].extensions !== 'undefined') {
+                                //console.log('Meshes:', data.nodes.length, 
+                                //    'Nombre:', data.nodes[i].name,
+                                //    'x:', data.nodes[i].translation[0],
+                                //    'z:', data.nodes[i].translation[1],
+                                //    'y:', data.nodes[i].translation[2],
+                                //    'Boton N:', vC1);
+                                vHPx = data.nodes[i].translation[0] / vDecimal;
+                                vHPz = data.nodes[i].translation[1] / vDecimal;
+                                vHPy = data.nodes[i].translation[2] / vDecimal;
+                                let oBoton = document.createElement('button');
+                                oBoton.id = 'HotSpotVariante';
+                                if (vVariantesPulsado) {
+                                    oBoton.className = 'hotspot';
+                                } else {
+                                    oBoton.className = 'hotspot hide';
                                 }
+                                oBoton.setAttribute('slot','hotspot' + `${vC1}`);
+                                oBoton.setAttribute('data-position',`${vHPx} ${vHPz} ${vHPy}`);
+                                oBoton.setAttribute('data-normal', '0 0 0');
+                                let oDetalle = document.createElement('div');
+                                oDetalle.className = 'annotation';
+                                oDetalle.innerHTML = data.nodes[i].name;
+                                oDetalle.style.color = 'rgb(0, 0, 0)';
+                                oBoton.appendChild(oDetalle);
+
+                                oModelViewer.appendChild(oBoton);
+                                vC1++;
                             }
-                        }) 
-                        .catch(error => {
-                            console.error('Error al obtener el archivo JSON:', error);
-                        });
+                        }
+                    }) 
+                    .catch(error => {
+                        console.error('Error al obtener el archivo JSON:', error);
+                    });
                 };
                 fHotspotVariante();
                 vTexto = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo ' + '<br>' +
@@ -356,7 +344,7 @@
             '{ "id" : "12", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" }' +
             ']';
             const oJsonBarra = JSON.parse(vJsonBarra);
-            fBarraHerramientas(oModelViewer, 'idBarra', 'R10px', 'T10px', '50px', '#43b2ff', '#ffffff', true, 'P',oJsonBarra);
+            fBarraHerramientas(oModelViewer, 'idBarra', 'R10px', 'T60px', '50px', '#43b2ff', '#ffffff', true, 'P',oJsonBarra);
 /***/
         </script>
     </body>

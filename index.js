@@ -533,6 +533,13 @@ function fDimensiones(pPadre, oBoton, pContenedor) {
 
 function fVariantes(pPadre, oBoton) {
   vActivo = fAnalisisBoton(pPadre, oBoton);
+    oModelViewer.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
+      if (vActivo) {
+        hotspot.classList.remove('hide');
+      } else {
+        hotspot.classList.add('hide');
+      }
+    });
 }
 function fFullScreen(pPadre, oBoton) {
   vActivo = fAnalisisBoton(pPadre, oBoton);
