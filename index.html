@@ -169,7 +169,7 @@
                         if (vVarianteCompara == pMaterial) {
                             vVariante[i] = vVariante[i].slice(0, vVariante[i].search('_'));
                             const oOpcion = document.createElement('option');
-                            oOpcion.value = vVariante[i];
+                                oOpcion.value = vVariante[i];
                             oOpcion.appendChild(document.createTextNode(vVariante[i]));
                             oVariantesSelect.appendChild(oOpcion);
                             document.getElementById('idVariantesSelect').value = pMaterialDefecto;
@@ -195,14 +195,14 @@
                             oVariantesSelect.style.display = 'none';
                             oVariantesContainer.innerHTML = '';
                             const vVarianteName = document.createElement('span');
-                            if (oMaterialClick.name.search('_') > 0) {
-                                vVarianteName.textContent = oMaterialClick.name;
-                                oVariantesContainer.appendChild(vVarianteName);
-                                const vMaterial = oMaterialClick.name.slice(oMaterialClick.name.search('_')+1,oMaterialClick.name.length); // Determinar el Material
-                                const vMaterialDefecto = oMaterialClick.name.slice(0, oMaterialClick.name.search('_')); // Determinar el Material x defecto
-                                //console.log('material = ' + oMaterialClick.name, ' Codigo = [' + vMaterial + ']', 'MDefecto = ' + vMaterialDefecto);
-                                fGenerarListaVariantes(pX, pY, vMaterial, vMaterialDefecto);
-                            }
+                                if (oMaterialClick.name.search('_') > 0) {
+                                    vVarianteName.textContent = oMaterialClick.name;
+                                    const vMaterial = oMaterialClick.name.slice(oMaterialClick.name.search('_')+1,oMaterialClick.name.length); // Determinar el Material
+                                    const vMaterialDefecto = oMaterialClick.name.slice(0, oMaterialClick.name.search('_')); // Determinar el Material x defecto
+                                    //console.log('material = ' + oMaterialClick.name, ' Codigo = [' + vMaterial + ']', 'MDefecto = ' + vMaterialDefecto);
+                                    fGenerarListaVariantes(pX, pY, vMaterial, vMaterialDefecto);
+                                }
+                            oVariantesContainer.appendChild(vVarianteName);
                         } else {
                             const target = pEvent.target;
                             if (target !== oVariantesSelect) {
@@ -212,7 +212,13 @@
                     }
                 }
                 //Cuando haces click genera la OptionList - Determinar a qué variantes se les da click
-                oModelViewer.addEventListener('click', fMostrarListavariantes);
+//                oModelViewer.addEventListener('click', fMostrarListavariantes);
+/**/
+                oModelViewer.addEventListener('click', function(oEvent) {
+                    fCarruselVariantes(oModelViewer, oEvent, vColores2);
+                });
+/**/
+
                 //Ocultar el selector de variantes cuando se selecciona una opción
                 oVariantesSelect.addEventListener('change', () => {
                     oVariantesSelect.style.display = 'none';
@@ -279,61 +285,12 @@
                 oModelViewer.querySelector('button[slot="hotspot-dim-X-Y"]').textContent = `${(oSize.z * vDecimal).toFixed(0)} `+ vUndMedida;
                 oModelViewer.updateHotspot({name: 'hotspot-dot-X-Y+Z', position: `${oCenter.x - vX2} ${oCenter.y - vY2} ${oCenter.z + vZ2}`});
                 fRenderSVG();
-                //crear los hotsspot indicando q tiene variables
-                function fHotspotVariante() {
-                    //Colocar hostspot en mesh si este tiene variantes
-                    //Leer archivo Json = GLTF
-                    let vC1 = 0;
-                    //let vTextoButton = [];
-                    fetch(oModelViewer.src)
-                    .then(res => res.json())
-                    .then(data =>   {
-/*
-                        console.log(data);
-                        console.log('Imagenes:', data.images);
-                        console.log('variantes: ', data.extensions.KHR_materials_variants.variants);
-                        console.log('Meshes: ', data.nodes);
-*/                        
-                        for (let i = 0; i < data.nodes.length; i++) {
-                            if (typeof data.materials[i].extensions !== 'undefined') {
-                                //console.log('Meshes:', data.nodes.length, 
-                                //    'Nombre:', data.nodes[i].name,
-                                //    'x:', data.nodes[i].translation[0],
-                                //    'z:', data.nodes[i].translation[1],
-                                //    'y:', data.nodes[i].translation[2],
-                                //    'Boton N:', vC1);
-                                vHPx = data.nodes[i].translation[0] / vDecimal;
-                                vHPz = data.nodes[i].translation[1] / vDecimal;
-                                vHPy = data.nodes[i].translation[2] / vDecimal;
-                                let oBoton = document.createElement('button');
-                                oBoton.id = 'HotSpotVariante';
-                                if (vVariantesPulsado) {
-                                    oBoton.className = 'hotspot';
-                                } else {
-                                    oBoton.className = 'hotspot hide';
-                                }
-                                oBoton.setAttribute('slot','hotspot' + `${vC1}`);
-                                oBoton.setAttribute('data-position',`${vHPx} ${vHPz} ${vHPy}`);
-                                oBoton.setAttribute('data-normal', '0 0 0');
-                                let oDetalle = document.createElement('div');
-                                oDetalle.className = 'annotation';
-                                oDetalle.innerHTML = data.nodes[i].name;
-                                oDetalle.style.color = 'rgb(0, 0, 0)';
-                                oBoton.appendChild(oDetalle);
-
-                                oModelViewer.appendChild(oBoton);
-                                vC1++;
-                            }
-                        }
-                    }) 
-                    .catch(error => {
-                        console.error('Error al obtener el archivo JSON:', error);
-                    });
-                };
-                fHotspotVariante();
+                fHotspotVariante(oModelViewer);
+/*                
                 vTexto = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo ' + '<br>' +
                     'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo';
                 fVentanaInformacion(vTexto);
+*/
             });
             let vJsonBarra = '[' + 
             '{ "id" : "00", "titulo" : "Menu Principal", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.png" + '", "visible" : "1", "disponible" : "1", "pulsado" : "0" },' +
@@ -351,8 +308,88 @@
             '{ "id" : "12", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" }' +
             ']';
             const oJsonBarra = JSON.parse(vJsonBarra);
-            fBarraHerramientas(oModelViewer, 'idBarra', 'R10px', 'T60px', '50px', '#43b2ff', '#ffffff', true, 'P',oJsonBarra);
+            fBarraHerramientas(oModelViewer, 'idBarra', 'R10px', 'T60px', '50px', '#43b2ff', '#ffffff', true, 'P', oJsonBarra);
 /***/
+            function fCarruselVariantes(pContenedor, pEvent, pColores2){
+                //console.log(oModelViewer.materialFromPoint(pEvent.clientX, pEvent.clientY))
+                console.log('Evento Click: ', pEvent);
+                vDivExiste = document.getElementById('idCarrusel');
+                if (vDivExiste === null){
+                    //crear DIV
+                    const oVentana = document.createElement('div');
+                        oVentana.setAttribute('id', 'idCarrusel');
+                        oVentana.style.left = '25%';
+                        oVentana.style.top = '45%';
+                        oVentana.style.width = '50%';
+                        oVentana.style.height = '30%';
+                        oVentana.style.position = 'absolute';
+                        oVentana.style.borderRadius = vBordeRadio;
+                        oVentana.style.padding = vPadding;
+                        oVentana.style.filter = vSombraUp;
+                        oVentana.style.backdropFilter = vBlurFondo;
+                        oVentana.style.border = vBlurBorde;
+                        oVentana.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
+                    pContenedor.appendChild(oVentana);
+                } else { //si ya esta creado en DIV
+
+                }
+            }
+                //crear los hotsspot indicando q tiene variables
+            function fHotspotVariante(pContenedor) {
+                //Colocar hostspot en mesh si este tiene variantes
+                //Leer archivo Json = GLTF
+                let vC1 = 0;
+                //let vTextoButton = [];
+                fetch(pContenedor.src)
+                .then(res => res.json())
+                .then(data =>   {
+
+                    console.log(data);
+                    console.log('Imagenes:', data.images);
+                    console.log('variantes: ', data.extensions.KHR_materials_variants.variants);
+                    console.log('Meshes: ', data.nodes);
+                    
+                    for (let i = 0; i < data.nodes.length; i++) {
+                        if (typeof data.materials[i].extensions !== 'undefined') {
+                            //console.log('Meshes:', data.nodes.length, 
+                            //    'Nombre:', data.nodes[i].name,
+                            //    'x:', data.nodes[i].translation[0],
+                            //    'z:', data.nodes[i].translation[1],
+                            //    'y:', data.nodes[i].translation[2],
+                            //    'Boton N:', vC1);
+                            vHPx = data.nodes[i].translation[0] / vDecimal;
+                            vHPz = data.nodes[i].translation[1] / vDecimal;
+                            vHPy = data.nodes[i].translation[2] / vDecimal;
+                            const oBoton = document.createElement('button');
+                                oBoton.id = 'HotSpotVariante';
+                                if (vVariantesPulsado) {
+                                    oBoton.className = 'hotspot';
+                                } else {
+                                    oBoton.className = 'hotspot hide';
+                                }
+                                oBoton.setAttribute('slot','hotspot' + `${vC1}`);
+                                oBoton.setAttribute('data-position',`${vHPx} ${vHPz} ${vHPy}`);
+                                oBoton.setAttribute('data-normal', '0 0 0');
+                                const oDetalle = document.createElement('div');
+                                    oDetalle.className = 'classVariantAnnotation';
+                                    oDetalle.innerHTML = data.nodes[i].name;
+                                    oDetalle.style.color = 'rgba(0, 0, 0, 0.5)';
+                                    oDetalle.style.backgroundColor = 'rgba(215, 215, 215, 0.5)';
+                                    oDetalle.style.position = 'absolute';
+                                    oDetalle.style.transform = 'translate(-50%, 0px)';
+                                    oDetalle.style.borderRadius = '4px';
+                                    oDetalle.style.padding = '15px';
+                                    oDetalle.style.cursor = 'pointer';
+                                oBoton.appendChild(oDetalle);
+                            pContenedor.appendChild(oBoton);
+                            vC1++;
+                        }
+                    }
+                }) 
+                .catch(error => {
+                    console.error('Error al obtener el archivo JSON:', error);
+                });
+            };
         </script>
     </body>
 </html>

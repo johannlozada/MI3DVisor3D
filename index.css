@@ -90,18 +90,17 @@ model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   width: 20px;
   height: 20px;
   border-radius: 10px;
-  border: 4px solid rgba(215, 215, 215, 0.5);
+  border: 4px solid rgba(215, 215, 215, 0);
   background-color: transparent;
   box-sizing: border-box;
   pointer-events: none;
   --min-hotspot-opacity: 0;
 }
-.annotation{
-  background-color: rgba(215, 215, 215, 0.5);
+.annotation{ /*No se usa*/
   position: absolute;
-  transform: translate(-50%, 15px);
+  transform: translate(-50%, 0px);
   border-radius: 4px;
-  padding: 5px;
+  padding: 15px;
 }
 .dimensionLineContainer{
   pointer-events: none;
