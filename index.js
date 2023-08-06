@@ -11,34 +11,40 @@ window.addEventListener('load', function() {
   }
 });
 /**** Colocar CSS inicial en HEAD */
-const oStylePagina = document.createElement("style");
-oStylePagina.textContent = '\
-.dot{\
+const oStylePagina = document.createElement('style');
+oStylePagina.textContent = "\
+  /* Import Google font - Poppins */\
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');\
+  *{\
+    margin: 0;\
+    padding: 0;\
+    font-family: 'Poppins', sans-serif;\
+  }\
+  body {\
+    width: 100vw;\
+    height: 100vh;\
+    font-size: 12px;\
+  }\
+  .hide{\
+    display: none;\
+  }\
+  .dot{\
+    display: none;\
+  }\
+  /*[1]*/\
+  @media only screen and (max-width: 600px) {\
+    /*[2]*/\
+  }\
+  /* This keeps child nodes hidden while the element loads */\
+  :not(:defined) > * {\
   display: none;\
-}\
-@keyframes girar {\
-  0% {\
-    transform: rotate(0deg);\
-  }\
-  100% {\
-    transform: rotate(360deg);\
-  }\
-}\
-@keyframes fadein {\
-  from {\
-    opacity:1;\
-  }\
-  to {\
-    opacity:0;\
-  }\
-}\
-@media only screen and (max-width: 600px) {\
-  [1];\
-}';
+  }";
 document.head.appendChild(oStylePagina);
 /**** Colocar Variables Iniciales */
 let vSombraUp = 'drop-shadow(3px 3px 2px rgba(68, 68, 68, 0.75))';
 let vSombraDn = 'drop-shadow(-3px -3px 2px rgba(68, 68, 68, 0.75))';
+let vBordeDestelloExterno = 'drop-shadow(0px 0px 2px rgba(255, 255, 255, 1) )';
+let vBordeDestelloInterno = 'drop-shadow(inset 1px 1px 3px rgba(255, 255, 255, 1) )';
 let vPadding = '2px';
 let vBordeRadio = '5px';
 let vBotonFondoPulsado = 'rgba(255, 255, 255, 0.45)';
@@ -75,6 +81,11 @@ function fMostrarParametros() {
       console.log(vParametro, vParametros[vParametro]);
   }
 }
+// Insertar codigo CSS en el principal /*[1]*/ y screen <600 /*[2]*/
+function fInsertarCssCode(pComodin, pCssCode){
+  //previamente declarar oStylePagina en la principal
+  oStylePagina.textContent = oStylePagina.textContent.replace(pComodin, pCssCode + pComodin);
+}
 function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pContenedor) {
   //Crear div
   let oContenedor = document.createElement('div');
@@ -87,7 +98,6 @@ function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pContenedor
     oContenedor.style.top = '50%';
     oContenedor.style.left = '50%';
     oContenedor.style.transform = 'translate(-50%, -50%)';
-    //oContenedor.style.filter = vSombraUp;
       //Crear imagen
       let oImg = document.createElement('img');
         oImg.setAttribute('id', pIdIdentificador + 'Img');
@@ -98,6 +108,24 @@ function fImagenCarga(pPadre, pIdIdentificador, pDirImagen, pTamano, pContenedor
         oImg.style.animation = 'girar 5s linear infinite';
       oContenedor.appendChild(oImg);
   document.body.appendChild(oContenedor);
+  vCssCodigo =    "\
+    @keyframes girar {\
+      0% {\
+        transform: rotate(0deg);\
+      }\
+      100% {\
+        transform: rotate(360deg);\
+      }\
+    }\
+    @keyframes fadein {\
+      from {\
+        opacity:1;\
+      }\
+      to {\
+        opacity:0;\
+      }\
+    }";
+  fInsertarCssCode('/*[1]*/', vCssCodigo);
   //Ocultar despues de la carga el GLTF
   pContenedor.addEventListener('load', function() {
     if (pContenedor.loaded) {
@@ -160,9 +188,14 @@ function fImagenImgLink(pPadre, pIdIdentificador, pPosX, pPosY, pTamano, pTransf
         oImg.style.backgroundSize = 'cover';
         oImg.style.transform = pTransformacion;
         oImg.style.width = 'auto';
-        oImg.style.height = pTamano;
+        vCssCodigo = "\
+        #" + pIdIdentificador + "{\
+            height: " + pTamano + ";\
+        }";
+        fInsertarCssCode('/*[1]*/', vCssCodigo);
+        //Insertar codigo screen < 600px
         if (pCssCodigo.length>0) {
-          oStylePagina.textContent = oStylePagina.textContent.replace('[1];', '#' + pIdIdentificador + pCssCodigo);
+          fInsertarCssCode('/*[2]*/', '#' + pIdIdentificador + pCssCodigo);
         }
       oContenedor.appendChild(oImg);
     pPadre.appendChild(oContenedor);
@@ -180,7 +213,7 @@ function fToggleFullScreen() {
   }
 }
 /* Saber tipo de pantalla y orientacion */
-function fTipoPantalla() {
+function fTipoDispositivo() {
   let vTipoPantalla = "";
   let vOrientacion = "";
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -203,42 +236,6 @@ function fTipoPantalla() {
   vTipoPantalla = vTipoPantalla + "|" + vOrientacion;
   return vTipoPantalla;
 }
-/* Obtener la ruta del archivo GLTF en github
-function fObtenerLink1(pUrl){ //Obtener la ruta completa archivo GLTF
-  let vContar = 0;
-  let vInicio = 0;
-  vNuevaCadena = pUrl;
-  vNuevoUrl = 'https://raw.githubusercontent.com/';
-  while ((vInicio = pUrl.indexOf("/", vInicio) + 1) > 0) {
-      vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/') + 1);
-      //console.log(vCadena);
-      vNuevaCadena = vNuevaCadena.slice(vCadena.length, vNuevaCadena.length);
-      //console.log(vNuevaCadena);
-      if (vContar == 3 || vContar == 4 || vContar > 5){
-          vNuevoUrl = vNuevoUrl + vCadena;
-      }
-      vContar++;
-  }
-  vNuevoUrl = vNuevoUrl + vNuevaCadena;
-  return vNuevoUrl;
-}
-function fObtenerLink2(pUrl){ //Obtener la ruta de la "carpeta" donde se encuentra el GLTF
-  let vContar = 0;
-  let vInicio = 0;
-  vNuevaCadena = pUrl;
-  vNuevoUrl = 'https://raw.githubusercontent.com/';
-  while ((vInicio = pUrl.indexOf("/", vInicio) + 1) > 0) {
-      vCadena = vNuevaCadena.slice(0, vNuevaCadena.indexOf('/') + 1);
-      //console.log(vCadena);
-      vNuevaCadena = vNuevaCadena.slice(vCadena.length, vNuevaCadena.length);
-      //console.log(vNuevaCadena);
-      if (vContar == 3 || vContar == 4 || vContar == 6 || vContar == 7){
-          vNuevoUrl = vNuevoUrl + vCadena;
-      }
-      vContar++;
-  }
-  return vNuevoUrl;
-}*/
 function fObtenerLink(pUrl, pTipo){ //Obtener la ruta de la "D = carpeta F = Archivo" donde se encuentra el GLTF
   let vContar = 0;
   let vInicio = 0;
@@ -258,10 +255,10 @@ function fObtenerLink(pUrl, pTipo){ //Obtener la ruta de la "D = carpeta F = Arc
   return vNuevoUrl;
 }
 function fARBoton(pContenedor, pRutaImagen) {
-  let oBotonAr = document.createElement('button');
+/*  let oBotonAr = document.createElement('button');
       oBotonAr.setAttribute('slot', 'ar-button');
       oBotonAr.setAttribute('id', 'idAr-button');
-  pContenedor.appendChild(oBotonAr);
+  pContenedor.appendChild(oBotonAr);*/
   let oDiv = document.createElement('div');
       oDiv.setAttribute('id', 'ar-prompt');
       let oImg = document.createElement('img');
@@ -386,46 +383,39 @@ function fAnalsisOrientacion(pClave, pMedidaBarra, pContenedor, pBarra) {
       }
   }
 }
-
+//Barra de herramientas q trabaja con Array JSon
 function fBarraHerramientas(pContenedor, pId, pPosX, pPosY, pTamano, pColores1, pColores2, pEstado, pDisposicion, pBotones) {
   pContenedor.addEventListener('load', function() {
     let oBarra = document.createElement('div');
-        if (pPosX.includes('L')) {
-            oBarra.style.left = pPosX.slice(1,pPosX.length);
-        }
-        if (pPosX.includes('R')) {
-            oBarra.style.right = pPosX.slice(1,pPosX.length);
-        }
-        if (pPosY.includes('T')) {
-            oBarra.style.top = pPosY.slice(1,pPosY.length);
-        }
-        if (pPosY.includes('B')) {
-            oBarra.style.bottom = pPosY.slice(1,pPosY.length);
-        }
-        oBarra.setAttribute('id', pId);
-        oBarra.style.position = 'absolute';
-        oBarra.style.margin = '0px';
-        oBarra.style.borderRadius = vBordeRadio;
-        oBarra.style.padding = vPadding;
-        oBarra.style.filter = vSombraUp;
-        oBarra.style.backdropFilter = vBlurFondo;
-        oBarra.style.border = vBlurBorde;
-        oBarra.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
-        for (i=0; i < pBotones.length; i++) {
-            pBotones[i].tamano = pTamano;
-            fImagenImg(oBarra, pColores2, pBotones[i].titulo, pBotones[i].imagen, i, pBotones, pContenedor);
-        }
+      if (pPosX.includes('L')) {
+          oBarra.style.left = pPosX.slice(1,pPosX.length);
+      }
+      if (pPosX.includes('R')) {
+          oBarra.style.right = pPosX.slice(1,pPosX.length);
+      }
+      if (pPosY.includes('T')) {
+          oBarra.style.top = pPosY.slice(1,pPosY.length);
+      }
+      if (pPosY.includes('B')) {
+          oBarra.style.bottom = pPosY.slice(1,pPosY.length);
+      }
+      oBarra.setAttribute('id', pId);
+      oBarra.style.position = 'absolute';
+      oBarra.style.margin = '0px';
+      oBarra.style.borderRadius = vBordeRadio;
+      oBarra.style.padding = vPadding;
+      oBarra.style.filter = vSombraUp;
+      oBarra.style.backdropFilter = vBlurFondo;
+      oBarra.style.border = vBlurBorde;
+      oBarra.style.display = 'flex';
+      oBarra.style.background = 'rgba(' + parseInt(pColores2[1]+pColores2[2],16) +', ' + parseInt(pColores2[3]+pColores2[4],16) + ', ' + parseInt(pColores2[5]+pColores2[6],16) + ', 0.25)';
+      for (i=0; i < pBotones.length; i++) {
+          pBotones[i].tamano = pTamano;
+          fImagenImg(oBarra, pColores2, pBotones[i].titulo, pBotones[i].imagen, i, pBotones, pContenedor);
+      }
     pContenedor.appendChild(oBarra);
-    oBarra.style.display = 'flex';
     let vClave = pDisposicion+pPosX.slice(0,1)+pPosY.slice(0,1);
     let vMedidaBarra = oBarra.clientWidth > oBarra.clientHeight ? oBarra.clientWidth : oBarra.clientHeight;
-/*    console.log('Clave : ', vClave, 
-      'Barra: ', vMedidaBarra,
-      'Alto P:', pContenedor.clientHeight, 
-      'Ancho P:', pContenedor.clientWidth,
-      'Forma :', pDisposicion, 
-      'pos X: ', pPosX.slice(0,1),
-      'pos Y: ', pPosY.slice(0,1));*/
     fAnalsisOrientacion(vClave, vMedidaBarra, pContenedor, oBarra);
     let vOrientacion = window.matchMedia("(orientation: portrait)");
     vOrientacion.addEventListener("change", function(e) {
@@ -480,28 +470,30 @@ function fImagenImg(pBarra, pColores, pTitulo, pArchivoIMG, pIndice, pBotones, p
       }
     oBoton.appendChild(oImg);
   pBarra.appendChild(oBoton);
+  /*
   if (pBotones[pIndice].visible === '0') {
     oBoton.style.display = 'none';
     oBoton.setAttribute('class', 'classHijo');
   }
+  */
 }
-function fAnalisisBoton(oBoton) {
-  let vPulsado = oBoton.getAttribute('pulsado');
-  let vActivo = oBoton.getAttribute('disponible');
+function fAnalisisBoton(pBoton) {
+  let vPulsado = pBoton.getAttribute('pulsado');
+  let vActivo = pBoton.getAttribute('disponible');
   vPulsado = vPulsado === 'false';
-  oBoton.setAttribute('pulsado', vPulsado);
+  pBoton.setAttribute('pulsado', vPulsado);
   if (vPulsado) {
     if (vActivo === '1') {
-      oBoton.style.background = vBotonFondoPulsado;
+      pBoton.style.background = vBotonFondoPulsado;
     }
   } 
   else {
-    oBoton.style.background = '';
+    pBoton.style.background = '';
   }
   return vPulsado;
 }
-function fMenuPrincipal(oBoton, pBotones, pContenedor) { // funcion MENU
-  vPulsado = fAnalisisBoton(oBoton);
+function fMenuPrincipal(pBoton, pBotones, pContenedor) { // funcion MENU
+  vPulsado = fAnalisisBoton(pBoton);
   oClassNivel = document.getElementsByClassName('classHijo');
   for (let i = 0; i < oClassNivel.length; i++) {
     if (vPulsado) {
@@ -514,16 +506,16 @@ function fMenuPrincipal(oBoton, pBotones, pContenedor) { // funcion MENU
     }
   }
 }
-function fDimensiones(pPadre, oBoton, pContenedor) {
-  vActivo = fAnalisisBoton(pPadre, oBoton);
+function fDimensiones(pBoton, pBotones, pContenedor) {
+  vPulsado = fAnalisisBoton(pBoton, pBotones);
   oLine = pContenedor.querySelector('#idDimLines');
-  if (vActivo) {
+  if (vPulsado) {
     oLine.classList.remove('hide');
   } else {
     oLine.classList.add('hide');
   }
   pContenedor.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
-    if (vActivo) {
+    if (vPulsado) {
       hotspot.classList.remove('hide');
     } else {
       hotspot.classList.add('hide');
@@ -531,39 +523,103 @@ function fDimensiones(pPadre, oBoton, pContenedor) {
   });
 }
 
-function fVariantes(pPadre, oBoton) {
-  vActivo = fAnalisisBoton(pPadre, oBoton);
-    oModelViewer.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
-      if (vActivo) {
+function fVariantes(pBoton, pBotones, pContenedor) {
+  vPulsado = fAnalisisBoton(pBoton, pBotones);
+    pContenedor.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
+      if (vPulsado) {
         hotspot.classList.remove('hide');
       } else {
         hotspot.classList.add('hide');
       }
     });
 }
-function fFullScreen(pPadre, oBoton) {
-  vActivo = fAnalisisBoton(pPadre, oBoton);
+function fFullScreen(pBoton, pBotones, pContenedor) {
+  vPulsado = fAnalisisBoton(pBoton, pBotones);
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
+      pBoton.setAttribute('pulsado', 'false');
+      pBoton.style.background = '';
+    }
+  });
   fToggleFullScreen();
 }
-function fRealidadAumentada(pPadre, oBoton) {
-  vActivo = fAnalisisBoton(pPadre, oBoton);
-  pPadre.setAttribute('slot', 'ar-button');
-  console.log(pPadre, oBoton);
+function fRealidadAumentada(pBoton, pBotones, pContenedor) {
+  vPulsado = fAnalisisBoton(pBoton, pBotones);
+  console.log('Realidad Aumentada ', pContenedor.canActivateAR, oBotonArFallo);
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
+      pBoton.setAttribute('pulsado', 'false');
+      pBoton.style.background = '';
+    }
+  });
+  pContenedor.activateAR();
+  //Si AR esta disponible / SI = llamar AR, AR pulsado, / NO = Bloquear boton AR e Indicar no Disponible
 }
-function fCaptura(pPadre, oBoton) {
-  vActivo = fAnalisisBoton(pPadre, oBoton);
+function fCaptura(pBoton, pBotones, pContenedor) {
+  vPulsado = fAnalisisBoton(pBoton, pBotones);
+  // Obtener el elemento de la página a capturar
+  const oModelViewer = document.getElementById('IdModelo3d');
+  // Obtener posicion actual de la camara
+  /*
+  const orbit = oModelViewer.getCameraOrbit();
+  const fov = oModelViewer.getFieldOfView();
+  oModelViewer.cameraTarget = orbit.target; 
+  oModelViewer.cameraOrbit = orbit.radius;
+  oModelViewer.fieldOfView = fov;
+*/
+  // Verificar soporte para captura de pantalla
+  if (html2canvas !== undefined) {
+    // Tomar captura con html2canvas
+    html2canvas(oModelViewer).then((canvas) => {
+      //canvas = oModelViewer.shadowRoot.querySelector('canvas');
+      /*
+      const vOpciones = {
+        canvas: canvas,
+        cameraorbit: oModelViewer.getCameraOrbit(),
+        fieldOfView: oModelViewer.getFieldOfView()
+      };
+      console.log(vOpciones);
+      oModelViewer.render(vOpciones);
+      */
+      // Crear un enlace para descargar
+      const vScreenShot = oModelViewer.toDataURL('image/png').replace("image/png", "image/octet-stream");
+      const anchor = document.createElement('a');
+      anchor.href = vScreenShot; 
+      // Obtener objeto Date con fecha/hora actual
+      const now = new Date();
+      // Obtener día, mes, año, hora, minutos y segundos
+      let day = '0' + now.getDate();
+      let month = now.getMonth() + 1; 
+      month = '0' + month; 
+      let year = now.getFullYear();
+      let hour = '0' + now.getHours();
+      let minute = '0' + now.getMinutes();
+      let second = '0' + now.getSeconds();
+      // Formatear fecha y hora como string y concatenar
+      fecha = day.slice(-2) + month.slice(-2) + year.toString();
+      hora = hour.slice(-2) + minute.slice(-2) + second.slice(-2);
+
+      anchor.download = 'MI3DCaptura-' + fecha + hora + '.png';
+      anchor.click();
+      vPulsado = fAnalisisBoton(pPadre, pBotones);
+      //oModelViewer.cameraOrbit = orbit.radius;
+      //oModelViewer.fieldOfView = fov;
+    });
+  } else {
+    alert('Captura de pantalla no soportada'); 
+  }
 }
-function fCompartir(pPadre, oBoton) {
-  vActivo = fAnalisisBoton(pPadre, oBoton);
+function fCompartir(pBoton, pBotones, pContenedor) {
+  vPulsado = fAnalisisBoton(pBoton, pBotones);
 }
-function fGaleria(pPadre, oBoton) {
-  vActivo = fAnalisisBoton(pPadre, oBoton);
+function fGaleria(pBoton, pBotones, pContenedor) {
+  vPulsado = fAnalisisBoton(pBoton, pBotones);
 }
-function fDetalles(pPadre, oBoton) {
-  vActivo = fAnalisisBoton(pPadre, oBoton);
+function fDetalles(pBoton, pBotones, pContenedor) {
+  vPulsado = fAnalisisBoton(pBoton, pBotones);
 }
-function fInformacion(pPadre, oBoton) {
-  vActivo = fAnalisisBoton(pPadre, oBoton);
+function fInformacion(pBoton, pBotones, pContenedor) {
+  vPulsado = fAnalisisBoton(pBoton, pBotones);
 }
 // funcion PARA HACER PRUEBAS
 function fTest() {
@@ -578,4 +634,72 @@ function fClassListVisibilidad(pElemento, pEstado) { //pasa dimension de Oculto/
   } else {
       pElemento.classList.add('hide');
   }
+}
+//crear los hotsspot indicando q tiene variables
+function fVariantesVisible(pContenedor, pTamano) {
+  //Colocar hostspot en mesh si este tiene variantes
+  //Leer archivo Json = GLTF
+  let vC1 = 0;
+  //let vTextoButton = [];
+  fetch(pContenedor.src)
+  .then(res => res.json())
+  .then(data =>   {
+
+//  console.log(data);
+//  console.log('Examinando:', data.materials[0]);
+//  console.log('variantes: ', data.extensions.KHR_materials_variants.variants);
+//  console.log('Meshes: ', data.nodes);
+      
+    for (let i = 0; i < data.nodes.length; i++) {
+      if (typeof data.materials[i].extensions !== 'undefined') {
+        //console.log('Meshes:', data.nodes.length, 
+        //    'Nombre:', data.nodes[i].name,
+        //    'x:', data.nodes[i].translation[0],
+        //    'z:', data.nodes[i].translation[1],
+        //    'y:', data.nodes[i].translation[2],
+        //    'Boton N:', vC1);
+        vHPx = data.nodes[i].translation[0] / vDecimal;
+        vHPz = data.nodes[i].translation[1] / vDecimal;
+        vHPy = data.nodes[i].translation[2] / vDecimal;
+        const oBoton = document.createElement('button');
+          oBoton.id = 'HotSpotVariante';
+          if (vVariantesPulsado) {
+              oBoton.className = 'hotspot';
+          } else {
+              oBoton.className = 'hotspot hide';
+          }
+          oBoton.setAttribute('slot','hotspot' + `${vC1}`);
+          oBoton.setAttribute('data-position',`${vHPx} ${vHPz} ${vHPy}`);
+          oBoton.setAttribute('data-normal', '0 0 0');
+          const oDetalle = document.createElement('div');
+            oDetalle.className = 'classVariantAnnotation';
+            oDetalle.innerHTML = data.nodes[i].name;
+            oDetalle.style.color = 'rgba(0, 0, 0, 1)';
+            //oDetalle.style.backgroundColor = 'rgba(215, 215, 215, 0.25)';
+            oDetalle.style.position = 'absolute';
+            oDetalle.style.transform = 'translate(-50%, 0px)';
+            oDetalle.style.borderRadius = '4px';
+            oDetalle.style.padding = '5px';
+            oDetalle.style.filter = vBordeDestelloExterno;
+            const oImg = document.createElement('img');
+              oImg.setAttribute('id', 'idImg' + data.nodes[i].name);
+              oImg.setAttribute('src', vRutaPrograma + 'imagenes/MI3D-Variantes.png');
+              oImg.style.filter = vBordeDestelloExterno;
+              oImg.style.height = pTamano;
+            oDetalle.appendChild(oImg);
+          oBoton.appendChild(oDetalle);
+        pContenedor.appendChild(oBoton);
+        //oBoton.style.zIndex = '100';
+        vC1++;
+      }
+    }
+  }) 
+  .catch(error => {
+    console.error('Error al obtener el archivo JSON:', error);
+  });
+};
+function fTecla(pContenedor){
+  document.addEventListener('keydown', function(evento) {
+    console.log('Tecla Pulsada', evento.key);
+  });
 }

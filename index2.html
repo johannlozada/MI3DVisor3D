@@ -1,358 +1,405 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv='cache-control' content='no-cache'> 
-        <meta http-equiv='expires' content='0'> 
-        <meta http-equiv='pragma' content='no-cache'>
-        <link rel="stylesheet" type="text/css" href="./index.css">
-        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-        <script src="./index.js"></script>
-        <title>MI3D - Visor 3D</title>
-        <link rel="shortcut icon" type="image/x-icon" href="imagenes/MI3D-favicon.ico">
-    </head>
-    <body>
-        <!--Cuerpo 3D-->
-        <div id="idContenedor">
-            <model-viewer id='IdModelo3d'
-                src=''
-                alt='MI3D - Visor 3D'
-                shadow-intensity='1'
-                camera-controls
-                ar
-                ar-modes='webxr scene-viewer quick-look'
-                xr-enviroment
-                ar-scale='auto'
-                disable-tap
-                scale='1 1 1'
-                autoplay
-                >
-                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
-                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
-                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
-                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Z" data-position="1 0 -1" data-normal="1 0 0"></button>
-                <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X+Y-Z" data-position="1 1 -1" data-normal="0 1 0"></button>
-                <button id="HotSpotDimension" class="dim" slot="hotspot-dim+Y-Z" data-position="0 -1 -1" data-normal="0 1 0"></button>
-                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X+Y-Z" data-position="-1 1 -1" data-normal="0 1 0"></button>
-                <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Z" data-position="-1 0 -1" data-normal="-1 0 0"></button>
-                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y-Z" data-position="-1 -1 -1" data-normal="-1 0 0"></button>
-                <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Y" data-position="-1 -1 0" data-normal="-1 0 0"></button>
-                <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y+Z" data-position="-1 -1 1" data-normal="-1 0 0"></button>
-                <svg id="idDimLines" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="dimensionLineContainer">
-                    <line class="dimensionLine"></line>
-                    <line class="dimensionLine"></line>
-                    <line class="dimensionLine"></line>
-                    <line class="dimensionLine"></line>
-                    <line class="dimensionLine"></line>
-                </svg>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="./index.js"></script>
+    <title>MI3D - Visor 3D</title>
+    <link rel="shortcut icon" type="image/x-icon" href="imagenes/MI3D-favicon.ico">
+</head>
+<body>
+    <!--Cuerpo 3D-->
+    <div id="idContenedor">
+        <model-viewer id='IdModelo3d'
+            src=''
+            alt='MI3D - Visor 3D'
+            shadow-intensity='1'
+            camera-controls
+            ar
+            ar-modes='webxr scene-viewer quick-look'
+            xr-enviroment
+            ar-scale='auto'
+            disable-tap
+            scale='1 1 1'
+            autoplay
+            >
+            <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y+Z" data-position="1 -1 1" data-normal="1 0 0"></button>
+            <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Y" data-position="1 -1 0" data-normal="1 0 0"></button>
+            <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X-Y-Z" data-position="1 -1 -1" data-normal="1 0 0"></button>
+            <button id="HotSpotDimension" class="dim" slot="hotspot-dim+X-Z" data-position="1 0 -1" data-normal="1 0 0"></button>
+            <button id="HotSpotDimension" class="dot" slot="hotspot-dot+X+Y-Z" data-position="1 1 -1" data-normal="0 1 0"></button>
+            <button id="HotSpotDimension" class="dim" slot="hotspot-dim+Y-Z" data-position="0 -1 -1" data-normal="0 1 0"></button>
+            <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X+Y-Z" data-position="-1 1 -1" data-normal="0 1 0"></button>
+            <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Z" data-position="-1 0 -1" data-normal="-1 0 0"></button>
+            <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y-Z" data-position="-1 -1 -1" data-normal="-1 0 0"></button>
+            <button id="HotSpotDimension" class="dim" slot="hotspot-dim-X-Y" data-position="-1 -1 0" data-normal="-1 0 0"></button>
+            <button id="HotSpotDimension" class="dot" slot="hotspot-dot-X-Y+Z" data-position="-1 -1 1" data-normal="-1 0 0"></button>
+            <svg id="idDimLines" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="dimensionLineContainer">
+                <line class="dimensionLine"></line>
+                <line class="dimensionLine"></line>
+                <line class="dimensionLine"></line>
+                <line class="dimensionLine"></line>
+                <line class="dimensionLine"></line>
+            </svg>
 <!--
-                <button slot='ar-button' id='idAr-button'>
-                </button>
-                <div id='ar-prompt'>
-                    <img src='imagenes/MI3D-AR.png'>
-                </div>
-                <button id='ar-failure'>
-                    No se detecta AR
-                </button>
+            <button slot='ar-button' id='idAr-button'>
+            </button>
+            <div id='ar-prompt'>
+                <img src='imagenes/MI3D-AR.png'>
+            </div>
+            <button id='ar-failure'>
+                No se detecta AR
+            </button>
 -->
-                <!-- Parámetros pasados en la URL: -->
-                <div id="parametros"></div>
-                <!-- Elemento select y contenedor para la lista de opciones -->
-                <select id='idVariantesSelect' style='display: none;'>
-                </select>
-                <div id='idVariantesContainer'>
-                </div>
-            </model-viewer>
-        </div>
-    
-        <script>
-            // Parametros iniciales que tendra q leer del googlesheet
-            // Ruta de archivo
-            vRutaGltf = 'https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf';
-            vRutaPrograma = window.location.href;
-            // SOLO CUANDO SE EJECUTE EN PC / ES TEMPORAL
-            if (vRutaPrograma.includes('file')) {
-                vRutaPrograma = fObtenerLink('https://github.com/johannlozada/MI3DVisor3D/blob/bfae50783939ee82e79a73412689672ebcea6248/','D');
-            } else {
-                if (vRutaPrograma.includes('127.0.0.1')) {
-                    vRutaPrograma = '/';
-                }
-            }
-            let vPosicion = '1';
-            vPosicion = vPosicion === '0' ? 'wall' : 'floor'; // Si vPosicion es 0=Piso o 1=Pared GLTF fObtenerLink2
-            let vColores1 = '#c8e1ff';
-            let vColores2 = '#3b91f7';
-            let vVariantesPulsado = false;
-            // Declara Objeto ModelViewer del GLTF
-            const oModelViewer = document.getElementById('IdModelo3d');
-            fARBoton(oModelViewer, vRutaPrograma + 'imagenes/MI3D-AR.png');
-/*
-            //Listado opciones con check
-            let vOpcionesMarco = '[' + 
-                '{ "id" : "00", "identificador" : "show-variantes", "texto" : "Variantes" },' +
-                '{ "id" : "01", "identificador" : "show-variantes", "texto" : "Variantes" },' +
-                '{ "id" : "02", "identificador" : "show-variantes", "texto" : "Variantes" },' +
-                '{ "id" : "03", "identificador" : "show-variantes", "texto" : "Variantes" }' +
-                ']';
-            const oOpcionesMarco = JSON.parse(vOpcionesMarco);
-            fMarcoOpciones(oModelViewer, oOpcionesMarco, vColores1, vColores2, 'R20%', 'T5px');
-*/
-            //Angulos de vision V y H
-            //vCamaraorbitar='-45deg 75deg 100%'; // camera-orbit = movimiento de la camara sobre el objeto $Theta $Phi $Radio
-            //vCamaraDestino='5m 2m 0m'; // camera-target = a donde va la camara sobre el objeto $X $Y $Z
-            //vMaxCamaraOrbita='22.5deg 90deg auto'; // $Theta $Phi $Radio Maximo
-            //vMinCamaraOrbita='-22.5deg 45deg auto'; // $Theta $Phi $Radio Minimo
-            //INICIO de obtener parametros
-            //los parametros despues del Link inician con ?CONST=VALOR ejemplo ...?const01=valor01&const02=valor02&...
-            //Leyenda:
-            //para01=ubicacion archivo Gltf
-            //para02=posicion en ar del Gltf
-            //la idea seria conectar con googlesheets, pasar parametros como codigo=CLI001
-            //Hacer un script que busque este codigo en la googlesheets y retorne el link con la direccion del GLTF
-            // Llamar a la función para mostrar los parámetros cuando la página se cargue
-            window.onload = fMostrarParametros();
-            //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
-            oModelViewer.src = fObtenerLink(vRutaGltf,'F');
-            vModelViewerRuta = fObtenerLink(vRutaGltf, 'D');
-            //Colocar logo de Marca cliente como fondo
-            vCssidImgFondo = '{height: 100vh; left: -80%; transform: rotate(-25deg)} [1];';
-            fImagenImgLink(oModelViewer, 'idImgFondo', 'C0%', 'C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.15', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssidImgFondo);
-            //Imagen de Carga de Pagina
-            fImagenCarga('', 'idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
-            //Determinar qué tipo de dispositivo se está usando
-/*            const vresultado1 = document.getElementById('idAr-button');
-            vtipopantalla = fTipoPantalla();
-            console.log(vtipopantalla);
-            if (vtipopantalla.includes('movil')) {
-                vresultado1.innerHTML = 'Activar AR';
-            }
-            else {
-                //vresultado1.innerHTML = '';
-                //vresultado1.style.cssText = 'background-image: url(imagenes/MI3D-AR.png); background-color: rgba(254, 254, 254, 0);';
-            }
-*/
-            //Colocar color de fondo oModelViewer
-            document.getElementById('idContenedor').style.cssText = 'background: radial-gradient(farthest-corner at -30vw 120vh,' + `${vColores1}` + ' 10%,' + `${vColores2}` + ' 100%);';
-            oModelViewer.addEventListener('ar-status', (event) => { //Escucha el evento AR
-                if (event.detail.status != 'failed') { // Si se activa el modo AR
-                    document.getElementById('idImgFondo').src = '';
-                    document.getElementById('idImgMI3D').src = '';
-                    document.getElementById('idDivFullScreen').style.background = vBotonFondoPulsado;
-                }
-                if (event.detail.status == 'not-presenting') { // Si se desactiva el modo AR
-                    document.getElementById('idImgFondo').src = vModelViewerRuta + 'ClienteFondo.png';
-                    document.getElementById('idImgMI3D').src = vRutaPrograma + 'imagenes/MI3D-Isotipo.png';
-                    document.getElementById('idDivFullScreen').style.background = '';
-                }
-            })
-            //Colocar Logo de Marca Cliente
-            vCssidImg1 = '{height: 40px;}; [1];';
-            fImagenImgLink(oModelViewer, 'idImgCliente', 'L10px', 'T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', true, 'https://www.google.com', '_blank','0', vCssidImg1);
-            //Colocar Logo de Marca MI3D
-            fImagenImgLink(oModelViewer, 'idImgMI3D', 'L10px', 'B20px', '40px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', true, 'https://www.google.com', '_blank','0', '');
-            oModelViewer.setAttribute('ar-placement', vPosicion);
-            oModelViewer.addEventListener('load', () => {
-                //Determinar cuantos variantes tiene un mesh
-                const oVariantesSelect = document.getElementById('idVariantesSelect');
-                const oVariantesContainer = document.getElementById('idVariantesContainer');
-                function fGenerarListaVariantes(pX, pY, pMaterial, pMaterialDefecto) {
-                    const vVariante = oModelViewer.availableVariants;
-                    oVariantesSelect.innerHTML = '';
-                    oVariantesSelect.style.display = 'block';
-                    oVariantesContainer.style.display = 'none';
-                    oVariantesSelect.style.left = pX + 'px';
-                    oVariantesSelect.style.top = pY + 'px';
-                    for (let i = 0; i < vVariante.length; i++) {
-                        vVarianteCompara = vVariante[i].slice(vVariante[i].search('_')+1,vVariante[i].legth);
-                        //Comparar si pertenecen al Material
-                        if (vVarianteCompara == pMaterial) {
-                            vVariante[i] = vVariante[i].slice(0, vVariante[i].search('_'));
-                            const oOpcion = document.createElement('option');
-                            oOpcion.value = vVariante[i];
-                            oOpcion.appendChild(document.createTextNode(vVariante[i]));
-                            oVariantesSelect.appendChild(oOpcion);
-                            document.getElementById('idVariantesSelect').value = pMaterialDefecto;
-                        }
-                    }
-                    // Permite cambiar la variante en el gltf
-                    oVariantesSelect.addEventListener('input', (event) => {
-                        oModelViewer.variantName = event.target.value + '_' + pMaterial;
-                        oVariantesSelect.style.display = 'none';
-                    });
-                }
-                function fMostrarListavariantes(pEvent) {
-                    vVariantesPulsado = document.getElementById('idDivVariantes');
-                    vVariantesPulsado = vVariantesPulsado.getAttribute('pulsado');
-                    vVariantesPulsado = vVariantesPulsado === 'false' ? false : true;
-                    if (vVariantesPulsado) {
-                        const oMaterialClick = oModelViewer.materialFromPoint(pEvent.clientX, pEvent.clientY);
-                        if (oMaterialClick != null) {
-                            const vRect = oModelViewer.getBoundingClientRect();
-                            const pX = pEvent.clientX - vRect.left;
-                            const pY = pEvent.clientY - vRect.top;
-                            oVariantesContainer.style.display = 'block';
-                            oVariantesSelect.style.display = 'none';
-                            oVariantesContainer.innerHTML = '';
-                            const vVarianteName = document.createElement('span');
-                            if (oMaterialClick.name.search('_') > 0) {
-                                vVarianteName.textContent = oMaterialClick.name;
-                                oVariantesContainer.appendChild(vVarianteName);
-                                const vMaterial = oMaterialClick.name.slice(oMaterialClick.name.search('_')+1,oMaterialClick.name.length); // Determinar el Material
-                                const vMaterialDefecto = oMaterialClick.name.slice(0, oMaterialClick.name.search('_')); // Determinar el Material x defecto
-                                //console.log('material = ' + oMaterialClick.name, ' Codigo = [' + vMaterial + ']', 'MDefecto = ' + vMaterialDefecto);
-                                fGenerarListaVariantes(pX, pY, vMaterial, vMaterialDefecto);
-                            }
-                        } else {
-                            const target = pEvent.target;
-                            if (target !== oVariantesSelect) {
-                                oVariantesSelect.style.display = 'none';
-                            }
-                        }
-                    }
-                }
-                //Cuando haces click genera la OptionList - Determinar a qué variantes se les da click
-                oModelViewer.addEventListener('click', fMostrarListavariantes);
-                //Ocultar el selector de variantes cuando se selecciona una opción
-                oVariantesSelect.addEventListener('change', () => {
-                    oVariantesSelect.style.display = 'none';
-                });
-                //Detecta cuando se da click en cualquier lado
-                oVariantesContainer.addEventListener('mousedown', function(e){
-                    oVariantesSelect.style.display = 'none';
-                });
-                //Oculta variantes al iniciar
-                oModelViewer.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
-                    fClassListVisibilidad(hotspot,false);
-                });
-                //Oculta las Medidas y las lineas al iniciar
-                fClassListVisibilidad(oModelViewer.querySelector('#idDimLines'), false);
-                oModelViewer.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
-                    fClassListVisibilidad(hotspot, false);
-                });
-                // update svg - inicio dibujo de Lineas Dimensiones
-                function fDibujarLinea(pSvgLine, pDotHotspot1, pDotHotspot2, pDimensionHotspot) {
-                    if (pDotHotspot1 && pDotHotspot2) {
-                        pSvgLine.setAttribute('x1', pDotHotspot1.canvasPosition.x);
-                        pSvgLine.setAttribute('y1', pDotHotspot1.canvasPosition.y);
-                        pSvgLine.setAttribute('x2', pDotHotspot2.canvasPosition.x);
-                        pSvgLine.setAttribute('y2', pDotHotspot2.canvasPosition.y);
-                        // use provided optional hotspot to tie visibility of this svg line to
-                        if (pDimensionHotspot && !pDimensionHotspot.facingCamera) {
-                            pSvgLine.classList.add('hide');
-                        } else {
-                            pSvgLine.classList.remove('hide');
-                        }
-                    }
-                }
-                const oDimLines = oModelViewer.querySelectorAll('line');
-                const fRenderSVG = () => {
-                    fDibujarLinea(oDimLines[0], oModelViewer.queryHotspot('hotspot-dot+X-Y+Z'), oModelViewer.queryHotspot('hotspot-dot+X-Y-Z'), oModelViewer.queryHotspot('hotspot-dim+X-Y'));
-                    fDibujarLinea(oDimLines[1], oModelViewer.queryHotspot('hotspot-dot+X-Y-Z'), oModelViewer.queryHotspot('hotspot-dot+X+Y-Z'), oModelViewer.queryHotspot('hotspot-dim+X-Z'));
-                    fDibujarLinea(oDimLines[2], oModelViewer.queryHotspot('hotspot-dot+X+Y-Z'), oModelViewer.queryHotspot('hotspot-dot-X+Y-Z')); // always visible
-                    fDibujarLinea(oDimLines[3], oModelViewer.queryHotspot('hotspot-dot-X+Y-Z'), oModelViewer.queryHotspot('hotspot-dot-X-Y-Z'), oModelViewer.queryHotspot('hotspot-dim-X-Z'));
-                    fDibujarLinea(oDimLines[4], oModelViewer.queryHotspot('hotspot-dot-X-Y-Z'), oModelViewer.queryHotspot('hotspot-dot-X-Y+Z'), oModelViewer.queryHotspot('hotspot-dim-X-Y'));
-                };
-                oModelViewer.addEventListener('camera-change', fRenderSVG);
-                const oCenter = oModelViewer.getBoundingBoxCenter();
-                const oSize = oModelViewer.getDimensions();
-                const vX2 = oSize.x / 2;
-                const vY2 = oSize.y / 2;
-                const vZ2 = oSize.z / 2;
-                vDecimal = 1;
-                vUndMedida = 'm';
-                //console.log(oSize.x, oSize.y, oSize.z);console.log(oCenter.x, oCenter.y, oCenter.z);
-                oModelViewer.updateHotspot({name: 'hotspot-dot+X-Y+Z', position: `${oCenter.x + vX2} ${oCenter.y - vY2} ${oCenter.z + vZ2}`});
-                oModelViewer.updateHotspot({name: 'hotspot-dim+X-Y', position: `${oCenter.x + vX2 * 1} ${oCenter.y - vY2 * 1} ${oCenter.z}`});
-                oModelViewer.querySelector('button[slot="hotspot-dim+X-Y"]').textContent = `${(oSize.z * vDecimal).toFixed(0)} `+ vUndMedida;
-                oModelViewer.updateHotspot({name: 'hotspot-dot+X-Y-Z', position: `${oCenter.x + vX2} ${oCenter.y - vY2} ${oCenter.z - vZ2}`});
-                oModelViewer.updateHotspot({name: 'hotspot-dim+X-Z', position: `${oCenter.x + vX2 * 1} ${oCenter.y} ${oCenter.z - vZ2 * 1}`});
-                oModelViewer.querySelector('button[slot="hotspot-dim+X-Z"]').textContent = `${(oSize.y * vDecimal).toFixed(0)} `+ vUndMedida;
-                oModelViewer.updateHotspot({name: 'hotspot-dot+X+Y-Z', position: `${oCenter.x + vX2} ${oCenter.y + vY2} ${oCenter.z - vZ2}`});
-                oModelViewer.updateHotspot({name: 'hotspot-dim+Y-Z', position: `${oCenter.x} ${oCenter.y + vY2 * 1} ${oCenter.z - vZ2 * 1}`});
-                oModelViewer.querySelector('button[slot="hotspot-dim+Y-Z"]').textContent = `${(oSize.x * vDecimal).toFixed(0)} `+ vUndMedida;
-                oModelViewer.updateHotspot({name: 'hotspot-dot-X+Y-Z', position: `${oCenter.x - vX2} ${oCenter.y + vY2} ${oCenter.z - vZ2}`});
-                oModelViewer.updateHotspot({name: 'hotspot-dim-X-Z', position: `${oCenter.x - vX2 * 1} ${oCenter.y} ${oCenter.z - vZ2 * 1}`});
-                oModelViewer.querySelector('button[slot="hotspot-dim-X-Z"]').textContent = `${(oSize.y * vDecimal).toFixed(0)} `+ vUndMedida;
-                oModelViewer.updateHotspot({name: 'hotspot-dot-X-Y-Z', position: `${oCenter.x - vX2} ${oCenter.y - vY2} ${oCenter.z - vZ2}`});
-                oModelViewer.updateHotspot({name: 'hotspot-dim-X-Y', position: `${oCenter.x - vX2 * 1} ${oCenter.y - vY2 * 1} ${oCenter.z}`});
-                oModelViewer.querySelector('button[slot="hotspot-dim-X-Y"]').textContent = `${(oSize.z * vDecimal).toFixed(0)} `+ vUndMedida;
-                oModelViewer.updateHotspot({name: 'hotspot-dot-X-Y+Z', position: `${oCenter.x - vX2} ${oCenter.y - vY2} ${oCenter.z + vZ2}`});
-                fRenderSVG();
-                //crear los hotsspot indicando q tiene variables
-                function fHotspotVariante() {
-                    //Colocar hostspot en mesh si este tiene variantes
-                    //Leer archivo Json = GLTF
-                    let vC1 = 0;
-                    //let vTextoButton = [];
-                    fetch(oModelViewer.src)
-                    .then(res => res.json())
-                    .then(data =>   {
-/*
-                        console.log(data);
-                        console.log('Imagenes:', data.images);
-                        console.log('variantes: ', data.extensions.KHR_materials_variants.variants);
-                        console.log('Meshes: ', data.nodes);
-*/                        
-                        for (let i = 0; i < data.nodes.length; i++) {
-                            if (typeof data.materials[i].extensions !== 'undefined') {
-                                //console.log('Meshes:', data.nodes.length, 
-                                //    'Nombre:', data.nodes[i].name,
-                                //    'x:', data.nodes[i].translation[0],
-                                //    'z:', data.nodes[i].translation[1],
-                                //    'y:', data.nodes[i].translation[2],
-                                //    'Boton N:', vC1);
-                                vHPx = data.nodes[i].translation[0] / vDecimal;
-                                vHPz = data.nodes[i].translation[1] / vDecimal;
-                                vHPy = data.nodes[i].translation[2] / vDecimal;
-                                let oBoton = document.createElement('button');
-                                oBoton.id = 'HotSpotVariante';
-                                if (vVariantesPulsado) {
-                                    oBoton.className = 'hotspot';
-                                } else {
-                                    oBoton.className = 'hotspot hide';
-                                }
-                                oBoton.setAttribute('slot','hotspot' + `${vC1}`);
-                                oBoton.setAttribute('data-position',`${vHPx} ${vHPz} ${vHPy}`);
-                                oBoton.setAttribute('data-normal', '0 0 0');
-                                let oDetalle = document.createElement('div');
-                                oDetalle.className = 'annotation';
-                                oDetalle.innerHTML = data.nodes[i].name;
-                                oDetalle.style.color = 'rgb(0, 0, 0)';
-                                oBoton.appendChild(oDetalle);
+            <!-- Parámetros pasados en la URL: -->
+            <div id="parametros"></div>
+            <!-- Elemento select y contenedor para la lista de opciones -->
+            <select id='idVariantesSelect' style='display: none;'>
+            </select>
+            <div id='idVariantesContainer'>
+            </div>
+        </model-viewer>
+    </div>
 
-                                oModelViewer.appendChild(oBoton);
-                                vC1++;
-                            }
-                        }
-                    }) 
-                    .catch(error => {
-                        console.error('Error al obtener el archivo JSON:', error);
-                    });
-                };
-                fHotspotVariante();
-                vTexto = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo ' + '<br>' +
-                    'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo';
-                fVentanaInformacion(vTexto);
-            });
-            let vJsonBarra = '[' + 
-            '{ "id" : "00", "titulo" : "Menu Principal", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.png" + '", "visible" : "1", "disponible" : "1", "pulsado" : "0" },' +
-            '{ "id" : "01", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" },' +
-            '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimensiones.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
-            '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
-            '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
-            '{ "id" : "05", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" },' +
-            '{ "id" : "06", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" },' +
-            '{ "id" : "07", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
-            '{ "id" : "08", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" },' +
-            '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
-            '{ "id" : "10", "titulo" : "Detalles", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Detalles.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
-            '{ "id" : "11", "titulo" : "Informacion", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
-            '{ "id" : "12", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" }' +
+    <script>
+        // Parametros iniciales que tendra q leer del googlesheet
+        // Ruta de archivo
+        vRutaGltf = 'https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf';
+        vDirectorioGltF = fObtenerLink('https://github.com/johannlozada/MI3DAlmacen/blob/c82390ae594a976512c3ea84a9027ac76b11f38c/Cliente01/Demo%203D%20Variantes.gltf','D');
+        vRutaPrograma = window.location.href;
+        // SOLO CUANDO SE EJECUTE EN PC / ES TEMPORAL
+        if (vRutaPrograma.includes('file')) {
+            vRutaPrograma = fObtenerLink('https://github.com/johannlozada/MI3DVisor3D/blob/9b13df4b7e7bee74dac47d52f073a91715f066d5/index.html','D');
+        } else {
+            if (vRutaPrograma.includes('127.0.0.1')) {
+                vRutaPrograma = '/';
+            }
+        }
+        let vPosicion = '1';
+        vPosicion = vPosicion === '0' ? 'wall' : 'floor'; // Si vPosicion es 0=Piso o 1=Pared GLTF fObtenerLink2
+        let vColores1 = '#c8e1ff';
+        let vColores2 = '#3b91f7';
+        let vVariantesPulsado = false;
+        // Declara Objeto ModelViewer del GLTF
+        const oModelViewer = document.getElementById('IdModelo3d');
+        fARBoton(oModelViewer, vRutaPrograma + 'imagenes/MI3D-AR.png');
+/*
+        //Listado opciones con check
+        let vOpcionesMarco = '[' + 
+            '{ "id" : "00", "identificador" : "show-variantes", "texto" : "Variantes" },' +
+            '{ "id" : "01", "identificador" : "show-variantes", "texto" : "Variantes" },' +
+            '{ "id" : "02", "identificador" : "show-variantes", "texto" : "Variantes" },' +
+            '{ "id" : "03", "identificador" : "show-variantes", "texto" : "Variantes" }' +
             ']';
-            const oJsonBarra = JSON.parse(vJsonBarra);
-            fBarraHerramientas(oModelViewer, 'idBarra', 'R10px', 'T60px', '50px', '#43b2ff', '#ffffff', true, 'P',oJsonBarra);
+        const oOpcionesMarco = JSON.parse(vOpcionesMarco);
+        fMarcoOpciones(oModelViewer, oOpcionesMarco, vColores1, vColores2, 'R20%', 'T5px');
+*/
+        //Angulos de vision V y H
+        //vCamaraorbitar='-45deg 75deg 100%'; // camera-orbit = movimiento de la camara sobre el objeto $Theta $Phi $Radio
+        //vCamaraDestino='5m 2m 0m'; // camera-target = a donde va la camara sobre el objeto $X $Y $Z
+        //vMaxCamaraOrbita='22.5deg 90deg auto'; // $Theta $Phi $Radio Maximo
+        //vMinCamaraOrbita='-22.5deg 45deg auto'; // $Theta $Phi $Radio Minimo
+        //INICIO de obtener parametros
+        //los parametros despues del Link inician con ?CONST=VALOR ejemplo ...?const01=valor01&const02=valor02&...
+        //Leyenda:
+        //para01=ubicacion archivo Gltf
+        //para02=posicion en ar del Gltf
+        //la idea seria conectar con googlesheets, pasar parametros como codigo=CLI001
+        //Hacer un script que busque este codigo en la googlesheets y retorne el link con la direccion del GLTF
+        // Llamar a la función para mostrar los parámetros cuando la página se cargue
+        window.onload = fMostrarParametros();
+        //Asignar ubicacion de archivo de manera temporal hasta terminar con los parametros
+        oModelViewer.src = fObtenerLink(vRutaGltf,'F');
+        vModelViewerRuta = fObtenerLink(vRutaGltf, 'D');
+        //Imagen de Carga de Pagina
+        fImagenCarga('', 'idImagenCarga', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', '150px', oModelViewer);
+        //Colocar logo de Marca cliente como fondo
+        vCssCodigo = "\
+            {\
+                height: 90vh;\
+                left: 0%;\
+                top: 25%;\
+                transform: rotate(25deg);\
+            }";
+        fImagenImgLink(oModelViewer, 'idImgFondo', 'C0%', 'C0%', '180%', 'rotate(-25deg) translate(-10%, -30%)', '0.15', vModelViewerRuta + 'ClienteFondo.png', true, '', '','-1', vCssCodigo);
+        //Determinar qué tipo de dispositivo se está usando
+/*            const vresultado1 = document.getElementById('idAr-button');
+        vtipopantalla = fTipoPantalla();
+        console.log(vtipopantalla);
+        if (vtipopantalla.includes('movil')) {
+            vresultado1.innerHTML = 'Activar AR';
+        }
+        else {
+            //vresultado1.innerHTML = '';
+            //vresultado1.style.cssText = 'background-image: url(imagenes/MI3D-AR.png); background-color: rgba(254, 254, 254, 0);';
+        }
+*/
+        //Colocar color de fondo oModelViewer
+        vCssCodigo = "\
+            #idContenedor {\
+                background: radial-gradient(farthest-corner at -30vw 120vh," + vColores1 + " 10%," + vColores2 + " 100%);\
+            }";
+        fInsertarCssCode('/*[1]*/', vCssCodigo);
+        oModelViewer.addEventListener('ar-status', (event) => { //Escucha el evento AR
+            if (event.detail.status != 'failed') { // Si se activa el modo AR
+                document.getElementById('idImgFondo').src = '';
+                document.getElementById('idImgMI3D').src = '';
+                document.getElementById('idDivFullScreen').style.background = vBotonFondoPulsado;
+            }
+            if (event.detail.status == 'not-presenting') { // Si se desactiva el modo AR
+                document.getElementById('idImgFondo').src = vModelViewerRuta + 'ClienteFondo.png';
+                document.getElementById('idImgMI3D').src = vRutaPrograma + 'imagenes/MI3D-Isotipo.png';
+                document.getElementById('idDivFullScreen').style.background = '';
+            }
+        })
+        //Colocar Logo de Marca Cliente
+        vCssCodigo = "{height: 60px;}";
+        fImagenImgLink(oModelViewer, 'idImgCliente', 'L10px', 'T10px', '80px', '0', '1', vModelViewerRuta + 'ClienteLogo.png', true, 'https://www.google.com', '_blank','0', vCssCodigo);
+        //Colocar Logo de Marca MI3D
+        vCssCodigo = "{height: 40px;}";
+        fImagenImgLink(oModelViewer, 'idImgMI3D', 'L10px', 'B20px', '60px', '0', '1', vRutaPrograma + 'imagenes/MI3D-Isotipo.png', true, 'https://www.google.com', '_blank','0', vCssCodigo);
+        oModelViewer.setAttribute('ar-placement', vPosicion);
+        oModelViewer.addEventListener('load', () => {
+
+            //Determinar cuantos variantes tiene un mesh
+            const oVariantesContainer = document.getElementById('idVariantesContainer');
+            const oVariantesSelect = document.getElementById('idVariantesSelect');
+
+            //Cuando haces click genera la OptionList - Determinar a qué variantes se les da click
+            //oModelViewer.addEventListener('click', fMostrarListavariantes1);
+/* UBICACION ORIGINAL
+            oModelViewer.addEventListener('click', function(oEvent) {
+                fMostrarListavariantes1(oModelViewer, oEvent, vColores2, oVariantesContainer, oVariantesSelect);
+                fCarruselVariantes(oModelViewer, oEvent, 'idCarrusel', vColores2, '150px');
+            });
+*/
+///
+            //Ocultar el selector de variantes cuando se selecciona una opción
+            oVariantesSelect.addEventListener('change', () => {
+                oVariantesSelect.style.display = 'none';
+            });
+            //Detecta cuando se da click en cualquier lado
+            oVariantesContainer.addEventListener('mousedown', function(e){
+                oVariantesSelect.style.display = 'none';
+            });
+///
+            //Oculta variantes al iniciar
+            oModelViewer.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
+                fClassListVisibilidad(hotspot,false);
+            });
+            //Oculta las Medidas y las lineas al iniciar
+            fClassListVisibilidad(oModelViewer.querySelector('#idDimLines'), false);
+            oModelViewer.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
+                fClassListVisibilidad(hotspot, false);
+            });
+            // update svg - inicio dibujo de Lineas Dimensiones
+            function fDibujarLinea(pSvgLine, pDotHotspot1, pDotHotspot2, pDimensionHotspot) {
+                if (pDotHotspot1 && pDotHotspot2) {
+                    pSvgLine.setAttribute('x1', pDotHotspot1.canvasPosition.x);
+                    pSvgLine.setAttribute('y1', pDotHotspot1.canvasPosition.y);
+                    pSvgLine.setAttribute('x2', pDotHotspot2.canvasPosition.x);
+                    pSvgLine.setAttribute('y2', pDotHotspot2.canvasPosition.y);
+                    // use provided optional hotspot to tie visibility of this svg line to
+                    if (pDimensionHotspot && !pDimensionHotspot.facingCamera) {
+                        pSvgLine.classList.add('hide');
+                    } else {
+                        pSvgLine.classList.remove('hide');
+                    }
+                }
+            }
+            const oDimLines = oModelViewer.querySelectorAll('line');
+            const fRenderSVG = () => {
+                fDibujarLinea(oDimLines[0], oModelViewer.queryHotspot('hotspot-dot+X-Y+Z'), oModelViewer.queryHotspot('hotspot-dot+X-Y-Z'), oModelViewer.queryHotspot('hotspot-dim+X-Y'));
+                fDibujarLinea(oDimLines[1], oModelViewer.queryHotspot('hotspot-dot+X-Y-Z'), oModelViewer.queryHotspot('hotspot-dot+X+Y-Z'), oModelViewer.queryHotspot('hotspot-dim+X-Z'));
+                fDibujarLinea(oDimLines[2], oModelViewer.queryHotspot('hotspot-dot+X+Y-Z'), oModelViewer.queryHotspot('hotspot-dot-X+Y-Z')); // always visible
+                fDibujarLinea(oDimLines[3], oModelViewer.queryHotspot('hotspot-dot-X+Y-Z'), oModelViewer.queryHotspot('hotspot-dot-X-Y-Z'), oModelViewer.queryHotspot('hotspot-dim-X-Z'));
+                fDibujarLinea(oDimLines[4], oModelViewer.queryHotspot('hotspot-dot-X-Y-Z'), oModelViewer.queryHotspot('hotspot-dot-X-Y+Z'), oModelViewer.queryHotspot('hotspot-dim-X-Y'));
+            };
+            oModelViewer.addEventListener('camera-change', fRenderSVG);
+            const oCenter = oModelViewer.getBoundingBoxCenter();
+            const oSize = oModelViewer.getDimensions();
+            const vX2 = oSize.x / 2;
+            const vY2 = oSize.y / 2;
+            const vZ2 = oSize.z / 2;
+            vDecimal = 1;
+            vUndMedida = 'm';
+            //console.log(oSize.x, oSize.y, oSize.z);console.log(oCenter.x, oCenter.y, oCenter.z);
+            oModelViewer.updateHotspot({name: 'hotspot-dot+X-Y+Z', position: `${oCenter.x + vX2} ${oCenter.y - vY2} ${oCenter.z + vZ2}`});
+            oModelViewer.updateHotspot({name: 'hotspot-dim+X-Y', position: `${oCenter.x + vX2 * 1} ${oCenter.y - vY2 * 1} ${oCenter.z}`});
+            oModelViewer.querySelector('button[slot="hotspot-dim+X-Y"]').textContent = `${(oSize.z * vDecimal).toFixed(0)} `+ vUndMedida;
+            oModelViewer.updateHotspot({name: 'hotspot-dot+X-Y-Z', position: `${oCenter.x + vX2} ${oCenter.y - vY2} ${oCenter.z - vZ2}`});
+            oModelViewer.updateHotspot({name: 'hotspot-dim+X-Z', position: `${oCenter.x + vX2 * 1} ${oCenter.y} ${oCenter.z - vZ2 * 1}`});
+            oModelViewer.querySelector('button[slot="hotspot-dim+X-Z"]').textContent = `${(oSize.y * vDecimal).toFixed(0)} `+ vUndMedida;
+            oModelViewer.updateHotspot({name: 'hotspot-dot+X+Y-Z', position: `${oCenter.x + vX2} ${oCenter.y + vY2} ${oCenter.z - vZ2}`});
+            oModelViewer.updateHotspot({name: 'hotspot-dim+Y-Z', position: `${oCenter.x} ${oCenter.y + vY2 * 1} ${oCenter.z - vZ2 * 1}`});
+            oModelViewer.querySelector('button[slot="hotspot-dim+Y-Z"]').textContent = `${(oSize.x * vDecimal).toFixed(0)} `+ vUndMedida;
+            oModelViewer.updateHotspot({name: 'hotspot-dot-X+Y-Z', position: `${oCenter.x - vX2} ${oCenter.y + vY2} ${oCenter.z - vZ2}`});
+            oModelViewer.updateHotspot({name: 'hotspot-dim-X-Z', position: `${oCenter.x - vX2 * 1} ${oCenter.y} ${oCenter.z - vZ2 * 1}`});
+            oModelViewer.querySelector('button[slot="hotspot-dim-X-Z"]').textContent = `${(oSize.y * vDecimal).toFixed(0)} `+ vUndMedida;
+            oModelViewer.updateHotspot({name: 'hotspot-dot-X-Y-Z', position: `${oCenter.x - vX2} ${oCenter.y - vY2} ${oCenter.z - vZ2}`});
+            oModelViewer.updateHotspot({name: 'hotspot-dim-X-Y', position: `${oCenter.x - vX2 * 1} ${oCenter.y - vY2 * 1} ${oCenter.z}`});
+            oModelViewer.querySelector('button[slot="hotspot-dim-X-Y"]').textContent = `${(oSize.z * vDecimal).toFixed(0)} `+ vUndMedida;
+            oModelViewer.updateHotspot({name: 'hotspot-dot-X-Y+Z', position: `${oCenter.x - vX2} ${oCenter.y - vY2} ${oCenter.z + vZ2}`});
+            fRenderSVG();
+            fVariantesVisible(oModelViewer, '30px');
+/*                
+            vTexto = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo ' + '<br>' +
+                'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo';
+            fVentanaInformacion(vTexto);
+*/
+
+// LUEGO BUSCAR MEJOR UBICACION
+            oModelViewer.addEventListener('click', function(oEvent) {
+                fMostrarListavariantes1(oModelViewer, oEvent, vColores2, oVariantesContainer, oVariantesSelect);
+                fCarruselVariantes(oModelViewer, oEvent, 'idCarrusel', vColores2, '150px');
+            });
+
+        });
+        //Fin del oModelViewer LOAD
+        let vJsonBarra = '[' + 
+        '{ "id" : "00", "titulo" : "Menu Principal", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Menu.png" + '", "visible" : "1", "disponible" : "1", "pulsado" : "0" },' +
+        '{ "id" : "01", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" },' +
+        '{ "id" : "02", "titulo" : "Dimensiones", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Dimensiones.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+        '{ "id" : "03", "titulo" : "Variantes", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Variantes.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+        '{ "id" : "04", "titulo" : "FullScreen", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Fullscreen.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+        '{ "id" : "05", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" },' +
+        '{ "id" : "06", "titulo" : "Captura", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Captura.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" },' +
+        '{ "id" : "07", "titulo" : "Compartir", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Compartir.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+        '{ "id" : "08", "titulo" : "-", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Separador.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" },' +
+        '{ "id" : "09", "titulo" : "Galeria", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Galeria.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+        '{ "id" : "10", "titulo" : "Detalles", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Detalles.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+        '{ "id" : "11", "titulo" : "Informacion", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-Informacion.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" },' +
+        '{ "id" : "12", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.png" + '", "visible" : "0", "disponible" : "1", "pulsado" : "0" }' +
+        ']';
+        const oJsonBarra = JSON.parse(vJsonBarra);
+        fBarraHerramientas(oModelViewer, 'idBarra', 'R10px', 'T60px', '50px', '#43b2ff', '#ffffff', true, 'P', oJsonBarra);
 /***/
-        </script>
-    </body>
+        function fMostrarListavariantes1(pContenedor, pEvent, pColores2, pVariantesContainer, pVariantesSelect) {
+            vVariantesPulsado = document.getElementById('idDivVariantes'); //Obtenemos boton variantes de toolbox
+            vVariantesPulsado = vVariantesPulsado.getAttribute('pulsado'); //Extraemos el atributo 'pulsado'
+            vVariantesPulsado = vVariantesPulsado === 'false' ? false : true; // Pasamos a valor boleano
+            if (vVariantesPulsado) {
+                const oMaterialClick = pContenedor.materialFromPoint(pEvent.clientX, pEvent.clientY);
+                if (oMaterialClick != null) {
+///                            
+                    const vRect = pContenedor.getBoundingClientRect();
+                    const pX = pEvent.clientX - vRect.left;
+                    const pY = pEvent.clientY - vRect.top;
+                    pVariantesContainer.style.display = 'block';
+                    pVariantesSelect.style.display = 'none';
+                    pVariantesContainer.innerHTML = '';
+///
+                    const vVarianteName = document.createElement('span');
+                        if (oMaterialClick.name.search('_') > 0) {
+                            vVarianteName.textContent = oMaterialClick.name;
+                            const vMaterial = oMaterialClick.name.slice(oMaterialClick.name.search('_')+1,oMaterialClick.name.length); // Determinar el Material
+                            const vMaterialDefecto = oMaterialClick.name.slice(0, oMaterialClick.name.search('_')); // Determinar el Material x defecto
+                            //console.log('material = ' + oMaterialClick.name, ' Codigo = [' + vMaterial + ']', 'MDefecto = ' + vMaterialDefecto);
+                            //console.log(pX, pY, vMaterial, vMaterialDefecto);
+                            fGenerarListaVariantes1(pContenedor, pX, pY, vMaterial, vMaterialDefecto, pVariantesContainer, pVariantesSelect);
+                        }
+
+                    pVariantesContainer.appendChild(vVarianteName);
+
+                } else {
+                    const target = pEvent.target;
+                    if (target !== pVariantesSelect) {
+
+                        pVariantesSelect.style.display = 'none';
+
+                    }
+                }
+            }
+        }
+        function fGenerarListaVariantes1(pContenedor, pX, pY, pMaterial, pMaterialDefecto, pVariantesContainer, pVariantesSelect) {
+            const vVariante = pContenedor.availableVariants;
+            pVariantesSelect.innerHTML = '';
+            pVariantesSelect.style.display = 'block';
+            pVariantesContainer.style.display = 'none';
+//                    pVariantesSelect.style.left = pX + 'px';
+//                    pVariantesSelect.style.top = pY + 'px';
+//                    fCarruselVariantes(pContenedor, 'idCarrusel', vColores2)
+            for (let i = 0; i < vVariante.length; i++) {
+                vVarianteCompara = vVariante[i].slice(vVariante[i].search('_')+1,vVariante[i].legth);
+                //Comparar si pertenecen al Material
+                if (vVarianteCompara == pMaterial) {
+                    vVariante[i] = vVariante[i].slice(0, vVariante[i].search('_'));
+                    const oOpcion = document.createElement('option');
+                        oOpcion.value = vVariante[i];
+                    oOpcion.appendChild(document.createTextNode(vVariante[i]));
+                    pVariantesSelect.appendChild(oOpcion);
+                    document.getElementById('idVariantesSelect').value = pMaterialDefecto;
+                }
+            }
+            // Permite cambiar la variante en el gltf
+            pVariantesSelect.addEventListener('input', (event) => {
+                console.log(event.target.value + '_' + pMaterial);
+                pContenedor.variantName = event.target.value + '_' + pMaterial;
+                pVariantesSelect.style.display = 'none';
+            });
+        }
+
+        async function fCarruselVariantes(pContenedor, pEvent, pNombre, pColores2, pAnchoTarjeta){
+
+            const oMaterialClick = pContenedor.materialFromPoint(pEvent.clientX, pEvent.clientY);
+//            console.log('xxx :', pContenedor.model, oMaterialClick.name, pContenedor.availableVariants);
+            vDivExiste = document.getElementById(pNombre);
+            //CONSTRUIR VARIANTES CON COLOR, TEXTURA
+            //OBTENER LAS VARIANTES DE TEXTURAS
+            const gltf = await fetch(pContenedor.src).then(response => response.json());
+            //console.log(gltf);
+            const materials = gltf.materials;
+            const oBaseColorTextures = materials.map(material => material.pbrMetallicRoughness.baseColorTexture); //Leer texturas
+            const otextureIndexes = oBaseColorTextures.map(texture => { //Asignar texturas
+                if (texture === undefined) {
+                    return "";
+                } else {
+                    return texture.index;
+                }
+            });
+            const oBaseColorFactor = materials.map(material => material.pbrMetallicRoughness.baseColorFactor); //Leer Colores
+            const oFactorIndexes = oBaseColorFactor.map(factor => { //Asignar colores
+                if (factor === undefined) {
+                    return "";
+                } else {
+                    return 'rgba(' + parseInt(factor[0] * 255) + ',' + parseInt(factor[1] * 255) + ',' + parseInt(factor[2] * 255) + ',' + parseInt(factor[3], 2) + ')';
+                }
+            });
+            const images = gltf.images;
+            const uris = images.map(image => image.uri); //Leer nombre de los archivos y Asignar nombres
+
+            const oVariantes = [];
+            for(let i = 0; i < otextureIndexes.length; i++){
+                if(otextureIndexes[i] > 0) {
+                    oVariantes.push({
+                        variante: materials[i].name,
+                        material: uris[otextureIndexes[i]]
+                    });
+                } else {
+                    oVariantes.push({
+                        variante: materials[i].name,
+                        material: ''
+                    });
+                }
+            }
+            for(let i = 0; i < oFactorIndexes.length; i++){
+                if(oFactorIndexes[i].length > 0) {
+                    oVariantes[i].material = oFactorIndexes[i];
+                }
+            }
+
+            console.log(oVariantes);
+        
+
+            if (vDivExiste === null){
+            }
+            const oVentana = document.getElementById(pNombre);
+        }
+    </script>
+</body>
 </html>
