@@ -259,16 +259,18 @@ function fARBoton(pContenedor, pRutaImagen) {
       oBotonAr.setAttribute('slot', 'ar-button');
       oBotonAr.setAttribute('id', 'idAr-button');
   pContenedor.appendChild(oBotonAr);*/
-  let oDiv = document.createElement('div');
-      oDiv.setAttribute('id', 'ar-prompt');
-      let oImg = document.createElement('img');
-          oImg.setAttribute('src', pRutaImagen);
-      oDiv.appendChild(oImg);
-  pContenedor.appendChild(oDiv);
-  let oBotonFail = document.createElement('button');
-      oBotonFail.setAttribute('id', 'ar-failure');
-      oBotonFail.innerHTML = 'No se detecta AR';
-  pContenedor.appendChild(oBotonFail);
+  if (fARSoportado()) {
+    let oDiv = document.createElement('div');
+        oDiv.setAttribute('id', 'ar-prompt');
+        let oImg = document.createElement('img');
+            oImg.setAttribute('src', pRutaImagen);
+        oDiv.appendChild(oImg);
+    pContenedor.appendChild(oDiv);
+    let oBotonFail = document.createElement('button');
+        oBotonFail.setAttribute('id', 'ar-failure');
+        oBotonFail.innerHTML = 'No se detecta AR';
+    pContenedor.appendChild(oBotonFail);
+  }
 }
 function fMarcoOpciones(pContenedor, pOpciones, pColor1, pColor2, pPosX, pPosY) {
   pContenedor.addEventListener('load', function() {
@@ -704,4 +706,17 @@ function fTecla(pContenedor){
   document.addEventListener('keydown', function(evento) {
     console.log('Tecla Pulsada', evento.key);
   });
+}
+function fARSoportado() {
+  // Función para verificar soporte de AR
+  const isARSupported = () => {
+    // Verificar soporte de WebXR
+    const isWebXRSupported = navigator.xr !== undefined; 
+    // Verificar soporte de AR Quick Look
+    const isQuickLookSupported = window.QLPreviewController !== undefined;
+    // Verificar soporte de ARKit / ARCore
+    const isARKitSupported = window.webkit !== undefined && window.webkit.messageHandlers.getARKitData !== undefined;
+    const isARCoreSupported = navigator.userAgent.indexOf('Android') >= 0 && /Version\/[89]/i.test(navigator.userAgent);
+    return isWebXRSupported || isQuickLookSupported || isARKitSupported || isARCoreSupported;
+  }
 }

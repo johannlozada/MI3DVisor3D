@@ -284,7 +284,7 @@
         '{ "id" : "12", "titulo" : "Realidad Aumentada", "imagen" : "' + vRutaPrograma+"imagenes/MI3D-AR.png" + '", "visible" : "0", "disponible" : "0", "pulsado" : "0" }' +
         ']';
         const oJsonBarra = JSON.parse(vJsonBarra);
-        if (fTipoDispositivo() == 'movil') { // Asegurar que AR este disponible
+        if (fARSoportado()) { // Asegurar que AR este disponible
             oJsonBarra[12].disponible = "1";
         }
         fBarraHerramientas(oModelViewer, 'idBarra', 'R10px', 'T60px', '50px', '#43b2ff', '#ffffff', true, 'P', oJsonBarra);
