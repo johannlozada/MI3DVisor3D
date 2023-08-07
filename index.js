@@ -479,11 +479,10 @@ function fImagenImg(pBarra, pColores, pTitulo, pArchivoIMG, pIndice, pBotones, p
 }
 function fAnalisisBoton(pBoton) {
   let vPulsado = pBoton.getAttribute('pulsado');
-  let vActivo = pBoton.getAttribute('disponible');
   vPulsado = vPulsado === 'false';
   pBoton.setAttribute('pulsado', vPulsado);
   if (vPulsado) {
-    if (vActivo === '1') {
+    if (pBoton.getAttribute('disponible') === '1') {
       pBoton.style.background = vBotonFondoPulsado;
     }
   } 
@@ -507,23 +506,26 @@ function fMenuPrincipal(pBoton, pBotones, pContenedor) { // funcion MENU
   }
 }
 function fDimensiones(pBoton, pBotones, pContenedor) {
-  vPulsado = fAnalisisBoton(pBoton, pBotones);
-  oLine = pContenedor.querySelector('#idDimLines');
-  if (vPulsado) {
-    oLine.classList.remove('hide');
-  } else {
-    oLine.classList.add('hide');
-  }
-  pContenedor.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
+  if (pBoton.getAttribute('disponible') === '1') {
+    vPulsado = fAnalisisBoton(pBoton, pBotones);
+    oLine = pContenedor.querySelector('#idDimLines');
     if (vPulsado) {
-      hotspot.classList.remove('hide');
+      oLine.classList.remove('hide');
     } else {
-      hotspot.classList.add('hide');
+      oLine.classList.add('hide');
     }
-  });
+    pContenedor.querySelectorAll('#HotSpotDimension').forEach((hotspot) => {
+      if (vPulsado) {
+        hotspot.classList.remove('hide');
+      } else {
+        hotspot.classList.add('hide');
+      }
+    });
+  }
 }
 
 function fVariantes(pBoton, pBotones, pContenedor) {
+  if (pBoton.getAttribute('disponible') === '1') {
   vPulsado = fAnalisisBoton(pBoton, pBotones);
     pContenedor.querySelectorAll('#HotSpotVariante').forEach((hotspot) => {
       if (vPulsado) {
@@ -532,16 +534,19 @@ function fVariantes(pBoton, pBotones, pContenedor) {
         hotspot.classList.add('hide');
       }
     });
+  }
 }
 function fFullScreen(pBoton, pBotones, pContenedor) {
-  vPulsado = fAnalisisBoton(pBoton, pBotones);
-  document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement && pBoton.getAttribute('pulsado') === 'true') {
-      pBoton.setAttribute('pulsado', 'false');
-      pBoton.style.background = '';
-    }
-  });
-  fToggleFullScreen();
+  if (pBoton.getAttribute('disponible') === '1') {
+    vPulsado = fAnalisisBoton(pBoton, pBotones);
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && pBoton.getAttribute('pulsado') === 'true') {
+        pBoton.setAttribute('pulsado', 'false');
+        pBoton.style.background = '';
+      }
+    });
+    fToggleFullScreen();
+  }
 }
 function fRealidadAumentada(pBoton, pBotones, pContenedor) {
   if (pBoton.getAttribute('disponible') === '1') {
@@ -571,42 +576,52 @@ function fRealidadAumentada(pBoton, pBotones, pContenedor) {
   //Si AR esta disponible / SI = llamar AR, AR pulsado, / NO = Bloquear boton AR e Indicar no Disponible
 }
 function fCaptura(pBoton, pBotones, pContenedor) {
-  vPulsado = fAnalisisBoton(pBoton, pBotones);
-  // Verificar soporte para captura de pantalla
-  if (html2canvas !== undefined) {
-    // Crear un enlace para descargar
-    const vScreenShot = pContenedor.toDataURL('image/png') //.replace("image/png", "image/octet-stream");
-    const anchor = document.createElement('a');
-    anchor.href = vScreenShot; 
-    // Obtener objeto Date con fecha/hora actual y obtener día, mes, año, hora, minutos y segundos
-    const now = new Date();
-    let day = '0' + now.getDate();
-    let month = '0' + (now.getMonth() + 1 + '');
-    let year = now.getFullYear();
-    let hour = '0' + now.getHours();
-    let minute = '0' + now.getMinutes();
-    let second = '0' + now.getSeconds();
-    // Formatear fecha y hora como string y concatenar
-    fecha = day.slice(-2) + month.slice(-2) + year.toString();
-    hora = hour.slice(-2) + minute.slice(-2) + second.slice(-2);
-    anchor.download = 'MI3DCaptura-' + fecha + hora + '.png';
-    anchor.click();
+  if (pBoton.getAttribute('disponible') === '1') {
     vPulsado = fAnalisisBoton(pBoton, pBotones);
-  } else {
-    alert('Captura de pantalla no soportada'); 
+    // Verificar soporte para captura de pantalla
+    if (html2canvas !== undefined) {
+      // Crear un enlace para descargar
+      const vScreenShot = pContenedor.toDataURL('image/png') //.replace("image/png", "image/octet-stream");
+      const anchor = document.createElement('a');
+      anchor.href = vScreenShot; 
+      // Obtener objeto Date con fecha/hora actual y obtener día, mes, año, hora, minutos y segundos
+      const now = new Date();
+      let day = '0' + now.getDate();
+      let month = '0' + (now.getMonth() + 1 + '');
+      let year = now.getFullYear();
+      let hour = '0' + now.getHours();
+      let minute = '0' + now.getMinutes();
+      let second = '0' + now.getSeconds();
+      // Formatear fecha y hora como string y concatenar
+      fecha = day.slice(-2) + month.slice(-2) + year.toString();
+      hora = hour.slice(-2) + minute.slice(-2) + second.slice(-2);
+      anchor.download = 'MI3DCaptura-' + fecha + hora + '.png';
+      anchor.click();
+      vPulsado = fAnalisisBoton(pBoton, pBotones);
+    } else {
+      alert('Captura de pantalla no soportada'); 
+    }
   }
 }
 function fCompartir(pBoton, pBotones, pContenedor) {
-  vPulsado = fAnalisisBoton(pBoton, pBotones);
+  if (pBoton.getAttribute('disponible') === '1') {
+    vPulsado = fAnalisisBoton(pBoton, pBotones);
+  }
 }
 function fGaleria(pBoton, pBotones, pContenedor) {
-  vPulsado = fAnalisisBoton(pBoton, pBotones);
+  if (pBoton.getAttribute('disponible') === '1') {
+    vPulsado = fAnalisisBoton(pBoton, pBotones);
+  }
 }
 function fDetalles(pBoton, pBotones, pContenedor) {
-  vPulsado = fAnalisisBoton(pBoton, pBotones);
+  if (pBoton.getAttribute('disponible') === '1') {
+    vPulsado = fAnalisisBoton(pBoton, pBotones);
+  }
 }
 function fInformacion(pBoton, pBotones, pContenedor) {
-  vPulsado = fAnalisisBoton(pBoton, pBotones);
+  if (pBoton.getAttribute('disponible') === '1') {
+    vPulsado = fAnalisisBoton(pBoton, pBotones);
+  }
 }
 // funcion PARA HACER PRUEBAS
 function fTest() {
