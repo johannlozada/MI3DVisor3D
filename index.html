@@ -83,6 +83,9 @@
             if (vRutaPrograma.includes('127.0.0.1')) {
                 vRutaPrograma = '/';
             }
+            if (vRutaPrograma.includes('index.html')) {
+                vRutaPrograma = '/';
+            }
         }
         let vPosicion = '1';
         vPosicion = vPosicion === '0' ? 'wall' : 'floor'; // Si vPosicion es 0=Piso o 1=Pared GLTF fObtenerLink2

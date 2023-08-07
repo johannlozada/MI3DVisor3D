@@ -545,7 +545,7 @@ function fFullScreen(pBoton, pBotones, pContenedor) {
 }
 function fRealidadAumentada(pBoton, pBotones, pContenedor) {
   vPulsado = fAnalisisBoton(pBoton, pBotones);
-  console.log('Realidad Aumentada ', pContenedor.canActivateAR, oBotonArFallo);
+  console.log('Realidad Aumentada ', pContenedor.canActivateAR);
   document.addEventListener('fullscreenchange', () => {
     if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
       pBoton.setAttribute('pulsado', 'false');
@@ -557,54 +557,26 @@ function fRealidadAumentada(pBoton, pBotones, pContenedor) {
 }
 function fCaptura(pBoton, pBotones, pContenedor) {
   vPulsado = fAnalisisBoton(pBoton, pBotones);
-  // Obtener el elemento de la página a capturar
-  const oModelViewer = document.getElementById('IdModelo3d');
-  // Obtener posicion actual de la camara
-  /*
-  const orbit = oModelViewer.getCameraOrbit();
-  const fov = oModelViewer.getFieldOfView();
-  oModelViewer.cameraTarget = orbit.target; 
-  oModelViewer.cameraOrbit = orbit.radius;
-  oModelViewer.fieldOfView = fov;
-*/
   // Verificar soporte para captura de pantalla
   if (html2canvas !== undefined) {
-    // Tomar captura con html2canvas
-    html2canvas(oModelViewer).then((canvas) => {
-      //canvas = oModelViewer.shadowRoot.querySelector('canvas');
-      /*
-      const vOpciones = {
-        canvas: canvas,
-        cameraorbit: oModelViewer.getCameraOrbit(),
-        fieldOfView: oModelViewer.getFieldOfView()
-      };
-      console.log(vOpciones);
-      oModelViewer.render(vOpciones);
-      */
-      // Crear un enlace para descargar
-      const vScreenShot = oModelViewer.toDataURL('image/png').replace("image/png", "image/octet-stream");
-      const anchor = document.createElement('a');
-      anchor.href = vScreenShot; 
-      // Obtener objeto Date con fecha/hora actual
-      const now = new Date();
-      // Obtener día, mes, año, hora, minutos y segundos
-      let day = '0' + now.getDate();
-      let month = now.getMonth() + 1; 
-      month = '0' + month; 
-      let year = now.getFullYear();
-      let hour = '0' + now.getHours();
-      let minute = '0' + now.getMinutes();
-      let second = '0' + now.getSeconds();
-      // Formatear fecha y hora como string y concatenar
-      fecha = day.slice(-2) + month.slice(-2) + year.toString();
-      hora = hour.slice(-2) + minute.slice(-2) + second.slice(-2);
-
-      anchor.download = 'MI3DCaptura-' + fecha + hora + '.png';
-      anchor.click();
-      vPulsado = fAnalisisBoton(pPadre, pBotones);
-      //oModelViewer.cameraOrbit = orbit.radius;
-      //oModelViewer.fieldOfView = fov;
-    });
+    // Crear un enlace para descargar
+    const vScreenShot = pContenedor.toDataURL('image/png') //.replace("image/png", "image/octet-stream");
+    const anchor = document.createElement('a');
+    anchor.href = vScreenShot; 
+    // Obtener objeto Date con fecha/hora actual y obtener día, mes, año, hora, minutos y segundos
+    const now = new Date();
+    let day = '0' + now.getDate();
+    let month = '0' + (now.getMonth() + 1 + '');
+    let year = now.getFullYear();
+    let hour = '0' + now.getHours();
+    let minute = '0' + now.getMinutes();
+    let second = '0' + now.getSeconds();
+    // Formatear fecha y hora como string y concatenar
+    fecha = day.slice(-2) + month.slice(-2) + year.toString();
+    hora = hour.slice(-2) + minute.slice(-2) + second.slice(-2);
+    anchor.download = 'MI3DCaptura-' + fecha + hora + '.png';
+    anchor.click();
+    vPulsado = fAnalisisBoton(pBoton, pBotones);
   } else {
     alert('Captura de pantalla no soportada'); 
   }
