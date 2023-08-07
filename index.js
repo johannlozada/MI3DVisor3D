@@ -546,13 +546,26 @@ function fFullScreen(pBoton, pBotones, pContenedor) {
 function fRealidadAumentada(pBoton, pBotones, pContenedor) {
   vPulsado = fAnalisisBoton(pBoton, pBotones);
   console.log('Realidad Aumentada ', pContenedor.canActivateAR);
-  document.addEventListener('fullscreenchange', () => {
+  if (vPulsado) {
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
+        pBoton.setAttribute('pulsado', 'false');
+        pBoton.style.background = '';
+      }
+    });
+    pContenedor.activateAR();
+  } else {
+    pContenedor.exitAR();
+  }
+
+/*
+  window.addEventListener('popstate', () => {
     if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
       pBoton.setAttribute('pulsado', 'false');
       pBoton.style.background = '';
     }
   });
-  pContenedor.activateAR();
+*/
   //Si AR esta disponible / SI = llamar AR, AR pulsado, / NO = Bloquear boton AR e Indicar no Disponible
 }
 function fCaptura(pBoton, pBotones, pContenedor) {
