@@ -708,7 +708,7 @@ function fTecla(pContenedor){
   });
 }
 // Función para verificar soporte de AR
-const fARSoportado = () => {
+function fARSoportado() {
   // Verificar soporte de WebXR
   const isWebXRSupported = navigator.xr !== undefined; 
   // Verificar soporte de AR Quick Look
