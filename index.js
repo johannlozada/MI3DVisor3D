@@ -707,16 +707,15 @@ function fTecla(pContenedor){
     console.log('Tecla Pulsada', evento.key);
   });
 }
-function fARSoportado() {
-  // Función para verificar soporte de AR
-  const isARSupported = () => {
-    // Verificar soporte de WebXR
-    const isWebXRSupported = navigator.xr !== undefined; 
-    // Verificar soporte de AR Quick Look
-    const isQuickLookSupported = window.QLPreviewController !== undefined;
-    // Verificar soporte de ARKit / ARCore
-    const isARKitSupported = window.webkit !== undefined && window.webkit.messageHandlers.getARKitData !== undefined;
-    const isARCoreSupported = navigator.userAgent.indexOf('Android') >= 0 && /Version\/[89]/i.test(navigator.userAgent);
-    return isWebXRSupported || isQuickLookSupported || isARKitSupported || isARCoreSupported;
-  }
+// Función para verificar soporte de AR
+const fARSoportado = () => {
+  // Verificar soporte de WebXR
+  const isWebXRSupported = navigator.xr !== undefined; 
+  // Verificar soporte de AR Quick Look
+  const isQuickLookSupported = window.QLPreviewController !== undefined;
+  // Verificar soporte de ARKit / ARCore
+  const isARKitSupported = window.webkit !== undefined && window.webkit.messageHandlers.getARKitData !== undefined;
+  const isARCoreSupported = navigator.userAgent.indexOf('Android') >= 0 && /Version\/[89]/i.test(navigator.userAgent);
+  console.log('HOLAAAA', isWebXRSupported, isQuickLookSupported, isARKitSupported, isARCoreSupported)
+  return isWebXRSupported || isQuickLookSupported || isARKitSupported || isARCoreSupported;
 }
