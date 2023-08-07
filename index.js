@@ -536,7 +536,7 @@ function fVariantes(pBoton, pBotones, pContenedor) {
 function fFullScreen(pBoton, pBotones, pContenedor) {
   vPulsado = fAnalisisBoton(pBoton, pBotones);
   document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
+    if (!document.fullscreenElement && pBoton.getAttribute('pulsado') === 'true') {
       pBoton.setAttribute('pulsado', 'false');
       pBoton.style.background = '';
     }
@@ -544,18 +544,20 @@ function fFullScreen(pBoton, pBotones, pContenedor) {
   fToggleFullScreen();
 }
 function fRealidadAumentada(pBoton, pBotones, pContenedor) {
-  vPulsado = fAnalisisBoton(pBoton, pBotones);
-  console.log('Realidad Aumentada ', pContenedor.canActivateAR);
-  if (vPulsado) {
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
-        pBoton.setAttribute('pulsado', 'false');
-        pBoton.style.background = '';
-      }
-    });
-    pContenedor.activateAR();
-  } else {
-    pContenedor.exitAR();
+  if (pBoton.getAttribute('disponible') === '1') {
+    vPulsado = fAnalisisBoton(pBoton, pBotones);
+    console.log('Realidad Aumentada ', pContenedor.canActivateAR);
+    if (vPulsado) {
+      document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
+          pBoton.setAttribute('pulsado', 'false');
+          pBoton.style.background = '';
+        }
+      });
+      pContenedor.activateAR();
+    } else {
+      pContenedor.exitAR();
+    }
   }
 
 /*
