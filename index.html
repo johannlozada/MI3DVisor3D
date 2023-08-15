@@ -94,7 +94,6 @@
         let vVariantesPulsado = false;
         // Declara Objeto ModelViewer del GLTF
         const oModelViewer = document.getElementById('IdModelo3d');
-        fARBoton(oModelViewer, vRutaPrograma + 'imagenes/MI3D-AR.png');
 /*
         //Listado opciones con check
         let vOpcionesMarco = '[' + 
@@ -285,6 +284,7 @@
         ']';
         const oJsonBarra = JSON.parse(vJsonBarra);
         if (fARSoportado()) { // Asegurar que AR este disponible
+            fARBoton(oModelViewer, vRutaPrograma + 'imagenes/MI3D-AR.png');
             oJsonBarra[12].disponible = "1";
         }
         fBarraHerramientas(oModelViewer, 'idBarra', 'R10px', 'T60px', '50px', '#43b2ff', '#ffffff', true, 'P', oJsonBarra);

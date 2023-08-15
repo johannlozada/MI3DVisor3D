@@ -255,22 +255,21 @@ function fObtenerLink(pUrl, pTipo){ //Obtener la ruta de la "D = carpeta F = Arc
   return vNuevoUrl;
 }
 function fARBoton(pContenedor, pRutaImagen) {
-/*  let oBotonAr = document.createElement('button');
+  let oBotonAr = document.createElement('button');
       oBotonAr.setAttribute('slot', 'ar-button');
       oBotonAr.setAttribute('id', 'idAr-button');
-  pContenedor.appendChild(oBotonAr);*/
-  if (fARSoportado()) {
-    let oDiv = document.createElement('div');
-        oDiv.setAttribute('id', 'ar-prompt');
-        let oImg = document.createElement('img');
-            oImg.setAttribute('src', pRutaImagen);
-        oDiv.appendChild(oImg);
-    pContenedor.appendChild(oDiv);
-    let oBotonFail = document.createElement('button');
-        oBotonFail.setAttribute('id', 'ar-failure');
-        oBotonFail.innerHTML = 'No se detecta AR';
-    pContenedor.appendChild(oBotonFail);
-  }
+      oBotonAr.innerHTML = '|  Activar AR';
+  pContenedor.appendChild(oBotonAr);
+  let oDiv = document.createElement('div');
+      oDiv.setAttribute('id', 'ar-prompt');
+      let oImg = document.createElement('img');
+          oImg.setAttribute('src', pRutaImagen);
+      oDiv.appendChild(oImg);
+  pContenedor.appendChild(oDiv);
+  let oBotonFail = document.createElement('button');
+      oBotonFail.setAttribute('id', 'ar-failure');
+      oBotonFail.innerHTML = 'No se detecta AR';
+  pContenedor.appendChild(oBotonFail);
 }
 function fMarcoOpciones(pContenedor, pOpciones, pColor1, pColor2, pPosX, pPosY) {
   pContenedor.addEventListener('load', function() {
@@ -554,27 +553,20 @@ function fRealidadAumentada(pBoton, pBotones, pContenedor) {
   if (pBoton.getAttribute('disponible') === '1') {
     vPulsado = fAnalisisBoton(pBoton, pBotones);
     console.log('Realidad Aumentada ', pContenedor.canActivateAR);
-    if (vPulsado) {
-      document.addEventListener('fullscreenchange', () => {
-        if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
-          pBoton.setAttribute('pulsado', 'false');
-          pBoton.style.background = '';
-        }
-      });
-      pContenedor.activateAR();
-    } else {
-      pContenedor.exitAR();
-    }
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
+        pBoton.setAttribute('pulsado', 'false');
+        pBoton.style.background = '';
+      }
+    });
   }
-
-/*
   window.addEventListener('popstate', () => {
     if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
       pBoton.setAttribute('pulsado', 'false');
       pBoton.style.background = '';
     }
   });
-*/
+      pContenedor.activateAR();
   //Si AR esta disponible / SI = llamar AR, AR pulsado, / NO = Bloquear boton AR e Indicar no Disponible
 }
 function fCaptura(pBoton, pBotones, pContenedor) {
@@ -708,14 +700,14 @@ function fTecla(pContenedor){
   });
 }
 // Función para verificar soporte de AR
-function fARSoportado() {
-  // Verificar soporte de WebXR
-  const isWebXRSupported = navigator.xr !== undefined; 
-  // Verificar soporte de AR Quick Look
-  const isQuickLookSupported = window.QLPreviewController !== undefined;
-  // Verificar soporte de ARKit / ARCore
-  const isARKitSupported = window.webkit !== undefined && window.webkit.messageHandlers.getARKitData !== undefined;
-  const isARCoreSupported = navigator.userAgent.indexOf('Android') >= 0 && /Version\/[89]/i.test(navigator.userAgent);
-  console.log('HOLAAAA', isWebXRSupported, isQuickLookSupported, isARKitSupported, isARCoreSupported)
-  return isWebXRSupported || isQuickLookSupported || isARKitSupported || isARCoreSupported;
-}
+const fARSoportado = () => {
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  if (isIOS) {
+    return window.webkit !== undefined; // ARKit 
+  }
+  if (isAndroid) {
+    return true; // Android soporta ARCore
+  }
+  return false;
+};
