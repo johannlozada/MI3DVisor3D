@@ -25,6 +25,11 @@ oStylePagina.textContent = "\
     height: 100vh;\
     font-size: 12px;\
   }\
+  .dim{\
+    display: block;\
+    padding: 3px;\
+    pointer-events: none;\
+  }\
   .hide{\
     display: none;\
   }\
