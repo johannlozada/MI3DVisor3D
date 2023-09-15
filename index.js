@@ -48,7 +48,7 @@ let vBordeDestelloInterno = 'drop-shadow(inset 1px 1px 3px rgba(255, 255, 255, 1
 let vPadding = '2px';
 let vBordeRadio = '5px';
 let vBotonFondoPulsado = 'rgba(255, 255, 255, 0.45)';
-let vBlurFondo = 'blur(4px)';
+let vBlurFondo = 'blur(3px)';
 let vBlurBorde = '1px solid rgba(255, 255, 255, 0.18)';
 /**** Desactivar click derecho del mouse */
 /*
@@ -258,7 +258,7 @@ function fARBoton(pContenedor, pRutaImagen) {
   let oBotonAr = document.createElement('button');
       oBotonAr.setAttribute('slot', 'ar-button');
       oBotonAr.setAttribute('id', 'idAr-button');
-      oBotonAr.innerHTML = '|  Activar AR';
+      oBotonAr.innerHTML = '.   |  Activar AR';
   pContenedor.appendChild(oBotonAr);
   let oDiv = document.createElement('div');
       oDiv.setAttribute('id', 'ar-prompt');
@@ -524,7 +524,6 @@ function fDimensiones(pBoton, pBotones, pContenedor) {
     });
   }
 }
-
 function fVariantes(pBoton, pBotones, pContenedor) {
   if (pBoton.getAttribute('disponible') === '1') {
   vPulsado = fAnalisisBoton(pBoton, pBotones);
@@ -548,26 +547,6 @@ function fFullScreen(pBoton, pBotones, pContenedor) {
     });
     fToggleFullScreen();
   }
-}
-function fRealidadAumentada(pBoton, pBotones, pContenedor) {
-  if (pBoton.getAttribute('disponible') === '1') {
-    vPulsado = fAnalisisBoton(pBoton, pBotones);
-    console.log('Realidad Aumentada ', pContenedor.canActivateAR);
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
-        pBoton.setAttribute('pulsado', 'false');
-        pBoton.style.background = '';
-      }
-    });
-  }
-  window.addEventListener('popstate', () => {
-    if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
-      pBoton.setAttribute('pulsado', 'false');
-      pBoton.style.background = '';
-    }
-  });
-      pContenedor.activateAR();
-  //Si AR esta disponible / SI = llamar AR, AR pulsado, / NO = Bloquear boton AR e Indicar no Disponible
 }
 function fCaptura(pBoton, pBotones, pContenedor) {
   if (pBoton.getAttribute('disponible') === '1') {
@@ -616,6 +595,28 @@ function fInformacion(pBoton, pBotones, pContenedor) {
   if (pBoton.getAttribute('disponible') === '1') {
     vPulsado = fAnalisisBoton(pBoton, pBotones);
   }
+}
+function fRealidadAumentada(pBoton, pBotones, pContenedor) {
+  if (pBoton.getAttribute('disponible') === '1') {
+    vPulsado = fAnalisisBoton(pBoton, pBotones);
+    console.log('Realidad Aumentada ', pContenedor.canActivateAR);
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
+        pBoton.setAttribute('pulsado', 'false');
+        pBoton.style.background = '';
+      }
+    });
+  }
+  window.addEventListener('popstate', () => {
+    if (!document.fullscreenElement && pBoton.getAttribute('pulsado')==='true') {
+      pBoton.setAttribute('pulsado', 'false');
+      pBoton.style.background = '';
+    }
+  });
+  pContenedor.activateImmersiveAR();
+  pContenedor.activateQuickLook();
+  //pContenedor.activateAR();
+  //Si AR esta disponible / SI = llamar AR, AR pulsado, / NO = Bloquear boton AR e Indicar no Disponible
 }
 // funcion PARA HACER PRUEBAS
 function fTest() {
